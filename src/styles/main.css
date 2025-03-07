@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* Import des composants personnalisés */
+@theme {
+    --font-sans: 'Montserrat', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+}
+@import "./components.css";
+@import "./utilities.css";
+
+
+/* Typographie */
+@plugin '@tailwindcss/typography';
+
+/* Iconify */
+@plugin "@iconify/tailwind4";
+@plugin "@iconify/tailwind4" {
+	prefix: 'icon-over';
+	override-only: true;
+    scale: 1.2;
+	prefixes: material-symbols, carbon;
+}
+
+/* DaisyUI */
+@plugin "daisyui" {
+    themes: frenchieLight --default, frenchieDark --prefersdark;
+}
+@plugin "daisyui/theme" {
+    name: "frenchieLight";
+    default: true;
+    prefersdark: false;
+    color-scheme: "light";
+    --color-base-100: hsl(210, 20%, 98%);
+    --color-base-200: hsl(210, 20%, 95%);
+    --color-base-300: hsla(210, 20%, 90%, 0.1);
+    --color-base-content: hsl(210, 20%, 10%);
+    --color-primary: hsl(220, 60%, 50%);
+    --color-primary-content: #fff;
+    --color-secondary: hsl(340, 80%, 60%);
+    --color-secondary-content: #fff;
+    --color-accent: hsl(30, 80%, 50%);
+    --color-accent-content: #FFF;
+    --color-neutral: hsl(210, 10%, 50%);
+    --color-neutral-content: #fff;
+    --color-info: hsl(230, 60%, 50%);
+    --color-info-content: #fff;
+    --color-success: hsl(150, 60%, 50%);
+    --color-success-content: #fff;
+    --color-warning: hsl(40, 80%, 50%);
+    --color-warning-content: #fff;
+    --color-error: hsl(0, 80%, 50%);
+    --color-error-content: #fff;
+    --radius-selector: 2rem;
+    --radius-field: 0.5rem;
+    --radius-box: 0.5rem;
+    --size-selector: 0.25rem;
+    --size-field: 0.25rem;
+    --border: 1px;
+    --depth: 1;
+    --noise: 0;
+}
+@plugin "daisyui/theme" {
+    name: "frenchieDark";
+    default: false;
+    prefersdark: true;
+    color-scheme: "dark";
+    --color-base-100: hsl(210, 20%, 10%);
+    --color-base-200: hsl(210, 20%, 8%);
+    --color-base-300: hsl(210, 20%, 5%);
+    --color-base-content: hsl(210, 20%, 90%);
+    --color-primary: hsl(220, 60%, 60%);
+    --color-primary-content: #000;
+    --color-secondary: hsl(340, 80%, 70%);
+    --color-secondary-content: #000;
+    --color-accent: hsl(30, 80%, 60%);
+    --color-accent-content: #000;
+    --color-neutral: hsl(210, 10%, 70%);
+    --color-neutral-content: #000;
+    --color-info: hsl(230, 60%, 70%);
+    --color-info-content: oklch(29% 0.066 243.157);
+    --color-success: hsl(150, 60%, 70%);
+    --color-success-content: oklch(37% 0.077 168.94);
+    --color-warning: hsl(40, 80%, 70%);
+    --color-warning-content: oklch(41% 0.112 45.904);
+    --color-error: hsl(0, 80%, 70%);
+    --color-error-content: oklch(27% 0.105 12.094);
+    --radius-selector: 2rem;
+    --radius-field: 0.5rem;
+    --radius-box: 0.5rem;
+    --size-selector: 0.25rem;
+    --size-field: 0.25rem;
+    --border: 1px;
+    --depth: 1;
+    --noise: 0;
+}
+@custom-variant dark (&:where([data-theme=frenchieDark], [data-theme=frenchieDark] *));
+
+  
