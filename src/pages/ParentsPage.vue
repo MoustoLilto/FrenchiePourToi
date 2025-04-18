@@ -28,7 +28,7 @@
                 </div>
                 <div class="flex items-center justify-center">
                     <img
-                        src="@/assets/parents-hero.jpg"
+                        :src="parentsHeroImg"
                         alt="Parents bouledogues français"
                         class="rounded-lg shadow-lg"
                     />
@@ -45,7 +45,7 @@
                 <div class="card bg-base-100 shadow-xl">
                     <figure>
                         <img
-                            src="@/assets/female-1.jpg"
+                            :src="female1Img"
                             alt="Femelle bouledogue français"
                             class="h-64 w-full object-cover"
                         />
@@ -79,7 +79,7 @@
                 <div class="card bg-base-100 shadow-xl">
                     <figure>
                         <img
-                            src="@/assets/female-2.jpg"
+                            :src="female2Img"
                             alt="Femelle bouledogue français"
                             class="h-64 w-full object-cover"
                         />
@@ -113,7 +113,7 @@
                 <div class="card bg-base-100 shadow-xl">
                     <figure>
                         <img
-                            src="@/assets/female-3.jpg"
+                            :src="female3Img"
                             alt="Femelle bouledogue français"
                             class="h-64 w-full object-cover"
                         />
@@ -154,7 +154,7 @@
                 <div class="card bg-base-100 shadow-xl">
                     <figure>
                         <img
-                            src="@/assets/male-1.jpg"
+                            :src="male1Img"
                             alt="Mâle bouledogue français"
                             class="h-64 w-full object-cover"
                         />
@@ -188,7 +188,7 @@
                 <div class="card bg-base-100 shadow-xl">
                     <figure>
                         <img
-                            src="@/assets/male-2.jpg"
+                            :src="male2Img"
                             alt="Mâle bouledogue français"
                             class="h-64 w-full object-cover"
                         />
@@ -272,7 +272,7 @@
                 <img
                     v-for="i in 8"
                     :key="i"
-                    :src="`@/assets/parent-gallery-${i}.jpg`"
+                    :src="getImageUrl(`parent-gallery-${i}.jpg`)"
                     alt="Bouledogue français"
                     class="rounded-lg shadow-lg"
                 />
@@ -303,4 +303,12 @@
 
 <script setup lang="ts">
 import { ROUTE_NAMES } from '@/constants/routesConstants';
+import { getImageUrl } from '@/services/assetsService';
+
+const parentsHeroImg = getImageUrl('parents-hero.jpg');
+const female1Img = getImageUrl('female-1.jpg');
+const female2Img = getImageUrl('female-2.jpg');
+const female3Img = getImageUrl('female-3.jpg');
+const male1Img = getImageUrl('male-1.jpg');
+const male2Img = getImageUrl('male-2.jpg');
 </script>

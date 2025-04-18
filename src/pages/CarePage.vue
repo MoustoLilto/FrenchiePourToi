@@ -30,7 +30,7 @@
                 </div>
                 <div class="flex items-center justify-center">
                     <img
-                        src="@/assets/care-hero.jpg"
+                        :src="careHeroImg"
                         alt="Soins du bouledogue français"
                         class="rounded-lg shadow-lg"
                     />
@@ -367,4 +367,7 @@
 
 <script setup lang="ts">
 import { ROUTE_NAMES } from '@/constants/routesConstants';
+import { getImageUrl } from '@/services/assetsService';
+
+const careHeroImg = getImageUrl('care-hero.jpg');
 </script>

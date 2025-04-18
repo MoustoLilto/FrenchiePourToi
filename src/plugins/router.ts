@@ -4,6 +4,29 @@ import { ROUTE_NAMES } from '@/constants/routesConstants';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import HomePage from '@/pages/HomePage.vue';
 import type { RouteRecordRaw } from 'vue-router';
+import { getLocale } from './i18n';
+
+// Fonction pour traduire les segments de route en fonction de la langue
+const i18nRoute = (to: any) => {
+    const locale = getLocale();
+    const { name, params, query, hash } = to;
+
+    // Si la route est déjà associée à la bonne langue, l'utiliser comme telle
+    if (params && params.lang && params.lang === locale) {
+        return to;
+    }
+
+    // Sinon, créer un nouvel objet de route avec la langue actuelle
+    return {
+        name,
+        params: {
+            ...params,
+            lang: locale,
+        },
+        query,
+        hash,
+    };
+};
 
 const routes: RouteRecordRaw[] = [
     {
@@ -114,5 +137,10 @@ router.beforeEach(() => {
 router.afterEach(() => {
     NProgress.done();
 });
+
+// Fonction utilitaire pour définir les routes avec i18n
+export function routeWithI18n(name: string, params = {}) {
+    return i18nRoute({ name, params });
+}
 
 export default router;

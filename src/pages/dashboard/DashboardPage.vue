@@ -53,7 +53,7 @@
                     <div class="card-body">
                         <div class="flex items-center gap-4">
                             <div class="bg-secondary/20 rounded-full p-3">
-                                <i class="icon-[carbon--message] text-secondary text-2xl" />
+                                <i class="icon-[ic--baseline-message] text-secondary text-2xl" />
                             </div>
                             <div>
                                 <div class="text-sm">Messages</div>

@@ -1,19 +1,18 @@
 <template>
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-primary mb-8 text-center font-serif text-4xl font-bold">
-            À propos de Frenchie Pour Toi
+            {{ $t('about.title') }}
         </h1>
 
         <!-- Section Notre Histoire -->
         <section class="mb-16">
             <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
                 <div class="flex flex-col justify-center">
-                    <h2 class="text-primary mb-6 font-serif text-3xl font-bold">Notre Histoire</h2>
+                    <h2 class="text-primary mb-6 font-serif text-3xl font-bold">
+                        {{ $t('about.subtitle') }}
+                    </h2>
                     <p class="mb-4">
-                        Frenchie Pour Toi est né d'une passion pour les bouledogues français. Tout a
-                        commencé en 2015 lorsque nous avons accueilli notre première bouledogue,
-                        Bella, dans notre famille. Son caractère affectueux et sa personnalité
-                        unique nous ont conquis.
+                        {{ $t('about.description') }}
                     </p>
                     <p class="mb-4">
                         Après plusieurs années d'expérience et de formation auprès d'éleveurs
@@ -29,11 +28,7 @@
                     </p>
                 </div>
                 <div class="flex items-center justify-center">
-                    <img
-                        src="@/assets/about-history.jpg"
-                        alt="Notre histoire"
-                        class="rounded-lg shadow-lg"
-                    />
+                    <img :src="aboutHistoryImg" alt="Notre histoire" class="rounded-lg shadow-lg" />
                 </div>
             </div>
         </section>
@@ -41,13 +36,13 @@
         <!-- Section Notre Équipe -->
         <section class="mb-16">
             <h2 class="text-primary mb-8 text-center font-serif text-3xl font-bold">
-                Notre Équipe
+                {{ $t('about.team.title') }}
             </h2>
             <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 <div class="card bg-base-100 shadow-xl">
                     <figure>
                         <img
-                            src="@/assets/team-1.jpg"
+                            :src="team1Img"
                             alt="Membre de l'équipe"
                             class="h-64 w-full object-cover"
                         />
@@ -64,7 +59,7 @@
                 <div class="card bg-base-100 shadow-xl">
                     <figure>
                         <img
-                            src="@/assets/team-2.jpg"
+                            :src="team2Img"
                             alt="Membre de l'équipe"
                             class="h-64 w-full object-cover"
                         />
@@ -81,7 +76,7 @@
                 <div class="card bg-base-100 shadow-xl">
                     <figure>
                         <img
-                            src="@/assets/team-3.jpg"
+                            :src="team3Img"
                             alt="Membre de l'équipe"
                             class="h-64 w-full object-cover"
                         />
@@ -101,18 +96,15 @@
         <!-- Section Notre Philosophie -->
         <section class="bg-base-200 mb-16 rounded-lg p-8">
             <h2 class="text-primary mb-8 text-center font-serif text-3xl font-bold">
-                Notre Philosophie
+                {{ $t('about.values.title') }}
             </h2>
             <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
                 <div>
                     <h3 class="mb-4 font-serif text-2xl font-bold">
-                        Le bien-être animal avant tout
+                        {{ $t('about.values.health.title') }}
                     </h3>
                     <p class="mb-6">
-                        Chez Frenchie Pour Toi, le bien-être de nos chiens est notre priorité
-                        absolue. Nos bouledogues vivent dans notre maison comme des membres à part
-                        entière de notre famille. Ils bénéficient d'une alimentation de qualité, de
-                        soins vétérinaires réguliers et de beaucoup d'amour et d'attention.
+                        {{ $t('about.values.health.description') }}
                     </p>
                     <p>
                         Nous limitons volontairement le nombre de portées par an pour garantir que
@@ -122,13 +114,10 @@
                 </div>
                 <div>
                     <h3 class="mb-4 font-serif text-2xl font-bold">
-                        La qualité plutôt que la quantité
+                        {{ $t('about.values.quality.title') }}
                     </h3>
                     <p class="mb-6">
-                        Notre objectif n'est pas de produire un grand nombre de chiots, mais de
-                        sélectionner soigneusement nos reproducteurs pour améliorer la race. Nous
-                        recherchons des chiens en bonne santé, au bon tempérament et conformes aux
-                        standards de la race.
+                        {{ $t('about.values.quality.description') }}
                     </p>
                     <p>
                         Tous nos chiots sont vendus avec un certificat vétérinaire, un carnet de
@@ -146,36 +135,12 @@
                 Nos Installations
             </h2>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <img
-                    src="@/assets/facility-1.jpg"
-                    alt="Nos installations"
-                    class="rounded-lg shadow-lg"
-                />
-                <img
-                    src="@/assets/facility-2.jpg"
-                    alt="Nos installations"
-                    class="rounded-lg shadow-lg"
-                />
-                <img
-                    src="@/assets/facility-3.jpg"
-                    alt="Nos installations"
-                    class="rounded-lg shadow-lg"
-                />
-                <img
-                    src="@/assets/facility-4.jpg"
-                    alt="Nos installations"
-                    class="rounded-lg shadow-lg"
-                />
-                <img
-                    src="@/assets/facility-5.jpg"
-                    alt="Nos installations"
-                    class="rounded-lg shadow-lg"
-                />
-                <img
-                    src="@/assets/facility-6.jpg"
-                    alt="Nos installations"
-                    class="rounded-lg shadow-lg"
-                />
+                <img :src="facility1Img" alt="Nos installations" class="rounded-lg shadow-lg" />
+                <img :src="facility2Img" alt="Nos installations" class="rounded-lg shadow-lg" />
+                <img :src="facility3Img" alt="Nos installations" class="rounded-lg shadow-lg" />
+                <img :src="facility4Img" alt="Nos installations" class="rounded-lg shadow-lg" />
+                <img :src="facility5Img" alt="Nos installations" class="rounded-lg shadow-lg" />
+                <img :src="facility6Img" alt="Nos installations" class="rounded-lg shadow-lg" />
             </div>
         </section>
 
@@ -188,7 +153,7 @@
                 <div class="collapse-arrow bg-base-100 collapse">
                     <input type="radio" name="faq-accordion" :checked="true" />
                     <div class="collapse-title font-serif text-xl font-medium">
-                        Comment réserver un chiot ?
+                        {{ $t('puppies.howToReserve.title') }}
                     </div>
                     <div class="collapse-content">
                         <p>
@@ -227,53 +192,20 @@
                         </p>
                     </div>
                 </div>
-                <div class="collapse-arrow bg-base-100 collapse">
-                    <input type="radio" name="faq-accordion" />
-                    <div class="collapse-title font-serif text-xl font-medium">
-                        Proposez-vous un service de livraison ?
-                    </div>
-                    <div class="collapse-content">
-                        <p>
-                            Nous préférons que les futurs propriétaires viennent chercher leur chiot
-                            en personne, ce qui permet une transition en douceur et des conseils
-                            personnalisés. Cependant, dans certains cas exceptionnels, nous pouvons
-                            organiser un transport sécurisé.
-                        </p>
-                    </div>
-                </div>
-                <div class="collapse-arrow bg-base-100 collapse">
-                    <input type="radio" name="faq-accordion" />
-                    <div class="collapse-title font-serif text-xl font-medium">
-                        Offrez-vous un suivi après l'adoption ?
-                    </div>
-                    <div class="collapse-content">
-                        <p>
-                            Absolument ! Nous restons disponibles pour répondre à toutes vos
-                            questions et vous conseiller tout au long de la vie de votre chien. Nous
-                            proposons également des conseils d'éducation et d'alimentation adaptés à
-                            votre bouledogue français.
-                        </p>
-                    </div>
-                </div>
             </div>
         </section>
 
-        <!-- Section CTA -->
-        <section class="bg-primary/10 rounded-lg p-8 text-center">
-            <h2 class="text-primary mb-4 font-serif text-3xl font-bold">
-                Prêt à accueillir un bouledogue français ?
-            </h2>
-            <p class="mx-auto mb-6 max-w-2xl">
-                Contactez-nous dès aujourd'hui pour en savoir plus sur nos chiots disponibles ou
-                pour réserver une visite de notre élevage. Nous serons ravis de vous accueillir et
-                de vous présenter nos bouledogues.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <RouterLink :to="{ name: ROUTE_NAMES.PUPPIES }" class="btn btn-primary">
-                    Voir nos chiots
-                </RouterLink>
-                <RouterLink :to="{ name: ROUTE_NAMES.CONTACT }" class="btn btn-outline">
-                    Nous contacter
+        <!-- Section Contact -->
+        <section class="bg-primary/10 rounded-lg p-8">
+            <div class="text-center">
+                <h2 class="text-primary mb-6 font-serif text-3xl font-bold">
+                    {{ $t('contact.title') }}
+                </h2>
+                <p class="mb-8">
+                    {{ $t('contact.description') }}
+                </p>
+                <RouterLink :to="{ name: ROUTE_NAMES.CONTACT }" class="btn btn-primary">
+                    {{ $t('common.buttons.contact') }}
                 </RouterLink>
             </div>
         </section>
@@ -281,5 +213,20 @@
 </template>
 
 <script setup lang="ts">
+import { getImageUrl } from '@/services/assetsService';
 import { ROUTE_NAMES } from '@/constants/routesConstants';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+
+const aboutHistoryImg = getImageUrl('about-history.jpg');
+const team1Img = getImageUrl('team-1.jpg');
+const team2Img = getImageUrl('team-2.jpg');
+const team3Img = getImageUrl('team-3.jpg');
+const facility1Img = getImageUrl('facility-1.jpg');
+const facility2Img = getImageUrl('facility-2.jpg');
+const facility3Img = getImageUrl('facility-3.jpg');
+const facility4Img = getImageUrl('facility-4.jpg');
+const facility5Img = getImageUrl('facility-5.jpg');
+const facility6Img = getImageUrl('facility-6.jpg');
 </script>

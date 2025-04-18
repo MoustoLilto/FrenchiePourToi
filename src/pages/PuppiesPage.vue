@@ -35,7 +35,7 @@
                 </div>
                 <div class="flex items-center justify-center">
                     <img
-                        src="@/assets/puppies-hero.jpg"
+                        :src="puppiesHeroImg"
                         alt="Chiots bouledogues français"
                         class="rounded-lg shadow-lg"
                     />
@@ -93,7 +93,7 @@
                 <div v-for="i in 6" :key="i" class="card bg-base-100 shadow-xl">
                     <figure>
                         <img
-                            :src="`@/assets/puppy-${i}.jpg`"
+                            :src="getImageUrl(`puppy-${i}.jpg`)"
                             alt="Chiot bouledogue français"
                             class="h-64 w-full object-cover"
                         />
@@ -135,7 +135,7 @@
                 <div v-for="i in 3" :key="i" class="card bg-base-100 shadow-xl">
                     <figure class="relative">
                         <img
-                            :src="`@/assets/puppy-reserved-${i}.jpg`"
+                            :src="getImageUrl(`puppy-reserved-${i}.jpg`)"
                             alt="Chiot bouledogue français"
                             class="h-64 w-full object-cover opacity-70"
                         />
@@ -282,4 +282,7 @@
 
 <script setup lang="ts">
 import { ROUTE_NAMES } from '@/constants/routesConstants';
+import { getImageUrl } from '@/services/assetsService';
+
+const puppiesHeroImg = getImageUrl('puppies-hero.jpg');
 </script>

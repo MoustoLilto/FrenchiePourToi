@@ -27,7 +27,7 @@
                 </div>
                 <div class="flex items-center justify-center">
                     <img
-                        src="@/assets/gallery-hero.jpg"
+                        :src="galleryHeroImg"
                         alt="Galerie de bouledogues français"
                         class="rounded-lg shadow-lg"
                     />
@@ -87,7 +87,7 @@
                     class="group relative overflow-hidden rounded-lg shadow-lg"
                 >
                     <img
-                        :src="`@/assets/gallery-${i}.jpg`"
+                        :src="getImageUrl(`gallery-${i}.jpg`)"
                         :alt="`Photo de bouledogue français ${i}`"
                         class="h-64 w-full object-cover transition-transform duration-300 group-hover:scale-110"
                     />
@@ -124,7 +124,7 @@
                 <div class="card bg-base-100 shadow-xl">
                     <figure>
                         <img
-                            src="@/assets/album-puppies.jpg"
+                            :src="albumPuppiesImg"
                             alt="Album chiots"
                             class="h-48 w-full object-cover"
                         />
@@ -148,7 +148,7 @@
                 <div class="card bg-base-100 shadow-xl">
                     <figure>
                         <img
-                            src="@/assets/album-adults.jpg"
+                            :src="albumAdultsImg"
                             alt="Album adultes"
                             class="h-48 w-full object-cover"
                         />
@@ -172,7 +172,7 @@
                 <div class="card bg-base-100 shadow-xl">
                     <figure>
                         <img
-                            src="@/assets/album-families.jpg"
+                            :src="albumFamiliesImg"
                             alt="Album familles"
                             class="h-48 w-full object-cover"
                         />
@@ -276,11 +276,17 @@
 
 <script setup lang="ts">
 import { ROUTE_NAMES } from '@/constants/routesConstants';
+import { getImageUrl } from '@/services/assetsService';
 import { ref } from 'vue';
 
 const selectedCategory = ref('all');
 const selectedColor = ref('all');
 const sortBy = ref('newest');
+
+const galleryHeroImg = getImageUrl('gallery-hero.jpg');
+const albumPuppiesImg = getImageUrl('album-puppies.jpg');
+const albumAdultsImg = getImageUrl('album-adults.jpg');
+const albumFamiliesImg = getImageUrl('album-families.jpg');
 
 // Fonction pour générer des descriptions aléatoires pour les photos
 const descriptions = [

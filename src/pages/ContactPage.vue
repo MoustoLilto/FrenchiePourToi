@@ -25,11 +25,7 @@
                     </p>
                 </div>
                 <div class="flex items-center justify-center">
-                    <img
-                        src="@/assets/contact-hero.jpg"
-                        alt="Contactez-nous"
-                        class="rounded-lg shadow-lg"
-                    />
+                    <img :src="contactHeroImg" alt="Contactez-nous" class="rounded-lg shadow-lg" />
                 </div>
             </div>
         </section>
@@ -290,6 +286,9 @@
 import { ROUTE_NAMES } from '@/constants/routesConstants';
 import { ref } from 'vue';
 import SocialLinks from '@/components/SocialLinks.vue';
+import { getImageUrl } from '@/services/assetsService';
+
+const contactHeroImg = getImageUrl('contact-hero.jpg');
 
 const form = ref({
     fullName: '',

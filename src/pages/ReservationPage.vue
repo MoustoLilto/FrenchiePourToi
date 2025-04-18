@@ -29,7 +29,7 @@
                 </div>
                 <div class="flex items-center justify-center">
                     <img
-                        src="@/assets/reservation-hero.jpg"
+                        :src="reservationHeroImg"
                         alt="Réservation d'un chiot"
                         class="rounded-lg shadow-lg"
                     />
@@ -397,7 +397,7 @@
                         <div class="flex items-center gap-4">
                             <div class="avatar">
                                 <div class="w-12 rounded-full">
-                                    <img :src="`@/assets/client-${i}.jpg`" alt="Client" />
+                                    <img :src="getImageUrl(`client-${i}.jpg`)" alt="Client" />
                                 </div>
                             </div>
                             <div>
@@ -435,6 +435,9 @@
 <script setup lang="ts">
 import { ROUTE_NAMES } from '@/constants/routesConstants';
 import { ref } from 'vue';
+import { getImageUrl } from '@/services/assetsService';
+
+const reservationHeroImg = getImageUrl('reservation-hero.jpg');
 
 const form = ref({
     fullName: '',

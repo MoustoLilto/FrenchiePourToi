@@ -27,7 +27,7 @@
                 </div>
                 <div class="flex items-center justify-center">
                     <img
-                        src="@/assets/blog-hero.jpg"
+                        :src="blogHeroImg"
                         alt="Blog Frenchie Pour Toi"
                         class="rounded-lg shadow-lg"
                     />
@@ -83,7 +83,7 @@
                 <div v-for="i in 6" :key="i" class="card bg-base-100 shadow-xl">
                     <figure>
                         <img
-                            :src="`@/assets/blog-${i}.jpg`"
+                            :src="getImageUrl(`blog-${i}.jpg`)"
                             alt="Article de blog"
                             class="h-48 w-full object-cover"
                         />
@@ -143,7 +143,7 @@
                 <div class="card bg-base-100 shadow-xl">
                     <div class="card-body items-center text-center">
                         <div class="text-primary mb-4 text-4xl">
-                            <i class="icon-[carbon--medicine-pill]" />
+                            <i class="icon-[material-symbols--pill]" />
                         </div>
                         <h3 class="card-title font-serif">Santé</h3>
                         <p class="text-sm">Conseils vétérinaires et prévention</p>
@@ -278,11 +278,14 @@
 
 <script setup lang="ts">
 import { ROUTE_NAMES } from '@/constants/routesConstants';
+import { getImageUrl } from '@/services/assetsService';
 import { ref } from 'vue';
 
 const searchQuery = ref('');
 const selectedCategory = ref('all');
 const newsletterEmail = ref('');
+
+const blogHeroImg = getImageUrl('blog-hero.jpg');
 
 // Données fictives pour la démo
 const categories = ['Santé', 'Alimentation', 'Éducation', 'Mode de vie', 'Actualités'];

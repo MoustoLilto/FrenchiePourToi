@@ -30,6 +30,8 @@
                         :routes="routes"
                     />
 
+                    <LanguageSwitcher class="pointer-events-auto" />
+
                     <i
                         class="icon-[carbon--sun] dark:icon-[carbon--moon] icon-btn"
                         @click="toggleDark()"
@@ -53,7 +55,7 @@
                 <div class="flex flex-col items-center gap-12 md:flex-row">
                     <div ref="animatedLogoRef" class="flex-center flex-1 md:basis-1/3">
                         <img
-                            :src="heroImg"
+                            src="https://res.cloudinary.com/duswjj3x8/image/upload/v1741359862/WhatsApp_Image_2025-03-07_at_15.57.45_xy8noe.jpg"
                             alt="Bouledogue Français"
                             class="aspect-1/1 h-64 w-64 rounded-full object-cover"
                         />
@@ -64,14 +66,11 @@
 
                         <p class="text-subtitle flex flex-col gap-4">
                             <span>
-                                Bienvenue chez
-                                <span class="text-quote font-serif">Frenchie Pour Toi</span>
-                                , votre boutique spécialisée dans les bouledogues français de
-                                qualité.
+                                {{ $t('home.hero.description') }}
                             </span>
 
                             <span>
-                                Découvrez nos adorables chiots et réservez le vôtre dès aujourd'hui.
+                                {{ $t('home.hero.additionalInfo') }}
                             </span>
                         </p>
 
@@ -79,7 +78,7 @@
                             :to="{ name: ROUTE_NAMES.PUPPIES }"
                             class="btn btn-primary w-fit"
                         >
-                            Voir nos chiots
+                            {{ $t('common.buttons.viewMore') }}
                         </RouterLink>
                     </div>
                 </div>
@@ -89,29 +88,32 @@
 </template>
 
 <script setup lang="ts">
+import { getImageUrl } from '@/services/assetsService';
 import { ROUTE_NAMES, HOME_ROUTE } from '@/constants/routesConstants';
 import logoImg from '@/assets/frenchie-logo.png';
-import heroImg from '@/assets/frenchie-hero.jpg';
+import { useI18n } from 'vue-i18n';
 
 import DesktopNavigation from '@/components/layouts/DesktopNavigation.vue';
 import MobileNavigation from '@/components/layouts/MobileNavigation.vue';
 import SocialLinks from '@/components/SocialLinks.vue';
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue';
 
+const { t } = useI18n();
 const screenStore = useScreenStore();
 
 const route = useRoute();
 const isHomePage = computed(() => route.name === HOME_ROUTE);
-const routes = [
-    { label: 'Accueil', name: ROUTE_NAMES.HOME },
-    { label: 'Nos Chiots', name: ROUTE_NAMES.PUPPIES },
-    { label: 'Nos Parents', name: ROUTE_NAMES.PARENTS },
-    { label: 'Soins', name: ROUTE_NAMES.CARE },
-    { label: 'Réservation', name: ROUTE_NAMES.RESERVATION },
-    { label: 'Galerie', name: ROUTE_NAMES.GALLERY },
-    { label: 'Blog', name: ROUTE_NAMES.BLOG },
-    { label: 'Contact', name: ROUTE_NAMES.CONTACT },
-    { label: 'À propos', name: ROUTE_NAMES.ABOUT },
-];
+const routes = computed(() => [
+    { label: t('common.navigation.home'), name: ROUTE_NAMES.HOME },
+    { label: t('common.navigation.puppies'), name: ROUTE_NAMES.PUPPIES },
+    { label: t('common.navigation.parents'), name: ROUTE_NAMES.PARENTS },
+    { label: t('common.navigation.care'), name: ROUTE_NAMES.CARE },
+    { label: t('common.navigation.reservation'), name: ROUTE_NAMES.RESERVATION },
+    { label: t('common.navigation.gallery'), name: ROUTE_NAMES.GALLERY },
+    { label: t('common.navigation.blog'), name: ROUTE_NAMES.BLOG },
+    { label: t('common.navigation.contact'), name: ROUTE_NAMES.CONTACT },
+    { label: t('common.navigation.about'), name: ROUTE_NAMES.ABOUT },
+]);
 
 const animatedLogoRef = ref<HTMLElement | null>(null);
 const { isVisible: isAnimatedLogoVisible } = useObserver(
