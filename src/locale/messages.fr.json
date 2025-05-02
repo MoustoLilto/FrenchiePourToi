@@ -1,12 +1,12 @@
 {
-  "locale": "fr-FR",
+  "locale": "fr",
   "translations": {
-    "3724591343089785757": "Bonjour, {$INTERPOLATION}",
-    "5468757275907225559": "Félicitations! Votre application est en cours d'exécution. 🎉",
-    "1164700553027795086": "Explorez les Docs",
-    "8921592434243629892": "Apprenez avec les Tutoriels",
-    "5770256320186997375": "Docs CLI",
-    "7903364132195168077": "Service de langage Angular",
-    "3015030205107423892": "Angular DevTools"
+    "3724591343089785757": "Hello, {$INTERPOLATION}",
+    "5468757275907225559": "Congratulations! Your app is running. 🎉",
+    "angularDoc": "Explorez les Docs",
+    "angularTutorial": "Apprenez avec les Tutoriels",
+    "angularCli": "Docs CLI",
+    "angularLanguageService": "Service de langage Angular",
+    "angularDevTools": "Angular DevTools"
   }
 }
