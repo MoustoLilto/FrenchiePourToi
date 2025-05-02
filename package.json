@@ -4,9 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --localize",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "i18n": "ng extract-i18n --output-path src/locale --format=json",
     "serve:ssr:FrenchiePourToi": "node dist/frenchie-pour-toi/server/server.mjs"
   },
   "private": true,
@@ -32,6 +33,7 @@
     "@angular-devkit/build-angular": "^19.2.8",
     "@angular/cli": "^19.2.8",
     "@angular/compiler-cli": "^19.2.0",
+    "@angular/localize": "19.2.9",
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",

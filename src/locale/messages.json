@@ -1,0 +1,12 @@
+{
+  "locale": "en",
+  "translations": {
+    "3724591343089785757": "Hello, {$INTERPOLATION}",
+    "5468757275907225559": "Congratulations! Your app is running. 🎉",
+    "angularDoc": "Explore the Docs",
+    "angularTutorial": "Learn with Tutorials",
+    "angularCli": "CLI Docs",
+    "angularLanguageService": "Angular Language Service",
+    "angularDevTools": "Angular DevTools"
+  }
+}
