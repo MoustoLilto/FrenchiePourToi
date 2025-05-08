@@ -9,7 +9,6 @@ import { CloudinaryImageComponent } from '@/cloudinary-image/cloudinary-image.co
   selector: 'app-root',
   imports: [CommonModule, RouterOutlet, CloudinaryImageComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   title = 'FrenchiePourToi';

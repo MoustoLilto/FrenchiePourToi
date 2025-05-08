@@ -1,0 +1,60 @@
+@layer components {
+    /* Progress bar */
+    #nprogress {
+        @apply pointer-events-none;
+
+        .bar {
+            @apply z-1031 bg-primary/75 fixed left-0 top-0 h-[2px] w-full;
+        }
+    }
+
+    /* Typographie */
+    .text-h1 {
+        @apply font-serif font-bold text-primary text-4xl md:text-5xl lg:text-6xl;
+    }
+    .text-h2 {
+        @apply font-serif font-semibold text-primary text-3xl md:text-4xl;
+    }
+    .text-h3 {
+        @apply font-serif text-primary text-2xl md:text-3xl;
+    }
+    .text-subtitle {
+        @apply font-sans font-medium text-lg text-base-content;
+    }
+    .text-body {
+        @apply font-sans font-normal text-base leading-relaxed text-base-content;
+    }
+    .text-caption {
+        @apply font-sans font-normal text-sm text-base-content/70;
+    }
+    .text-quote {
+        @apply italic font-semibold;
+    }
+
+    /* Icônes */
+    .icon-btn {
+        @apply flex items-center justify-center cursor-pointer select-none transition-colors text-base-content/75 hover:text-primary;
+    }
+
+    /* Layout */
+    .container {
+        @apply w-full max-w-7xl mx-auto;
+    }
+    .section {
+        @apply py-20 px-4 md:px-8;
+    }
+
+    /* Sections d'information */
+    .info-section {
+        @apply h-80 w-3/4 m-auto flex flex-col items-center justify-center text-center gap-4;
+    }
+    .info-section-icon {
+        @apply text-3xl text-base-content ;
+    }
+    .info-section-title {
+        @apply text-2xl font-bold text-base-content;
+    }
+    .info-section-subtitle {
+        @apply text-sm text-base-content/80;
+    }
+}

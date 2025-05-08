@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-cloudinary-image',
   templateUrl: './cloudinary-image.component.html',
-  styleUrl: './cloudinary-image.component.scss',
   standalone: true,
   imports: [CommonModule]
 })

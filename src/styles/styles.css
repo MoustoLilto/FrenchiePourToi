@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  --font-sans: 'Montserrat', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+}
+@import "./components.css";
+@import "./utilities.css";
+
+@plugin "@iconify/tailwind4";
+@plugin "@iconify/tailwind4" {
+	prefix: 'icon-over';
+	override-only: true;
+    scale: 1.2;
+	prefixes: material-symbols, carbon;
+}
