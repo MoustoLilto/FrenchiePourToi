@@ -21,13 +21,6 @@ export class CloudinaryService {
     });
   }
 
-  // Transformations standards avec paramètres DRY
-  private applyBaseOptimizations(image: CloudinaryImage): CloudinaryImage {
-    return image
-      .format('auto')
-      .quality('auto:good');
-  }
-
   // Image de chiot pour la liste
   getChiotListImage(publicId: string): CloudinaryImage {
     return this.applyBaseOptimizations(
@@ -116,5 +109,12 @@ export class CloudinaryService {
   // Pour les transformations personnalisées
   getCloudinary(): Cloudinary {
     return this.cld;
+  }
+
+  // Transformations standards avec paramètres DRY
+  private applyBaseOptimizations(image: CloudinaryImage): CloudinaryImage {
+    return image
+      .format('auto')
+      .quality('auto:good');
   }
 }

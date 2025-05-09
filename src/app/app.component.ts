@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { Observable } from 'rxjs';
+import { DarkModeService } from '@/services/dark-mode.service';
+
 
 import {CloudinaryImage} from '@cloudinary/url-gen';
 import { CloudinaryService } from '@/services/cloudinary.service';
@@ -12,9 +15,12 @@ import { CloudinaryImageComponent } from '@/cloudinary-image/cloudinary-image.co
 })
 export class AppComponent implements OnInit {
   title = 'FrenchiePourToi';
+  isDark: Signal<boolean>;
   img!: CloudinaryImage;
 
-  constructor(private cloudinaryService: CloudinaryService) {}
+  constructor(private cloudinaryService: CloudinaryService, private darkModeService: DarkModeService) {
+    this.isDark = this.darkModeService.isDark;
+  }
 
   items= [
     { title: $localize`:@@angularDoc:Explore the Docs`, link: 'https://angular.dev' },
@@ -27,5 +33,9 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.img = this.cloudinaryService.getChiotProfileImage('frenchie-hero_lyekts');
     console.log(this.img);
+  }
+
+  toggleDarkMode() {
+    this.darkModeService.toggleDark();
   }
 }

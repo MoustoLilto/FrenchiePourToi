@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CloudinaryService } from '@/services/cloudinary.service';
+import { DarkModeService } from '@/services/dark-mode.service';
 
-describe('CloudinaryService', () => {
-  let service: CloudinaryService;
+describe('DarkModeService', () => {
+  let service: DarkModeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CloudinaryService);
+    service = TestBed.inject(DarkModeService);
   });
 
   it('should be created', () => {

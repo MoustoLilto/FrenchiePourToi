@@ -9,16 +9,20 @@
     Photo:
   </div>
 
-  <app-cloudinary-image
-        publicId="frenchie-hero_lyekts"
-        [widths]="[400, 800, 900]"
-        alt="Une autre image de chiot"
-        [sizes]="'25vw'"
-      />
+  <h1>Mon application</h1>
+  <button (click)="toggleDarkMode()" class="btn btn-primary">Basculer Mode Sombre</button>
+  <p>Le mode sombre est {{ isDark() ? 'activé' : 'désactivé' }}</p>
 
-      <i class="icon-mdi:wrench-clock-outline text-giga text-gray-600" ></i>
-      <i class="icon-[carbon--arrow-up-right] group-hover:icon-over-[carbon--arrow-right]"></i>
-      <span class="icon-[carbon--accessibility]"></span>
+  <app-cloudinary-image
+    publicId="frenchie-hero_lyekts"
+    [widths]="[400, 800, 900]"
+    alt="Une autre image de chiot"
+    [sizes]="'25vw'"
+  />
+
+  <i class="icon-mdi:wrench-clock-outline text-giga text-gray-600" ></i>
+  <i class="icon-[carbon--arrow-up-right] group-hover:icon-over-[carbon--arrow-right]"></i>
+  <span class="icon-[carbon--accessibility]"></span>
 
   <router-outlet />
 </div>
