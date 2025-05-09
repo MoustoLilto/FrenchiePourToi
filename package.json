@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "i18n": "ng extract-i18n --output-path src/locale --format=json",
-    "serve:ssr:FrenchiePourToi": "node dist/frenchie-pour-toi/server/server.mjs"
+    "serve:ssr:FrenchiePourToi": "node dist/frenchie-pour-toi/server/server.mjs",
+    "lint": "ng lint",
+    "lint:fix": "ng lint --fix"
   },
   "private": true,
   "dependencies": {
@@ -32,24 +34,31 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@iconify-json/ic": "^1.2.2",
-    "@iconify-json/material-symbols": "^1.2.14",
-    "@iconify/tailwind4": "^1.0.6",
-    "@iconify-json/carbon": "^1.2.8",
     "@angular-devkit/build-angular": "^19.2.8",
     "@angular/cli": "^19.2.8",
     "@angular/compiler-cli": "^19.2.0",
     "@angular/localize": "19.2.9",
+    "@iconify-json/carbon": "^1.2.8",
+    "@iconify-json/ic": "^1.2.2",
+    "@iconify-json/material-symbols": "^1.2.14",
+    "@iconify/tailwind4": "^1.0.6",
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
+    "angular-eslint": "19.4.0",
     "daisyui": "^5.0.35",
+    "eslint": "^9.26.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.0",
     "jasmine-core": "~5.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.7.2"
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "8.32.0"
   }
 }
