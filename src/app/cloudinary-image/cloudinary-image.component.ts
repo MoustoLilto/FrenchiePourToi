@@ -1,35 +1,50 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { CloudinaryService } from '@/services/cloudinary.service';
-import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { provideCloudinaryLoader } from '@angular/common';
+import { environment } from '~/environments/environment';
 
 @Component({
     selector: 'app-cloudinary-image',
-    templateUrl: './cloudinary-image.component.html',
+    template: `
+        <img
+            *ngIf="publicId"
+            [alt]="alt"
+            [ngSrc]="publicId"
+            [placeholder]="withPlaceholder"
+            [priority]="isPriority"
+            [class]="inputClass"
+            [fill]="isFilled"
+            [width]="width"
+            [height]="height"
+            [sizes]="sizes"
+        />
+    `,
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, NgOptimizedImage],
+    providers: [
+        provideCloudinaryLoader(
+            `${environment.cloudinary.cloudUrl}/${environment.cloudinary.cloudName}`
+        ),
+    ],
 })
-export class CloudinaryImageComponent implements OnChanges {
+export class CloudinaryImageComponent {
     @Input() publicId!: string;
     @Input() alt = '';
-    @Input() widths: number[] = [300, 600, 900];
-    @Input() mainWidth = 800;
-    @Input() sizes = '100vw';
+    @Input() inputClass = '';
+    @Input() isPriority = false;
+    @Input() withPlaceholder = false;
 
-    imageUrls: { src: string; srcset: string } | null = null;
+    // Lorsque l'image est statique
+    @Input() width: number | null = null;
+    @Input() height: number | null = null;
+    @Input() sizes?: string; // '(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw';
 
-    constructor(private cloudinaryService: CloudinaryService) {}
+    // Lorsque l'image est dynamique
+    @Input() isFilled?: boolean;
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes['publicId'] || changes['widths'] || changes['mainWidth'] || changes['sizes']) {
-            if (this.publicId) {
-                this.imageUrls = this.cloudinaryService.getImageUrlsForSrcset(
-                    this.publicId,
-                    this.widths,
-                    this.mainWidth
-                );
-            } else {
-                this.imageUrls = null;
-            }
+    constructor() {
+        if (this.width && this.height) {
+            this.isFilled = false;
         }
     }
 }
