@@ -1,11 +1,12 @@
 import { Component, OnInit, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { DarkModeService } from '@/services/dark-mode.service';
+import { DarkModeService } from '@/core/services/dark-mode.service';
 
 import { CloudinaryImage } from '@cloudinary/url-gen';
-import { CloudinaryService } from '@/services/cloudinary.service';
-import { CloudinaryImageComponent } from '@/cloudinary-image/cloudinary-image.component';
+import { CloudinaryService } from '@/core/services/cloudinary.service';
+import { CloudinaryImageComponent } from '@/shared/components/cloudinary-image/cloudinary-image.component';
+
 @Component({
     selector: 'app-root',
     imports: [CommonModule, RouterOutlet, CloudinaryImageComponent],

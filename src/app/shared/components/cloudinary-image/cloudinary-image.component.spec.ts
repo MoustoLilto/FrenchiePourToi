@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CloudinaryImageComponent } from './cloudinary-image.component';
+import { CloudinaryImageComponent } from '@/shared/components/cloudinary-image/cloudinary-image.component';
 
 describe('CloudinaryImageComponent', () => {
     let component: CloudinaryImageComponent;

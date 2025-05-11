@@ -1,0 +1,70 @@
+STANDALONE
+src/
+├── app/
+│   ├── core/                             # Services singletons, gardes, intercepteurs
+│   │   ├── guards/
+│   │   ├── interceptors/
+│   │   ├── models/
+│   │   └── services/                     # Ex: auth.service.ts
+│   │
+│   ├── shared/                           # Composants, directives, pipes réutilisables (tous standalone)
+│   │   ├── components/                   # Ex: generic-card.component.ts (standalone)
+│   │   ├── directives/                   # Ex: highlight.directive.ts (standalone)
+│   │   ├── pipes/                        # Ex: age.pipe.ts (standalone)
+│   │   └── models/
+│   │
+│   ├── layout/                           # Composants structurels (standalone)
+│   │   ├── header/
+│   │   │   └── header.component.ts|html|scss (standalone)
+│   │   ├── footer/
+│   │   │   └── footer.component.ts|html|scss (standalone)
+│   │
+│   ├── features/                         # Dossier pour regrouper les routes et composants de fonctionnalités
+│   │   ├── home/
+│   │   │   ├── components/               # Ou directement les composants ici si peu nombreux
+│   │   │   │   └── home-page.component.ts|html|scss (standalone)
+│   │   │   └── home.routes.ts            # Routes spécifiques à la fonctionnalité "home"
+│   │   │
+│   │   ├── puppies/
+│   │   │   ├── components/
+│   │   │   │   ├── puppy-list.component.ts|html|scss (standalone)
+│   │   │   │   └── puppy-detail.component.ts|html|scss (standalone)
+│   │   │   ├── services/                 # Services spécifiques (peuvent être injectés directement ou providedIn: 'root')
+│   │   │   │   └── puppy.service.ts
+│   │   │   ├── models/
+│   │   │   │   └── puppy.model.ts
+│   │   │   └── puppies.routes.ts         # Routes pour "puppies", ex: path: '', component: PuppyListComponent
+│   │   │
+│   │   ├── parents/
+│   │   │   ├── components/
+│   │   │   │   └── parent-profile.component.ts|html|scss (standalone)
+│   │   │   ├── services/
+│   │   │   │   └── parent.service.ts
+│   │   │   ├── models/
+│   │   │   │   └── parent.model.ts
+│   │   │   └── parents.routes.ts
+│   │   │
+│   │   ├── about/
+│   │   │   ├── components/
+│   │   │   │   └── about-us.component.ts|html|scss (standalone)
+│   │   │   └── about.routes.ts
+│   │   │
+│   │   └── contact/
+│   │       ├── components/
+│   │       │   └── contact-form.component.ts|html|scss (standalone)
+│   │       ├── services/
+│   │       │   └── contact.service.ts
+│   │       └── contact.routes.ts
+│   │
+│   ├── app.routes.ts                     # Routes principales, importera les *.routes.ts des features
+│   ├── app.config.ts                     # Configuration de l'application (providers globaux)
+│   ├── app.component.html                # Contient <app-header>, <router-outlet>, <app-footer>
+│   ├── app.component.scss
+│   ├── app.component.ts                  # (standalone: true), importera HeaderComponent, FooterComponent
+│   └── app.component.spec.ts
+│
+├── assets/
+├── environments/
+├── index.html
+├── main.ts
+├── ...
