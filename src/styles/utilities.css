@@ -6,6 +6,9 @@
 @utility flex-between{
     @apply flex items-center justify-between;
 }
+@utility flex-end{
+    @apply flex items-center justify-end;
+}
 
 @utility flex-col-center{
     @apply flex flex-col items-center justify-center;
@@ -13,5 +16,8 @@
 
 @utility flex-col-between{
     @apply flex flex-col items-center justify-between;
+}
+@utility flex-col-between{
+    @apply flex flex-col items-center justify-end;
 }
 

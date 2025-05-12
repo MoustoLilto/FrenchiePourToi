@@ -49,8 +49,8 @@ export const routes: Routes = [
                 (m) => m.BlogLayoutComponent
             ),
     },
-    // {
-    //     path: '**',
-    //     redirectTo: '',
-    // },
+    {
+        path: '**',
+        redirectTo: '',
+    },
 ];

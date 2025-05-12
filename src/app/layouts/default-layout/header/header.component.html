@@ -10,32 +10,26 @@
             />
         </a>
 
-        <nav class="pointer-events-auto">
-            <ul class="flex space-x-4">
-                @for (item of navItems; track item.path) {
-                    <li>
-                        <a [routerLink]="item.path" class="text-primary">
-                            {{ item.label }}
-                        </a>
-                    </li>
-                }
-            </ul>
-        </nav>
+        <app-desktop-nav [navItems]="navItems" class="bg-pink-400"></app-desktop-nav>
 
-        <div class="pointer-events-auto flex items-center justify-end gap-4 text-base">
-            <button class="btn btn-ghost btn-sm" (click)="toggleDarkMode()">
-                <span class="icon-[carbon--sun] dark:icon-[carbon--moon] text-xl"></span>
-            </button>
+        <div class="flex-end pointer-events-auto gap-4 text-2xl">
+            <app-mobile-nav [navItems]="navItems"></app-mobile-nav>
 
-            <button class="btn btn-ghost btn-sm" (click)="switchLanguage()">
-                <span class="icon-[material-symbols--language] text-xl"></span>
+            <label class="swap swap-rotate">
+                <input type="checkbox" [checked]="isDark()" (change)="toggleDarkMode()" />
+                <span class="icon-[carbon--moon] swap-on text-xl"></span>
+                <span class="icon-[carbon--sun] swap-off text-xl"></span>
+            </label>
 
-                @if (currentLocale === Language.FR) {
-                    <span>EN</span>
-                } @else {
-                    <span>FR</span>
-                }
-            </button>
+            <label class="swap text-base">
+                <input
+                    type="checkbox"
+                    [checked]="currentLocale === Language.FR"
+                    (change)="switchLanguage()"
+                />
+                <span class="swap-on">FR</span>
+                <span class="swap-off">EN</span>
+            </label>
         </div>
     </div>
 </header>

@@ -30,3 +30,4 @@ export const routes = {
         label: $localize`:@@route.label.about:A propos`,
     },
 };
+export type Route = (typeof routes)[keyof typeof routes];

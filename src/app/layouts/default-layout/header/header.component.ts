@@ -5,10 +5,18 @@ import { RouterLink } from '@angular/router';
 import { routes } from '@/core/constants/routes.constants';
 import { CommonModule } from '@angular/common';
 import { Language } from '@/core/constants/language.enum';
+import { DesktopNavComponent } from './desktop-nav/desktop-nav.component';
+import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
 
 @Component({
     selector: 'app-header',
-    imports: [CloudinaryImageComponent, RouterLink, CommonModule],
+    imports: [
+        CloudinaryImageComponent,
+        RouterLink,
+        CommonModule,
+        DesktopNavComponent,
+        MobileNavComponent,
+    ],
     templateUrl: './header.component.html',
 })
 export class HeaderComponent {
