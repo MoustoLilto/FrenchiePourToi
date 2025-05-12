@@ -1,12 +1,17 @@
 {
   "locale": "en",
   "translations": {
-    "3724591343089785757": "Hello, {$INTERPOLATION}",
-    "5468757275907225559": "Congratulations! Your app is running. 🎉",
-    "angularDoc": "Explore the Docs",
-    "angularTutorial": "Learn with Tutorials",
-    "angularCli": "CLI Docs",
-    "angularLanguageService": "Angular Language Service",
-    "angularDevTools": "Angular DevTools"
+    "route.title.home": "Home - F.P.T",
+    "route.label.home": "Home",
+    "route.title.puppies": "Our puppies - F.P.T",
+    "route.label.puppies": "Our puppies",
+    "route.title.parents": "Our parents - F.P.T",
+    "route.label.parents": "Our parents",
+    "route.title.reservation": "Reservation - F.P.T",
+    "route.label.reservation": "Reservation",
+    "route.title.blog": "Blog - F.P.T",
+    "route.label.blog": "Blog",
+    "route.title.about": "About - F.P.T",
+    "route.label.about": "About"
   }
 }

@@ -1,7 +1,9 @@
-<div>
-    <p>default-layout works!</p>
+<div class="bg-base-200 text-base-content flex h-full flex-col font-sans">
+    <app-header />
 
-    Child Componennt
+    <main role="main" class="flex-auto">
+        <router-outlet />
+    </main>
 
-    <router-outlet />
+    <app-footer />
 </div>

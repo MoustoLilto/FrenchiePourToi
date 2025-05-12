@@ -1,51 +1,9 @@
-import { Component, OnInit, Signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DarkModeService } from '@/core/services/dark-mode.service';
-
-import { CloudinaryImage } from '@cloudinary/url-gen';
-import { CloudinaryService } from '@/core/services/cloudinary.service';
-import { CloudinaryImageComponent } from '@/shared/components/cloudinary-image/cloudinary-image.component';
 
 @Component({
     selector: 'app-root',
-    imports: [CommonModule, RouterOutlet, CloudinaryImageComponent],
+    imports: [RouterOutlet],
     templateUrl: './app.component.html',
 })
-export class AppComponent implements OnInit {
-    title = 'FrenchiePourToi';
-    isDark: Signal<boolean>;
-    img!: CloudinaryImage;
-
-    constructor(
-        private cloudinaryService: CloudinaryService,
-        private darkModeService: DarkModeService
-    ) {
-        this.isDark = this.darkModeService.isDark;
-    }
-
-    items = [
-        { title: $localize`:@@angularDoc:Explore the Docs`, link: 'https://angular.dev' },
-        {
-            title: $localize`:@@angularTutorial:Learn with Tutorials`,
-            link: 'https://angular.dev/tutorials',
-        },
-        { title: $localize`:@@angularCli:CLI Docs`, link: 'https://angular.dev/tools/cli' },
-        {
-            title: $localize`:@@angularLanguageService:Angular Language Service`,
-            link: 'https://angular.dev/tools/language-service',
-        },
-        {
-            title: $localize`:@@angularDevTools:Angular DevTools`,
-            link: 'https://angular.dev/tools/devtools',
-        },
-    ];
-
-    ngOnInit() {
-        this.img = this.cloudinaryService.getChiotProfileImage('frenchie-hero_lyekts');
-    }
-
-    toggleDarkMode() {
-        this.darkModeService.toggleDark();
-    }
-}
+export class AppComponent {}

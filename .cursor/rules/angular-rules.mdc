@@ -1,0 +1,49 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# Contexte et Objectif de l'Application
+
+L'objectif principal de cette application est de servir de site vitrine pour la vente de chiots "frenchie". Le site vise à :
+
+- Présenter les chiots disponibles à la vente.
+- Afficher des informations sur les parents des chiots.
+- Fournir une section "Qui sommes-nous" pour établir la confiance.
+- Inclure un blog avec des articles sur l'entretien des chiens, mettant en avant notre expertise dans le domaine.
+- Faciliter la vente des chiots en mettant en valeur leur qualité et le sérieux de l'élevage.
+
+Toutes les développements et modifications doivent être orientés vers l'accomplissement de ces objectifs, en créant une expérience utilisateur agréable et informative pour les futurs acheteurs potentiels.
+
+# Structure de Projet
+
+Ce projet suit une structure organisée pour les différents types de fichiers :
+
+- Les composants, services, models, etc. spécifiques à une fonctionnalité résident dans `src/app/features/<nom-fonctionnalite>/`.
+- Les composants visuels, directives, pipes et autres éléments réutilisables partagés entre plusieurs fonctionnalités se trouvent dans `src/app/shared/`.
+- Les services singletons, gardes, intercepteurs et models globaux ou partagés par l'ensemble de l'application sont placés dans `src/app/core/`.
+
+Lorsque de nouveaux fichiers sont créés, ils doivent être placés dans le répertoire approprié selon cette structure.
+
+# Stack Technique du Projet
+
+Ce projet est développé en utilisant la stack technique suivante :
+
+- **Framework Frontend :** Angular 19
+- **Architecture Angular :** Utilisation exclusive des Standalone Components (pas de modules) et de la nouvelle syntaxe de flux de contrôle (`@if`, `@for`, `@switch`).
+- **Styling :** Tailwind CSS 4 avec la librairie de composants DaisyUI 5.
+- **Fonctionnalités clés :** Support du mode sombre (Dark Theme) et Internationalisation (i18n) pour le français et l'anglais.
+
+Toute contribution ou modification doit respecter l'utilisation de ces technologies et paradigmes de développement.
+
+# Utilisation du serveur MCP context7 pour avoir la doc à jour
+
+Lorsque des informations à jour sur des bibliothèques ou technologies spécifiques au projet sont nécessaires, il faut utiliser le serveur MCP context7. Le processus implique deux étapes :
+
+1.  Utiliser l'outil `resolve-library-id` pour trouver l'identifiant compatible Context7 de la bibliothèque.
+2.  Utiliser l'outil `get-library-docs` avec l'identifiant obtenu pour récupérer la documentation pertinente.
+
+Cette approche garantit que les informations utilisées pour le développement sont basées sur les versions actuelles et la configuration du projet.
+
+
+
