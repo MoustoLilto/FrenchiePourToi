@@ -1,0 +1,17 @@
+{
+  "locale": "en",
+  "translations": {
+    "route.title.home": "Home - F.P.T",
+    "route.label.home": "Home",
+    "route.title.puppies": "Our puppies - F.P.T",
+    "route.label.puppies": "Our puppies",
+    "route.title.parents": "Our parents - F.P.T",
+    "route.label.parents": "Our parents",
+    "route.title.reservation": "Reservation - F.P.T",
+    "route.label.reservation": "Reservation",
+    "route.title.blog": "Blog - F.P.T",
+    "route.label.blog": "Blog",
+    "route.title.about": "About - F.P.T",
+    "route.label.about": "About"
+  }
+}

@@ -5,9 +5,9 @@
   "projects": {
     "FrenchiePourToi": {
       "i18n": {
-        "sourceLocale": "en",
+        "sourceLocale": "fr",
         "locales": {
-          "fr": "src/locale/messages.fr.json"
+          "en": "src/locale/messages.en.json"
         }
       },
       "projectType": "application",

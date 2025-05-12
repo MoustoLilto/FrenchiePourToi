@@ -1,9 +1,10 @@
-import { Component, Signal, Inject, LOCALE_ID, signal } from '@angular/core';
+import { Component, Signal, Inject, LOCALE_ID } from '@angular/core';
 import { DarkModeService } from '@/core/services/dark-mode.service';
 import { CloudinaryImageComponent } from '@/shared/components/cloudinary-image/cloudinary-image.component';
 import { RouterLink } from '@angular/router';
 import { routes } from '@/core/constants/routes.constants';
 import { CommonModule } from '@angular/common';
+import { Language } from '@/core/constants/language.enum';
 
 @Component({
     selector: 'app-header',
@@ -13,8 +14,9 @@ import { CommonModule } from '@angular/common';
 export class HeaderComponent {
     isDark: Signal<boolean>;
     routes = routes;
-    navItems = Object.values(routes).filter((route) => route.path !== '/');
+    navItems = Object.values(routes).filter((route) => route.path !== routes.home.path);
     currentLocale: string;
+    Language = Language;
 
     constructor(
         private darkModeService: DarkModeService,
@@ -29,7 +31,7 @@ export class HeaderComponent {
     }
 
     switchLanguage() {
-        const targetLocale = this.currentLocale === 'fr' ? 'en' : 'fr';
+        const targetLocale = this.currentLocale === Language.FR ? Language.EN : Language.FR;
         const currentPath = window.location.pathname;
         let newPath: string;
 

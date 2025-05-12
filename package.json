@@ -9,7 +9,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "i18n": "ng extract-i18n --output-path src/locale --format=json",
-    "serve:ssr:FrenchiePourToi": "node dist/frenchie-pour-toi/server/server.mjs",
+    "serve": "node dist/frenchie-pour-toi/server/server.mjs",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix"
   },

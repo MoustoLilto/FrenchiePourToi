@@ -1,6 +1,6 @@
-<header role="banner" class="bg-base-100 fixed inset-x-0 top-0 z-50 backdrop-blur-sm">
+<header role="banner" class="bg-base-100/90 fixed inset-x-0 top-0 z-50 backdrop-blur-sm">
     <div class="flex-between container pointer-events-none h-16 bg-red-100 px-4">
-        <a [routerLink]="routes.home.path" class="flex">
+        <a [routerLink]="routes.home.path" class="pointer-events-auto flex">
             <app-cloudinary-image
                 publicId="logo_l4z9mp"
                 [isPriority]="true"
@@ -10,7 +10,7 @@
             />
         </a>
 
-        <nav role="navigation" aria-label="Navigation principale">
+        <nav class="pointer-events-auto">
             <ul class="flex space-x-4">
                 @for (item of navItems; track item.path) {
                     <li>
@@ -23,20 +23,14 @@
         </nav>
 
         <div class="pointer-events-auto flex items-center justify-end gap-4 text-base">
-            <button
-                class="btn btn-ghost btn-sm"
-                (click)="toggleDarkMode()"
-                aria-label="Toggle dark mode"
-            >
+            <button class="btn btn-ghost btn-sm" (click)="toggleDarkMode()">
                 <span class="icon-[carbon--sun] dark:icon-[carbon--moon] text-xl"></span>
             </button>
 
-            <button
-                class="btn btn-ghost btn-sm font-semibold"
-                (click)="switchLanguage()"
-                aria-label="Switch language"
-            >
-                @if (currentLocale === 'fr') {
+            <button class="btn btn-ghost btn-sm" (click)="switchLanguage()">
+                <span class="icon-[material-symbols--language] text-xl"></span>
+
+                @if (currentLocale === Language.FR) {
                     <span>EN</span>
                 } @else {
                     <span>FR</span>

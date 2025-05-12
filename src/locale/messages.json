@@ -1,17 +1,17 @@
 {
-  "locale": "en",
+  "locale": "fr",
   "translations": {
-    "route.title.home": "Home - F.P.T",
-    "route.label.home": "Home",
-    "route.title.puppies": "Our puppies - F.P.T",
-    "route.label.puppies": "Our puppies",
-    "route.title.parents": "Our parents - F.P.T",
-    "route.label.parents": "Our parents",
-    "route.title.reservation": "Reservation - F.P.T",
-    "route.label.reservation": "Reservation",
+    "route.title.home": "Accueil - F.P.T",
+    "route.label.home": "Accueil",
+    "route.title.puppies": "Nos chiots - F.P.T",
+    "route.label.puppies": "Nos chiots",
+    "route.title.parents": "Nos parents - F.P.T",
+    "route.label.parents": "Nos parents",
+    "route.title.reservation": "Réservation - F.P.T",
+    "route.label.reservation": "Réservation",
     "route.title.blog": "Blog - F.P.T",
     "route.label.blog": "Blog",
-    "route.title.about": "About - F.P.T",
-    "route.label.about": "About"
+    "route.title.about": "A propos - F.P.T",
+    "route.label.about": "A propos"
   }
 }
