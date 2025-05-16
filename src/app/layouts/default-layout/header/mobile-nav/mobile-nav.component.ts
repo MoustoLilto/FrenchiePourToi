@@ -8,7 +8,7 @@ import { Route } from '@/core/constants/routes.constants';
     standalone: true,
     imports: [RouterLink, CommonModule],
     template: `
-        <div class="dropdown dropdown-end pointer-events-auto md:hidden">
+        <div class="dropdown dropdown-end pointer-events-auto">
             <div tabindex="0" role="button" class="btn btn-ghost">
                 <span class="icon-[material-symbols--menu] text-xl"></span>
             </div>

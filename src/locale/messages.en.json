@@ -12,6 +12,10 @@
     "route.title.blog": "Blog - F.P.T",
     "route.label.blog": "Blog",
     "route.title.about": "About - F.P.T",
-    "route.label.about": "About"
+    "route.label.about": "About",
+    "social.facebook": "Facebook",
+    "social.instagram": "Instagram",
+    "social.tiktok": "TikTok",
+    "social.youtube": "YouTube"
   }
 }

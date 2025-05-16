@@ -10,16 +10,12 @@
             />
         </a>
 
-        <app-desktop-nav [navItems]="navItems" class="bg-pink-400"></app-desktop-nav>
+        <app-desktop-nav [navItems]="navItems" class="hidden bg-pink-400 md:block" />
 
-        <div class="flex-end pointer-events-auto gap-4 text-2xl">
-            <app-mobile-nav [navItems]="navItems"></app-mobile-nav>
+        <div class="flex-end pointer-events-auto gap-6 text-2xl">
+            <app-social-links [withLabel]="false" class="hidden md:flex" inputClass="text-lg" />
 
-            <label class="swap swap-rotate">
-                <input type="checkbox" [checked]="isDark()" (change)="toggleDarkMode()" />
-                <span class="icon-[carbon--moon] swap-on text-xl"></span>
-                <span class="icon-[carbon--sun] swap-off text-xl"></span>
-            </label>
+            <app-mobile-nav [navItems]="navItems" class="md:hidden" />
 
             <label class="swap text-base">
                 <input
@@ -29,6 +25,12 @@
                 />
                 <span class="swap-on">FR</span>
                 <span class="swap-off">EN</span>
+            </label>
+
+            <label class="swap swap-rotate text-lg">
+                <input type="checkbox" [checked]="isDark()" (change)="toggleDarkMode()" />
+                <span class="icon-[carbon--moon] swap-on"></span>
+                <span class="icon-[carbon--sun] swap-off"></span>
             </label>
         </div>
     </div>

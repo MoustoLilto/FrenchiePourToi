@@ -8,7 +8,7 @@ import { Route } from '@/core/constants/routes.constants';
     standalone: true,
     imports: [RouterLink, CommonModule],
     template: `
-        <nav class="pointer-events-auto hidden md:block">
+        <nav class="pointer-events-auto">
             <ul class="flex gap-4">
                 @for (item of navItems; track item.path) {
                     <li>

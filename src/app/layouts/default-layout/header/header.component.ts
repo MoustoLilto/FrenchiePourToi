@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { Language } from '@/core/constants/language.enum';
 import { DesktopNavComponent } from './desktop-nav/desktop-nav.component';
 import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
+import { SocialLinksComponent } from '@/shared/components/social-links.component';
 
 @Component({
     selector: 'app-header',
@@ -16,6 +17,7 @@ import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
         CommonModule,
         DesktopNavComponent,
         MobileNavComponent,
+        SocialLinksComponent,
     ],
     templateUrl: './header.component.html',
 })
