@@ -37,11 +37,11 @@ import { SocialLinksComponent } from '@/shared/components/social-links.component
                 <div class="flex-end pointer-events-auto gap-6 text-2xl">
                     <app-social-links
                         [withLabel]="false"
-                        class="hidden md:flex"
+                        class="hidden items-center gap-3 md:flex"
                         inputClass="text-lg"
                     />
 
-                    <app-mobile-nav [navItems]="navItems" class="md:hidden" />
+                    <app-mobile-nav [navItems]="navItems" class="flex-center md:hidden" />
 
                     <label class="swap text-base">
                         <input
