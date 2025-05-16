@@ -45,5 +45,16 @@ Lorsque des informations à jour sur des bibliothèques ou technologies spécifi
 
 Cette approche garantit que les informations utilisées pour le développement sont basées sur les versions actuelles et la configuration du projet.
 
+# Conventions pour les Composants Angular
+
+- **Templates et Styles Inline par Défaut :** Pour favoriser la colocation et la lisibilité des petits et moyens composants, les templates et les styles doivent être définis inline dans le fichier `.ts` du composant.
+    - La génération de nouveaux composants est configurée pour utiliser des templates inline et ne pas créer de fichiers de style séparés.
+    - L'utilisation de Tailwind CSS doit être privilégiée pour minimiser la quantité de styles spécifiques au composant.
+
+- **Exception pour la Complexité :**
+    - Si le contenu du template inline d'un composant dépasse **500 lignes**, il peut être extrait dans un fichier `.html` séparé (`templateUrl`).
+    - Si les styles inline (hors classes Tailwind) deviennent excessivement longs et nuisent à la lisibilité du fichier `.ts` (par exemple, plus de 100-150 lignes de CSS pur), ils peuvent être extraits dans un fichier de styles séparé (`styleUrls`).
+    - Cette décision doit être prise au cas par cas, en privilégiant toujours la maintenabilité et la clarté.
+
 
 

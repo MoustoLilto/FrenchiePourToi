@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-puppies',
-  imports: [],
-  templateUrl: './puppies.component.html'
+    selector: 'app-puppies',
+    imports: [],
+    template: `
+        <p>puppies works!</p>
+    `,
 })
-export class PuppiesComponent {
-
-}
+export class PuppiesComponent {}

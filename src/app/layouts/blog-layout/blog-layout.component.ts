@@ -4,6 +4,12 @@ import { RouterOutlet } from '@angular/router';
 @Component({
     selector: 'app-blog-layout',
     imports: [RouterOutlet],
-    templateUrl: './blog-layout.component.html',
+    template: `
+        <div>
+            <p>blog-layout works!</p>
+
+            <router-outlet />
+        </div>
+    `,
 })
 export class BlogLayoutComponent {}

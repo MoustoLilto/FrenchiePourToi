@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-parents',
   imports: [],
-  templateUrl: './parents.component.html'
+  template: `<p>parents works!</p>`
 })
 export class ParentsComponent {
 

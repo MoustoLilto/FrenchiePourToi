@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-reservation',
-  imports: [],
-  templateUrl: './reservation.component.html'
+    selector: 'app-reservation',
+    imports: [],
+    template: `
+        <p>reservation works!</p>
+    `,
 })
-export class ReservationComponent {
-
-}
+export class ReservationComponent {}
