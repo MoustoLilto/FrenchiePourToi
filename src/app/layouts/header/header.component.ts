@@ -20,9 +20,9 @@ import { SocialLinksComponent } from '@/shared/components/social-links.component
         SocialLinksComponent,
     ],
     template: `
-        <header role="banner" class="bg-base-100/90 fixed inset-x-0 top-0 z-50 backdrop-blur-sm">
-            <div class="flex-between container pointer-events-none h-16 bg-red-100 px-4">
-                <a [routerLink]="routes.home.path" class="pointer-events-auto flex">
+        <header role="banner" class="fixed inset-x-0 top-0 z-50">
+            <div class="flex-center container pointer-events-none h-16 gap-2 px-4">
+                <a [routerLink]="routes.home.path" class="pointer-events-auto flex flex-1">
                     <app-cloudinary-image
                         publicId="logo_l4z9mp"
                         [isPriority]="true"
@@ -32,9 +32,13 @@ import { SocialLinksComponent } from '@/shared/components/social-links.component
                     />
                 </a>
 
-                <app-desktop-nav [navItems]="navItems" class="hidden bg-pink-400 md:block" />
+                <app-desktop-nav
+                    [navItems]="navItems"
+                    class="flex-center pointer-events-auto hidden flex-1 md:flex"
+                    role="navigation"
+                />
 
-                <div class="flex-end pointer-events-auto gap-6 text-2xl">
+                <div class="flex-end pointer-events-auto flex-1 gap-6 text-2xl">
                     <app-social-links
                         [withLabel]="false"
                         class="hidden items-center gap-3 md:flex"
@@ -66,7 +70,9 @@ import { SocialLinksComponent } from '@/shared/components/social-links.component
 export class HeaderComponent {
     isDark: Signal<boolean>;
     routes = routes;
-    navItems = Object.values(routes).filter((route) => route.path !== routes.home.path);
+    navItems = Object.values(routes).filter(
+        (route) => route.path !== routes.home.path && route.path !== routes.blog.path
+    );
     currentLocale: string;
     Language = Language;
 

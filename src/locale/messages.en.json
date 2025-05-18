@@ -16,6 +16,8 @@
     "social.facebook": "Facebook",
     "social.instagram": "Instagram",
     "social.tiktok": "TikTok",
-    "social.youtube": "YouTube"
+    "social.youtube": "YouTube",
+    "scroll-to-top-button.aria-label": "Scroll to top",
+    "scroll-to-top-button.title": "Scroll to top"
   }
 }

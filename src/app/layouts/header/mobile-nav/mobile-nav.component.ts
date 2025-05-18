@@ -16,7 +16,7 @@ import { SocialLinksComponent } from '@/shared/components/social-links.component
                 tabindex="0"
                 class="dropdown-content card card-sm bg-base-200/80 shadow-base-content/5 ring-base-content/5 w-max overflow-hidden shadow-lg ring-1 backdrop-blur"
             >
-                <div class="card-body">
+                <div class="card-body" role="navigation">
                     <ul class="text-base">
                         @for (item of navItems; track item.path) {
                             <li>
