@@ -23,6 +23,7 @@ import { SocialLinksComponent } from '@/shared/components/social-links.component
                                 <a
                                     [routerLink]="item.path"
                                     routerLinkActive="text-primary"
+                                    [routerLinkActiveOptions]="{ exact: true }"
                                     class="hover:text-primary flex-between group/nav w-full text-nowrap py-2 transition"
                                     #rla="routerLinkActive"
                                 >

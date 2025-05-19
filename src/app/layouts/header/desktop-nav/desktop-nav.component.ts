@@ -17,6 +17,7 @@ import { Route } from '@/core/constants/routes.constants';
                         [routerLink]="item.path"
                         class="hover:text-primary relative block text-nowrap px-3 py-2 transition"
                         routerLinkActive="text-primary"
+                        [routerLinkActiveOptions]="{ exact: true }"
                         #rla="routerLinkActive"
                     >
                         {{ item.label }}
