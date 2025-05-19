@@ -1,13 +1,14 @@
-import { Component, Signal, Inject, LOCALE_ID } from '@angular/core';
+import { Component, Signal, Inject, LOCALE_ID, inject } from '@angular/core';
 import { DarkModeService } from '@/core/services/dark-mode.service';
 import { CloudinaryImageComponent } from '@/shared/components/cloudinary-image/cloudinary-image.component';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { routes } from '@/core/constants/routes.constants';
 import { CommonModule } from '@angular/common';
 import { Language } from '@/core/constants/language.enum';
 import { DesktopNavComponent } from './desktop-nav/desktop-nav.component';
 import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
 import { SocialLinksComponent } from '@/shared/components/social-links.component';
+import { layoutStore } from '@/core/stores/layout.store';
 
 @Component({
     selector: 'app-header',
@@ -22,15 +23,21 @@ import { SocialLinksComponent } from '@/shared/components/social-links.component
     template: `
         <header role="banner" class="fixed inset-x-0 top-0 z-50">
             <div class="flex-center container pointer-events-none h-16 gap-2 px-4">
-                <a [routerLink]="routes.home.path" class="pointer-events-auto flex flex-1">
-                    <app-cloudinary-image
-                        publicId="logo_l4z9mp"
-                        [isPriority]="true"
-                        [width]="60"
-                        [height]="60"
-                        alt="Logo"
-                    />
-                </a>
+                <div class="flex flex-1">
+                    <a
+                        [routerLink]="routes.home.path"
+                        class="flex-center pointer-events-auto"
+                        [class.hidden]="isHomePage() && layoutStore.isHomeLogoVisible()"
+                    >
+                        <app-cloudinary-image
+                            publicId="logo_l4z9mp"
+                            [isPriority]="true"
+                            [width]="60"
+                            [height]="60"
+                            alt="Logo"
+                        />
+                    </a>
+                </div>
 
                 <app-desktop-nav
                     [navItems]="navItems"
@@ -68,6 +75,7 @@ import { SocialLinksComponent } from '@/shared/components/social-links.component
     `,
 })
 export class HeaderComponent {
+    layoutStore = inject(layoutStore);
     isDark: Signal<boolean>;
     routes = routes;
     navItems = Object.values(routes).filter(
@@ -78,7 +86,8 @@ export class HeaderComponent {
 
     constructor(
         private darkModeService: DarkModeService,
-        @Inject(LOCALE_ID) localeId: string
+        @Inject(LOCALE_ID) localeId: string,
+        private router: Router
     ) {
         this.isDark = this.darkModeService.isDark;
         this.currentLocale = localeId;
@@ -101,5 +110,13 @@ export class HeaderComponent {
         }
 
         window.location.href = newPath;
+    }
+
+    isHomePage(): boolean {
+        return this.router.url === routes.home.path;
+        // const currentUrl = this.router.url;
+        // // La page d'accueil peut être '/' (si pas de redirection auto vers locale),
+        // // ou '/fr', ou '/en'
+        // return currentUrl === '/' || /^\/(fr|en)$/.test(currentUrl);
     }
 }

@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
-
+import { Component, inject } from '@angular/core';
+import { layoutStore } from '@/core/stores/layout.store';
+import { IntersectionObserverDirective } from '@/shared/directives/intersection-observer.directive';
 @Component({
     selector: 'app-home',
-    imports: [],
+    imports: [IntersectionObserverDirective],
     template: `
         <div
+            appIntersectionObserver
+            (intersectionChange)="onIntersectionChange($event)"
             class="hero min-h-screen"
             style="
         background-image: url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp);
@@ -24,4 +27,10 @@ import { Component } from '@angular/core';
         </div>
     `,
 })
-export class HomeComponent {}
+export class HomeComponent {
+    layoutStore = inject(layoutStore);
+
+    onIntersectionChange(isVisible: boolean) {
+        this.layoutStore.setIsHomeLogoVisible(isVisible);
+    }
+}
