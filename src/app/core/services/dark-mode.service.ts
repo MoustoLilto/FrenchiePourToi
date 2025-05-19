@@ -41,7 +41,11 @@ export class DarkModeService {
     toggleDark(): void {
         this._isDark.update((currentValue) => {
             const newValue = !currentValue;
-            localStorage.setItem(this.storageKey, newValue.toString());
+            if (newValue) {
+                localStorage.setItem(this.storageKey, 'dark');
+            } else {
+                localStorage.setItem(this.storageKey, 'light');
+            }
             return newValue;
         });
     }
@@ -73,6 +77,7 @@ export class DarkModeService {
             this.colorSchemeQuery.addEventListener('change', (event) => {
                 const savedPreference = localStorage.getItem(this.storageKey);
                 if (savedPreference === null) {
+                    localStorage.setItem(this.storageKey, 'auto');
                     this._isDark.set(event.matches);
                 }
             });
