@@ -17,6 +17,14 @@
     "social.instagram": "Instagram",
     "social.tiktok": "TikTok",
     "social.youtube": "YouTube",
+    "home.hero.alt": "Bouledogue Français",
+    "home.hero.description": " Nous sommes un élevage familial spécialisé dans les bouledogues français de qualité. Nos chiots sont élevés avec amour et attention pour devenir vos fidèles compagnons. ",
+    "home.hero.additionalInfo": " Chaque chiot est issu de parents sélectionnés pour leur santé, leur tempérament et leur conformité aux standards de la race. Nous mettons tout en œuvre pour vous offrir des chiots en parfaite santé et bien socialisés. ",
+    "home.hero.viewMore": "Voir nos chiots",
+    "footer.description": "Élevage de bouledogues français de qualité. Nos chiots sont élevés avec amour et attention pour devenir vos fidèles compagnons. ",
+    "footer.links": " Liens rapides ",
+    "footer.contact": " Contact ",
+    "footer.copyright": " ©2025 Frenchie Pour Toi. Tous droits réservés. ",
     "scroll-to-top-button.aria-label": "Retour en haut de la page",
     "scroll-to-top-button.title": "Retour en haut"
   }

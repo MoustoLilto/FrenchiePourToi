@@ -6,7 +6,9 @@ import { RouterOutlet } from '@angular/router';
     standalone: true,
     imports: [RouterOutlet],
     template: `
-        <router-outlet />
+        <div class="flex h-full min-h-screen flex-col">
+            <router-outlet class="grow" />
+        </div>
     `,
 })
 export class AppComponent {}

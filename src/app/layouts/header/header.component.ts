@@ -114,9 +114,5 @@ export class HeaderComponent {
 
     isHomePage(): boolean {
         return this.router.url === routes.home.path;
-        // const currentUrl = this.router.url;
-        // // La page d'accueil peut être '/' (si pas de redirection auto vers locale),
-        // // ou '/fr', ou '/en'
-        // return currentUrl === '/' || /^\/(fr|en)$/.test(currentUrl);
     }
 }

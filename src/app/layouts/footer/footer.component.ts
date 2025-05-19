@@ -14,7 +14,7 @@ import { address } from '@/core/constants/address.constants';
                     <div class="flex flex-col items-start justify-start gap-4">
                         <h3 class="font-serif text-xl font-bold">Frenchie Pour Toi</h3>
 
-                        <p i18n="footer.description">
+                        <p i18n="@@footer.description">
                             Élevage de bouledogues français de qualité. Nos chiots sont élevés avec
                             amour et attention pour devenir vos fidèles compagnons.
                         </p>
@@ -26,12 +26,12 @@ import { address } from '@/core/constants/address.constants';
                         />
                     </div>
 
-                    <div class="block">
-                        <h3 class="mb-4 font-serif text-xl font-bold" i18n="footer.links">
+                    <div class="flex flex-col gap-4">
+                        <h3 class="font-serif text-xl font-bold" i18n="@@footer.links">
                             Liens rapides
                         </h3>
 
-                        <ul class="space-y-2">
+                        <ul class="space-y-2" role="navigation">
                             @for (item of navItems; track item.path) {
                                 <li>
                                     <a
@@ -48,7 +48,7 @@ import { address } from '@/core/constants/address.constants';
                     </div>
 
                     <div class="flex flex-col items-start justify-start gap-2">
-                        <h3 class="mb-2 font-serif text-xl font-bold" i18n="footer.contact">
+                        <h3 class="mb-2 font-serif text-xl font-bold" i18n="@@footer.contact">
                             Contact
                         </h3>
 
@@ -81,7 +81,7 @@ import { address } from '@/core/constants/address.constants';
                 </div>
 
                 <div class="border-base-300 mt-8 border-t pt-8 text-center">
-                    <p class="caption-text" i18n="footer.copyright">
+                    <p class="caption-text" i18n="@@footer.copyright">
                         ©2025 Frenchie Pour Toi. Tous droits réservés.
                     </p>
                 </div>

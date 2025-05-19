@@ -22,7 +22,7 @@ import { ScrollToTopButtonComponent } from '@/shared/components/scroll-to-top-bu
         >
             <app-header />
 
-            <main role="main" class="flex-auto">
+            <main role="main" class="h-full flex-auto">
                 <router-outlet />
             </main>
 
