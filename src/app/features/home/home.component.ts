@@ -1,5 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { layoutStore } from '@/core/stores/layout.store';
 import { IntersectionObserverDirective } from '@/shared/directives/intersection-observer.directive';
 import { CloudinaryImageComponent } from '@/shared/components/cloudinary-image/cloudinary-image.component';
@@ -11,6 +10,8 @@ import { Puppy } from '@/core/models/puppy.model';
 import { Testimonial } from '@/core/models/testimonial.model';
 import { DataService, LoadingState } from '@/core/services/data.service';
 import { Observable } from 'rxjs';
+import { LoadingStateComponent } from '@/shared/components/loading-state.component';
+
 @Component({
     selector: 'app-home',
     imports: [
@@ -19,7 +20,7 @@ import { Observable } from 'rxjs';
         RouterLink,
         PuppyMiniatureComponent,
         TestimonialMiniatureComponent,
-        AsyncPipe,
+        LoadingStateComponent,
     ],
     template: `
         <div class="container flex flex-col py-16">
@@ -70,21 +71,8 @@ import { Observable } from 'rxjs';
             <section class="section flex flex-col gap-8">
                 <h2 class="text-h2 text-center" i18n="@@home.puppies.title">Nos derniers chiots</h2>
 
-                @if (puppies$ | async; as state) {
-                    @if (state.loading) {
-                        <div class="flex-center flex-col gap-4">
-                            <div class="loading loading-spinner loading-lg text-primary"></div>
-                            <p i18n="@@common.loading">Chargement en cours...</p>
-                        </div>
-                    } @else if (state.error) {
-                        <div class="alert alert-error">
-                            <i class="icon-[carbon--warning] text-2xl"></i>
-                            <div>
-                                <h3 class="font-bold" i18n="@@common.error">Erreur</h3>
-                                <div>{{ state.error }}</div>
-                            </div>
-                        </div>
-                    } @else if (state.data) {
+                <app-loading-state [state$]="puppies$">
+                    <ng-template let-state>
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                             @for (puppy of state.data; track puppy.id) {
                                 <app-puppy-miniature [puppy]="puppy" />
@@ -94,8 +82,8 @@ import { Observable } from 'rxjs';
                                 </div>
                             }
                         </div>
-                    }
-                }
+                    </ng-template>
+                </app-loading-state>
 
                 <div class="flex-center">
                     <a
@@ -226,27 +214,6 @@ export class HomeComponent {
         //     this.testimonials.set(testimonials);
         // });
     }
-
-    // puppies: Puppy[] = [
-    //     {
-    //         id: 1,
-    //         name: $localize`:@@home.puppies.1.name:Chiot 1`,
-    //         description: $localize`:@@home.puppies.1.description:Chiot bouledogue français`,
-    //         image: 'WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj',
-    //     },
-    //     {
-    //         id: 2,
-    //         name: $localize`:@@home.puppies.2.name:Chiot 2`,
-    //         description: $localize`:@@home.puppies.2.description:Chiot bouledogue français`,
-    //         image: 'WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj',
-    //     },
-    //     {
-    //         id: 3,
-    //         name: $localize`:@@home.puppies.3.name:Chiot 3`,
-    //         description: $localize`:@@home.puppies.3.description:Chiot bouledogue français`,
-    //         image: 'WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj',
-    //     },
-    // ];
 
     testimonials: Testimonial[] = [
         {

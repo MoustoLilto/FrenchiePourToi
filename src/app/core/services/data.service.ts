@@ -6,6 +6,7 @@ import { PuppiesResponse, Puppy } from '@/core/models/puppy.model';
 import { map, catchError, startWith, delay } from 'rxjs/operators';
 // import { Breeder } from '@/core/models/breeder.model';
 import { Testimonial } from '@/core/models/testimonial.model';
+import { withLoadingState } from '@/shared/rxjs/with-loading-state.operator';
 
 export interface LoadingState<T> {
     data: T | null;
@@ -21,24 +22,22 @@ export class DataService {
     private locale = inject(LOCALE_ID);
 
     private getLocalizedPath(basePath: string): string {
-        // Utilisation du chemin absolu depuis la racine des assets
         return `assets/data/${this.locale}/${basePath}.json`;
     }
 
     getPuppies(): Observable<LoadingState<Puppy[]>> {
         return this.http.get<PuppiesResponse>(this.getLocalizedPath('puppies')).pipe(
-            delay(2000), // Ajout d'un délai de 2 secondes
-            map((response) => ({ data: [], loading: false, error: null })),
-            catchError((error) => of({ data: null, loading: false, error: error.message })),
-            startWith({ data: null, loading: true, error: null })
+            // delay(2000), // Ajout d'un délai de 2 secondes
+            map((response) => response.puppies),
+            withLoadingState()
         );
     }
 
-    getBreeders(): Observable<any> {
-        return this.http.get<any>(this.getLocalizedPath('breeders'));
+    getBreeders(): Observable<LoadingState<any>> {
+        return this.http.get<any>(this.getLocalizedPath('breeders')).pipe(withLoadingState());
     }
 
-    getTestimonials(): Observable<any> {
-        return this.http.get<any>(this.getLocalizedPath('testimonials'));
+    getTestimonials(): Observable<LoadingState<any>> {
+        return this.http.get<any>(this.getLocalizedPath('testimonials')).pipe(withLoadingState());
     }
 }
