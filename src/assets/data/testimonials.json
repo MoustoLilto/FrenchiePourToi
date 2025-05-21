@@ -1,0 +1,38 @@
+{
+  "testimonials": [
+    {
+      "id": "testimonial-1",
+      "translations": {
+        "fr": {
+          "name": "Marie D.",
+          "comment": "Nous sommes ravis de notre petit Léo ! L'élevage est très professionnel et les chiots sont élevés dans d'excellentes conditions."
+        },
+        "en": {
+          "name": "Marie D.",
+          "comment": "We are delighted with our little Leo! The breeding is very professional and the puppies are raised in excellent conditions."
+        }
+      },
+      "date": "2024-02-15",
+      "rating": 5,
+      "image": "https://res.cloudinary.com/votre-cloud/image/upload/v1/testimonials/leo-1",
+      "puppyId": "puppy-2023-12"
+    },
+    {
+      "id": "testimonial-2",
+      "translations": {
+        "fr": {
+          "name": "Pierre M.",
+          "comment": "Un grand merci pour votre professionnalisme. Notre petite Ruby est en pleine forme et parfaitement sociabilisée."
+        },
+        "en": {
+          "name": "Pierre M.",
+          "comment": "Thank you very much for your professionalism. Our little Ruby is in great shape and perfectly socialized."
+        }
+      },
+      "date": "2024-01-20",
+      "rating": 5,
+      "image": "https://res.cloudinary.com/votre-cloud/image/upload/v1/testimonials/ruby-1",
+      "puppyId": "puppy-2023-11"
+    }
+  ]
+}

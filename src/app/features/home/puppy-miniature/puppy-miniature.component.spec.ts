@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PuppyDetailComponent } from './puppy-detail.component';
+import { PuppyMiniatureComponent } from './puppy-miniature.component';
 
-describe('PuppyDetailComponent', () => {
-    let component: PuppyDetailComponent;
-    let fixture: ComponentFixture<PuppyDetailComponent>;
+describe('PuppyMiniatureComponent', () => {
+    let component: PuppyMiniatureComponent;
+    let fixture: ComponentFixture<PuppyMiniatureComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [PuppyDetailComponent],
+            imports: [PuppyMiniatureComponent],
         }).compileComponents();
 
-        fixture = TestBed.createComponent(PuppyDetailComponent);
+        fixture = TestBed.createComponent(PuppyMiniatureComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

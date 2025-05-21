@@ -1,0 +1,64 @@
+{
+  "puppies": [
+    {
+      "id": "puppy-2024-01",
+      "translations": {
+        "fr": {
+          "name": "Luna",
+          "description": "Luna est une petite femelle très joueuse et affectueuse",
+          "features": [
+            "Yeux bleus",
+            "Petite taille",
+            "LOF"
+          ]
+        },
+        "en": {
+          "name": "Luna",
+          "description": "Luna is a playful and affectionate little female",
+          "features": [
+            "Blue eyes",
+            "Small size",
+            "French Kennel Club registered"
+          ]
+        }
+      },
+      "birthDate": "2024-01-15",
+      "gender": {
+        "fr": "Femelle",
+        "en": "Female"
+      },
+      "color": {
+        "fr": "Fauve",
+        "en": "Fawn"
+      },
+      "status": {
+        "fr": "disponible",
+        "en": "available"
+      },
+      "price": 2500,
+      "images": [
+        {
+          "url": "https://res.cloudinary.com/votre-cloud/image/upload/v1/puppies/luna-1",
+          "alt": {
+            "fr": "Luna de face",
+            "en": "Luna front view"
+          },
+          "isMain": true
+        }
+      ],
+      "parents": {
+        "father": "male-1",
+        "mother": "female-1"
+      },
+      "vaccines": [
+        {
+          "name": {
+            "fr": "Première injection",
+            "en": "First injection"
+          },
+          "date": "2024-02-15"
+        }
+      ]
+    }
+  ]
+}

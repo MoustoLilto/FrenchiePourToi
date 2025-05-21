@@ -1,12 +1,26 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import { layoutStore } from '@/core/stores/layout.store';
 import { IntersectionObserverDirective } from '@/shared/directives/intersection-observer.directive';
 import { CloudinaryImageComponent } from '@/shared/components/cloudinary-image/cloudinary-image.component';
+import { PuppyMiniatureComponent } from './puppy-miniature/puppy-miniature.component';
+import { TestimonialMiniatureComponent } from './testimonial-miniature/testimonial-miniature.component';
 import { RouterLink } from '@angular/router';
 import { routes } from '@/core/constants/routes.constants';
+import { Puppy } from '@/core/models/puppy.model';
+import { Testimonial } from '@/core/models/testimonial.model';
+import { DataService, LoadingState } from '@/core/services/data.service';
+import { Observable } from 'rxjs';
 @Component({
     selector: 'app-home',
-    imports: [IntersectionObserverDirective, CloudinaryImageComponent, RouterLink],
+    imports: [
+        IntersectionObserverDirective,
+        CloudinaryImageComponent,
+        RouterLink,
+        PuppyMiniatureComponent,
+        TestimonialMiniatureComponent,
+        AsyncPipe,
+    ],
     template: `
         <div class="container flex flex-col py-16">
             <!-- Section Présentation -->
@@ -56,38 +70,32 @@ import { routes } from '@/core/constants/routes.constants';
             <section class="section flex flex-col gap-8">
                 <h2 class="text-h2 text-center" i18n="@@home.puppies.title">Nos derniers chiots</h2>
 
-                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    @for (puppy of puppies; track puppy.id) {
-                        <div class="card bg-base-100 shadow-xl">
-                            <figure class="size-full">
-                                <app-cloudinary-image
-                                    class="flex-center relative size-full"
-                                    [publicId]="puppy.image"
-                                    i18n-alt="@@home.puppies.alt"
-                                    alt="Chiots bouledogue français"
-                                    [width]="450"
-                                    [height]="450"
-                                />
-                            </figure>
-
-                            <div class="card-body">
-                                <h3 class="card-title">{{ puppy.name }}</h3>
-                                <p>
-                                    {{ puppy.description }}
-                                </p>
-                                <div class="card-actions justify-end">
-                                    <a
-                                        [routerLink]="[routes.puppies.path, puppy.id]"
-                                        class="btn btn-primary btn-sm"
-                                        i18n="@@home.puppies.viewMore"
-                                    >
-                                        En savoir plus
-                                    </a>
-                                </div>
+                @if (puppies$ | async; as state) {
+                    @if (state.loading) {
+                        <div class="flex-center flex-col gap-4">
+                            <div class="loading loading-spinner loading-lg text-primary"></div>
+                            <p i18n="@@common.loading">Chargement en cours...</p>
+                        </div>
+                    } @else if (state.error) {
+                        <div class="alert alert-error">
+                            <i class="icon-[carbon--warning] text-2xl"></i>
+                            <div>
+                                <h3 class="font-bold" i18n="@@common.error">Erreur</h3>
+                                <div>{{ state.error }}</div>
                             </div>
                         </div>
+                    } @else if (state.data) {
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                            @for (puppy of state.data; track puppy.id) {
+                                <app-puppy-miniature [puppy]="puppy" />
+                            } @empty {
+                                <div class="flex-center flex-col gap-4">
+                                    <p i18n="@@common.noData">Aucun chiot disponible</p>
+                                </div>
+                            }
+                        </div>
                     }
-                </div>
+                }
 
                 <div class="flex-center">
                     <a
@@ -156,40 +164,7 @@ import { routes } from '@/core/constants/routes.constants';
 
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     @for (testimonial of testimonials; track testimonial.id) {
-                        <div class="card bg-base-100 shadow-xl">
-                            <div class="card-body">
-                                <div class="mb-2 flex">
-                                    @for (i of testimonial.rating; track i) {
-                                        <i class="icon-[carbon--star-filled] text-warning"></i>
-                                    }
-                                </div>
-
-                                <p class="mb-4 italic">"{{ testimonial.description }}"</p>
-
-                                <div class="flex items-center gap-4">
-                                    <div class="avatar">
-                                        <div class="w-12 rounded-full">
-                                            <app-cloudinary-image
-                                                class="relative size-full"
-                                                inputClass="size-12 object-top"
-                                                publicId="IMG_0460_f8onkt"
-                                                i18n-alt="@@home.puppies.alt"
-                                                [width]="48"
-                                                [height]="48"
-                                                alt="Chiot bouledogue français"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <h3 class="font-bold">{{ testimonial.name }}</h3>
-                                        <p class="text-sm">
-                                            Propriétaire depuis {{ testimonial.ownerSince }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <app-testimonial-miniature [testimonial]="testimonial" />
                     }
                 </div>
             </section>
@@ -237,32 +212,43 @@ export class HomeComponent {
     layoutStore = inject(layoutStore);
     routes = routes;
 
+    puppies$?: Observable<LoadingState<Puppy[]>>;
+    // testimonials = signal<Testimonial[]>([]);
+
     onIntersectionChange(isVisible: boolean) {
         this.layoutStore.setIsHomeLogoVisible(isVisible);
     }
 
-    puppies = [
-        {
-            id: 1,
-            name: $localize`:@@home.puppies.1.name:Chiot 1`,
-            description: $localize`:@@home.puppies.1.description:Chiot bouledogue français`,
-            image: 'WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj',
-        },
-        {
-            id: 2,
-            name: $localize`:@@home.puppies.2.name:Chiot 2`,
-            description: $localize`:@@home.puppies.2.description:Chiot bouledogue français`,
-            image: 'WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj',
-        },
-        {
-            id: 3,
-            name: $localize`:@@home.puppies.3.name:Chiot 3`,
-            description: $localize`:@@home.puppies.3.description:Chiot bouledogue français`,
-            image: 'WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj',
-        },
-    ];
+    constructor(private dataService: DataService) {
+        this.puppies$ = this.dataService.getPuppies();
 
-    testimonials = [
+        // this.dataService.getTestimonials().subscribe((testimonials) => {
+        //     this.testimonials.set(testimonials);
+        // });
+    }
+
+    // puppies: Puppy[] = [
+    //     {
+    //         id: 1,
+    //         name: $localize`:@@home.puppies.1.name:Chiot 1`,
+    //         description: $localize`:@@home.puppies.1.description:Chiot bouledogue français`,
+    //         image: 'WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj',
+    //     },
+    //     {
+    //         id: 2,
+    //         name: $localize`:@@home.puppies.2.name:Chiot 2`,
+    //         description: $localize`:@@home.puppies.2.description:Chiot bouledogue français`,
+    //         image: 'WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj',
+    //     },
+    //     {
+    //         id: 3,
+    //         name: $localize`:@@home.puppies.3.name:Chiot 3`,
+    //         description: $localize`:@@home.puppies.3.description:Chiot bouledogue français`,
+    //         image: 'WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj',
+    //     },
+    // ];
+
+    testimonials: Testimonial[] = [
         {
             id: 1,
             name: $localize`:@@home.testimonials.1.name:Client 1`,

@@ -1,0 +1,92 @@
+{
+  "breeders": {
+    "males": [
+      {
+        "id": "male-1",
+        "translations": {
+          "fr": {
+            "name": "Rocky",
+            "description": "Rocky est notre étalon principal, champion de France 2023"
+          },
+          "en": {
+            "name": "Rocky",
+            "description": "Rocky is our main stud, French Champion 2023"
+          }
+        },
+        "birthDate": "2021-05-10",
+        "color": {
+          "fr": "Fauve",
+          "en": "Fawn"
+        },
+        "pedigree": "LOF-123456",
+        "images": [
+          {
+            "url": "https://res.cloudinary.com/votre-cloud/image/upload/v1/breeders/rocky-1",
+            "alt": {
+              "fr": "Rocky de face",
+              "en": "Rocky front view"
+            },
+            "isMain": true
+          }
+        ],
+        "tests": [
+          {
+            "name": {
+              "fr": "Test ADN",
+              "en": "DNA Test"
+            },
+            "result": {
+              "fr": "Indemne",
+              "en": "Clear"
+            },
+            "date": "2022-06-15"
+          }
+        ]
+      }
+    ],
+    "females": [
+      {
+        "id": "female-1",
+        "translations": {
+          "fr": {
+            "name": "Bella",
+            "description": "Bella est notre reproductrice principale, excellente mère"
+          },
+          "en": {
+            "name": "Bella",
+            "description": "Bella is our main breeding female, excellent mother"
+          }
+        },
+        "birthDate": "2022-01-20",
+        "color": {
+          "fr": "Bleue",
+          "en": "Blue"
+        },
+        "pedigree": "LOF-789012",
+        "images": [
+          {
+            "url": "https://res.cloudinary.com/votre-cloud/image/upload/v1/breeders/bella-1",
+            "alt": {
+              "fr": "Bella de face",
+              "en": "Bella front view"
+            },
+            "isMain": true
+          }
+        ],
+        "tests": [
+          {
+            "name": {
+              "fr": "Test ADN",
+              "en": "DNA Test"
+            },
+            "result": {
+              "fr": "Indemne",
+              "en": "Clear"
+            },
+            "date": "2023-03-10"
+          }
+        ]
+      }
+    ]
+  }
+}
