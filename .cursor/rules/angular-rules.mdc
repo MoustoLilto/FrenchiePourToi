@@ -56,5 +56,124 @@ Cette approche garantit que les informations utilisées pour le développement s
     - Si les styles inline (hors classes Tailwind) deviennent excessivement longs et nuisent à la lisibilité du fichier `.ts` (par exemple, plus de 100-150 lignes de CSS pur), ils peuvent être extraits dans un fichier de styles séparé (`styleUrls`).
     - Cette décision doit être prise au cas par cas, en privilégiant toujours la maintenabilité et la clarté.
 
+# Organisation et Réutilisabilité
+
+## Extraction et Centralisation des Éléments Réutilisables
+
+- **Composants Réutilisables :** Tout composant utilisé dans plus d'une fonctionnalité doit être extrait vers `src/app/shared/components/`.
+    - Exemples dans le projet : `LoadingStateComponent`, `SlotComponent`, `SocialLinksComponent`, `CloudinaryImageComponent`.
+    - Les composants complexes avec des sous-composants doivent être organisés dans des sous-dossiers dédiés (exemple : `cloudinary-image/`).
+
+- **Directives Réutilisables :** Les directives utilitaires doivent être placées dans `src/app/shared/directives/`.
+    - Exemples : `IntersectionObserverDirective`, `ScrollListenerDirective`, `LoadingStateDirective`.
+    - Toutes les directives doivent être standalone et utiliser le préfixe `app`.
+
+- **Opérateurs RxJS Custom :** Les opérateurs RxJS personnalisés doivent être centralisés dans `src/app/shared/rxjs/`.
+    - Exemple : `withLoadingState` operator pour la gestion cohérente des états de chargement.
+
+- **Constantes Globales :** Toutes les constantes partagées doivent être placées dans `src/app/core/constants/`.
+    - Structure typée avec interfaces TypeScript (exemple : `routes.constants.ts`, `social-links.constants.ts`).
+    - Utiliser `$localize` pour les textes internationalisés directement dans les constantes.
+
+# Conventions de Nommage et Structure
+
+## Alias de Chemins TypeScript
+
+- **Utilisation Systématique des Alias :**
+    - `@/` pour tous les imports depuis `src/app/`
+    - `~/` pour tous les imports depuis `src/`
+    - Éviter absolument les imports relatifs longs (`../../../`) en faveur des alias
+
+## Organisation des Composants Complexes
+
+- **Sous-dossiers pour Composants avec Dépendances :**
+    - Les composants avec des sous-composants doivent être organisés dans des sous-dossiers dédiés
+    - Exemple : `header/` contient `desktop-nav/` et `mobile-nav/`
+    - Chaque composant doit avoir son fichier de test `.spec.ts` dans le même dossier
+
+## Gestion d'État
+
+- **NgRx Signals pour l'État Global :**
+    - Utiliser NgRx Signals exclusivement pour la gestion d'état globale
+    - Placer tous les stores dans `src/app/core/stores/`
+    - Fournir les stores au niveau root avec `{ providedIn: 'root' }`
+    - Nommer les stores avec le suffixe `.store.ts`
+
+# Patterns de Développement
+
+## Composition et Templates
+
+- **Patterns de Composition Avancés :**
+    - Privilégier la composition avec `@ContentChild` et `TemplateRef` pour créer des composants flexibles
+    - Utiliser des templates de fallback pour les cas où le contenu n'est pas fourni
+    - Implémenter des slots nommés pour une meilleure organisation du contenu (voir `SlotComponent`)
+
+## Gestion des États de Chargement
+
+- **Pattern LoadingState Unifié :**
+    - Utiliser systématiquement l'opérateur `withLoadingState()` pour tous les appels asynchrones
+    - Combiner avec le `LoadingStateComponent` pour une UX cohérente
+    - Fournir des templates personnalisés pour les états de chargement et d'erreur quand nécessaire
+    - Structure d'interface standardisée : `{ data: T | null, loading: boolean, error: string | null }`
+
+## Internationalisation
+
+- **Conventions i18n Strictes :**
+    - Utiliser `$localize` pour toutes les chaînes de caractères visibles par l'utilisateur
+    - Structure hiérarchique des clés : `@@route.title.home`, `@@social.facebook`, `@@common.loading`
+    - Centraliser les textes traduits dans les fichiers de constantes quand approprié
+    - Support français (FR) et anglais (EN) obligatoire
+
+# Configuration et Outils
+
+## Linting et Formatage
+
+- **Standards de Code Stricts :**
+    - Respecter la configuration ESLint avec les préfixes `app-` pour tous les composants et directives
+    - Utiliser Prettier avec configuration : 100 caractères de largeur, tabulations 4 espaces, quotes simples
+    - Appliquer automatiquement le formatage Tailwind CSS via `prettier-plugin-tailwindcss`
+    - Interdire `console.log` et `debugger` en production
+
+## Gestion des Dépendances
+
+- **Standards de Packages :**
+    - Utiliser `pnpm` exclusivement comme gestionnaire de packages
+    - Maintenir les versions Angular alignées (core, common, router, etc.)
+    - Séparer clairement les dépendances de production et de développement
+    - Versions fixes pour éviter les conflits
+
+## Services et Injection
+
+- **Patterns d'Injection Modernes :**
+    - Fournir les services au niveau approprié (root pour les singletons, component pour les services locaux)
+    - Implémenter des interfaces TypeScript strictes pour tous les modèles de données
+    - Placer les modèles globaux dans `src/app/core/models/`
+
+# Optimisation et Performance
+
+## Images et Assets
+
+- **Gestion des Images Optimisée :**
+    - Utiliser systématiquement `CloudinaryImageComponent` pour toutes les images
+    - Configurer les images prioritaires avec `isPriority="true"` pour les images above-the-fold
+    - Définir des tailles appropriées avec l'attribut `sizes` pour les images responsives
+    - Provider Cloudinary configuré au niveau composant
+
+## Détection de Changements et SSR
+
+- **Optimisations Performance :**
+    - Utiliser `ChangeDetectionStrategy.OnPush` pour tous les composants réutilisables
+    - Implémenter des Signals pour la réactivité moderne
+    - Vérifier la compatibilité avec le SSR via `isPlatformBrowser()` pour toutes les APIs du navigateur
+    - Injecter `PLATFORM_ID` pour les vérifications de plateforme
+
+## Directives et Observateurs
+
+- **Patterns d'Observation :**
+    - Implémenter `OnDestroy` pour tous les observateurs (IntersectionObserver, etc.)
+    - Utiliser des Signals en lecture seule pour exposer l'état des directives
+    - Nettoyer tous les observateurs dans `ngOnDestroy()`
+    - Vérifier la plateforme browser avant d'utiliser les APIs natives
+
 
 

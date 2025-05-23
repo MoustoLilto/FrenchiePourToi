@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LOCALE_ID, inject } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { PuppiesResponse, Puppy } from '@/core/models/puppy.model';
-import { map, catchError, startWith, delay } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 // import { Breeder } from '@/core/models/breeder.model';
 import { Testimonial } from '@/core/models/testimonial.model';
 import { withLoadingState } from '@/shared/rxjs/with-loading-state.operator';
