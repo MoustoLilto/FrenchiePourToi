@@ -3,22 +3,28 @@
     {
       "id": "puppy-2024-01",
       "name": "Luna",
-      "description": "Luna est une petite femelle très joueuse et affectueuse",
+      "description": "Luna est une adorable femelle fauve avec une personnalité douce et joueuse. Elle adore les câlins et s'entend parfaitement avec les enfants. Un vrai petit ange !",
       "features": [
-        "Yeux bleus",
-        "Petite taille",
-        "LOF"
+        "LOF",
+        "Yeux expressifs",
+        "Caractère doux",
+        "Sociable avec enfants"
       ],
       "birthDate": "2024-01-15",
       "gender": "Femelle",
       "color": "Fauve",
-      "status": "disponible",
+      "status": "available",
       "price": 2500,
       "images": [
         {
           "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
-          "alt": "Luna de face",
+          "alt": "Luna - Vue de face",
           "isMain": true
+        },
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Luna - Profil",
+          "isMain": false
         }
       ],
       "parents": {
@@ -28,6 +34,245 @@
       "vaccines": [
         {
           "name": "Première injection",
+          "date": "2024-02-15"
+        }
+      ]
+    },
+    {
+      "id": "puppy-2024-02",
+      "name": "Max",
+      "description": "Max est un magnifique mâle bringé au caractère bien trempé. Très intelligent et loyal, il sera un excellent compagnon pour une famille active.",
+      "features": [
+        "LOF",
+        "Champion lignée",
+        "Caractère affirmé",
+        "Très intelligent"
+      ],
+      "birthDate": "2024-01-20",
+      "gender": "Mâle",
+      "color": "Bringé",
+      "status": "available",
+      "price": 2800,
+      "images": [
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Max - Vue de face",
+          "isMain": true
+        }
+      ],
+      "parents": {
+        "father": "male-2",
+        "mother": "female-2"
+      },
+      "vaccines": [
+        {
+          "name": "Première injection",
+          "date": "2024-02-20"
+        },
+        {
+          "name": "Deuxième injection",
+          "date": "2024-03-20"
+        }
+      ]
+    },
+    {
+      "id": "puppy-2024-03",
+      "name": "Bella",
+      "description": "Bella est une superbe femelle crème aux yeux bleus rares. Très calme et affectueuse, elle recherche une famille douce qui saura l'apprécier.",
+      "features": [
+        "LOF",
+        "Yeux bleus",
+        "Pelage rare",
+        "Caractère calme"
+      ],
+      "birthDate": "2024-02-01",
+      "gender": "Femelle",
+      "color": "Crème",
+      "status": "reserved",
+      "price": 3200,
+      "images": [
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Bella - Vue de face",
+          "isMain": true
+        }
+      ],
+      "parents": {
+        "father": "male-1",
+        "mother": "female-3"
+      },
+      "vaccines": [
+        {
+          "name": "Première injection",
+          "date": "2024-03-01"
+        }
+      ]
+    },
+    {
+      "id": "puppy-2024-04",
+      "name": "Rocky",
+      "description": "Rocky est un petit mâle fauve plein d'énergie ! Il adore jouer et explorer. Parfait pour une famille sportive qui aime les aventures.",
+      "features": [
+        "LOF",
+        "Très énergique",
+        "Petite taille",
+        "Joueur"
+      ],
+      "birthDate": "2024-02-10",
+      "gender": "Mâle",
+      "color": "Fauve",
+      "status": "available",
+      "price": 2600,
+      "images": [
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Rocky - Vue de face",
+          "isMain": true
+        }
+      ],
+      "parents": {
+        "father": "male-2",
+        "mother": "female-1"
+      },
+      "vaccines": [
+        {
+          "name": "Première injection",
+          "date": "2024-03-10"
+        }
+      ]
+    },
+    {
+      "id": "puppy-2024-05",
+      "name": "Coco",
+      "description": "Coco est une adorable femelle pied au tempérament équilibré. Elle s'adapte facilement à tous les environnements et adore la compagnie.",
+      "features": [
+        "LOF",
+        "Tempérament équilibré",
+        "Sociable",
+        "Facile à éduquer"
+      ],
+      "birthDate": "2024-01-25",
+      "gender": "Femelle",
+      "color": "Pied",
+      "status": "available",
+      "price": 2700,
+      "images": [
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Coco - Vue de face",
+          "isMain": true
+        }
+      ],
+      "parents": {
+        "father": "male-3",
+        "mother": "female-2"
+      },
+      "vaccines": [
+        {
+          "name": "Première injection",
+          "date": "2024-02-25"
+        }
+      ]
+    },
+    {
+      "id": "puppy-2024-06",
+      "name": "Zeus",
+      "description": "Zeus est un impressionnant mâle bleu au caractère noble. Issu d'une lignée de champions, il sera parfait pour l'exposition ou comme compagnon de prestige.",
+      "features": [
+        "LOF",
+        "Couleur rare",
+        "Lignée champions",
+        "Potentiel exposition"
+      ],
+      "birthDate": "2024-01-30",
+      "gender": "Mâle",
+      "color": "Bleu",
+      "status": "available",
+      "price": 3500,
+      "images": [
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Zeus - Vue de face",
+          "isMain": true
+        }
+      ],
+      "parents": {
+        "father": "male-4",
+        "mother": "female-4"
+      },
+      "vaccines": [
+        {
+          "name": "Première injection",
+          "date": "2024-03-01"
+        }
+      ]
+    },
+    {
+      "id": "puppy-2024-07",
+      "name": "Nala",
+      "description": "Nala est une charmante femelle chocolat avec un caractère doux et maternal. Elle sera parfaite dans un foyer calme et aimant.",
+      "features": [
+        "LOF",
+        "Couleur chocolat",
+        "Caractère maternel",
+        "Très douce"
+      ],
+      "birthDate": "2024-02-05",
+      "gender": "Femelle",
+      "color": "Chocolat",
+      "status": "available",
+      "price": 3000,
+      "images": [
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Nala - Vue de face",
+          "isMain": true
+        }
+      ],
+      "parents": {
+        "father": "male-3",
+        "mother": "female-3"
+      },
+      "vaccines": [
+        {
+          "name": "Première injection",
+          "date": "2024-03-05"
+        }
+      ]
+    },
+    {
+      "id": "puppy-2024-08",
+      "name": "Simba",
+      "description": "Simba est un magnifique mâle fauve avec une prestance naturelle. Confiant et sociable, il s'épanouit en société et adore être le centre d'attention.",
+      "features": [
+        "LOF",
+        "Prestance naturelle",
+        "Très confiant",
+        "Leader né"
+      ],
+      "birthDate": "2024-12-15",
+      "gender": "Mâle",
+      "color": "Fauve",
+      "status": "sold",
+      "price": 2900,
+      "images": [
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Simba - Vue de face",
+          "isMain": true
+        }
+      ],
+      "parents": {
+        "father": "male-1",
+        "mother": "female-2"
+      },
+      "vaccines": [
+        {
+          "name": "Première injection",
+          "date": "2024-01-15"
+        },
+        {
+          "name": "Deuxième injection",
           "date": "2024-02-15"
         }
       ]

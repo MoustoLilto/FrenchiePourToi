@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common'; // Ajoutez cette ligne
 import { layoutStore } from '@/core/stores/layout.store';
 import { IntersectionObserverDirective } from '@/shared/directives/intersection-observer.directive';
 import { CloudinaryImageComponent } from '@/shared/components/cloudinary-image/cloudinary-image.component';
@@ -21,11 +22,12 @@ import { LoadingStateComponent } from '@/shared/components/loading-state.compone
         PuppyMiniatureComponent,
         TestimonialMiniatureComponent,
         LoadingStateComponent,
+        AsyncPipe,
     ],
     template: `
-        <div class="container flex flex-col py-16">
+        <div class="container flex flex-col">
             <!-- Section Présentation -->
-            <section class="section flex-col-center h-120 w-full gap-12 md:flex-row">
+            <header class="section flex-col-center h-120 w-full gap-12 md:flex-row">
                 <div
                     appIntersectionObserver
                     (intersectionChange)="onIntersectionChange($event)"
@@ -38,7 +40,7 @@ import { LoadingStateComponent } from '@/shared/components/loading-state.compone
                         publicId="logo_l4z9mp"
                         [isPriority]="true"
                         i18n-alt="@@home.hero.alt"
-                        alt="Bouledogue Français"
+                        alt="Hero picture"
                         [isFilled]="true"
                     />
                 </div>
@@ -65,13 +67,13 @@ import { LoadingStateComponent } from '@/shared/components/loading-state.compone
                         <span i18n="@@home.hero.viewMore">Voir nos chiots</span>
                     </a>
                 </div>
-            </section>
+            </header>
 
             <!-- Section Derniers Chiots -->
             <section class="section flex flex-col gap-8">
                 <h2 class="text-h2 text-center" i18n="@@home.puppies.title">Nos derniers chiots</h2>
 
-                <app-loading-state [state$]="puppies$">
+                <app-loading-state [state]="puppies$ | async">
                     <ng-template let-state>
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                             @for (puppy of state.data; track puppy.id) {

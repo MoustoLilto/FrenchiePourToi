@@ -6,7 +6,6 @@ import {
     TemplateRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
 import { LoadingState } from '../rxjs/with-loading-state.operator';
 
 @Component({
@@ -15,7 +14,7 @@ import { LoadingState } from '../rxjs/with-loading-state.operator';
     imports: [CommonModule],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        <ng-container *ngIf="state$ | async as state">
+        <ng-container *ngIf="state">
             @if (state.loading) {
                 <ng-container *ngTemplateOutlet="loadingTpl || defaultLoadingTpl"></ng-container>
 
@@ -58,7 +57,7 @@ import { LoadingState } from '../rxjs/with-loading-state.operator';
     `,
 })
 export class LoadingStateComponent<T> {
-    @Input() state$?: Observable<LoadingState<T>>;
+    @Input() state?: LoadingState<T> | null;
     @ContentChild(TemplateRef) contentTemplate?: TemplateRef<any>;
     @ContentChild('loading', { read: TemplateRef }) loadingTpl?: TemplateRef<any>;
     @ContentChild('error', { read: TemplateRef }) errorTpl?: TemplateRef<any>;

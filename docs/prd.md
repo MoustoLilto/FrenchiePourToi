@@ -35,7 +35,6 @@ Au-delà de la simple présentation, le site facilite le processus de réservati
 - Services vétérinaires ou de toilettage
 - Forum communautaire ou réseau social
 - Système de vente aux enchères
-- Gestion d'un chenil virtuel ou jeux interactifs
 
 ## 3. User personas
 ### 3.1 Key user types

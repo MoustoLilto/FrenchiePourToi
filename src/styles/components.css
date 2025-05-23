@@ -13,10 +13,10 @@
         @apply font-serif font-bold text-primary text-4xl md:text-5xl lg:text-6xl;
     }
     .text-h2 {
-        @apply font-serif font-semibold text-primary text-3xl md:text-4xl;
+        @apply font-serif font-bold text-primary text-3xl md:text-4xl;
     }
     .text-h3 {
-        @apply font-serif text-primary text-2xl md:text-3xl;
+        @apply font-serif font-bold text-primary text-2xl md:text-3xl;
     }
     .text-subtitle {
         @apply font-sans font-medium text-lg text-base-content;
@@ -42,6 +42,9 @@
     }
     .section {
         @apply py-20 px-4 md:px-8;
+    }
+    .section-header {
+        @apply flex-col-center w-full gap-8 px-4 pt-8 md:px-8;
     }
 
     /* Sections d'information */

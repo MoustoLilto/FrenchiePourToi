@@ -1,0 +1,434 @@
+{
+  "parents": [
+    {
+      "id": "male-1",
+      "name": "Champion Arthur du Val de Loire",
+      "description": "Arthur est un étalon exceptionnel, champion de France 2023. Son caractère équilibré et sa morphologie parfaite en font un reproducteur de choix pour notre élevage.",
+      "gender": "male",
+      "birthDate": "2021-03-15",
+      "color": "Fauve",
+      "weight": 14,
+      "height": 32,
+      "pedigree": {
+        "registration": "LOF 2021/15789",
+        "lineage": [
+          "Ch. Napoléon des Hauts de Seine",
+          "Multi-Ch. Bella Vista de Montmartre",
+          "Ch. Duke of Wellington",
+          "Lady Diana des Champs Élysées"
+        ]
+      },
+      "healthTests": [
+        {
+          "name": "Test ADN - DM (Myélopathie dégénérative)",
+          "result": "Sain",
+          "date": "2023-01-15",
+          "certificate": "DM-2023-001"
+        },
+        {
+          "name": "Test ADN - HUU (Hyperuricosurie)",
+          "result": "Sain",
+          "date": "2023-01-15",
+          "certificate": "HUU-2023-001"
+        },
+        {
+          "name": "Radiographie hanches",
+          "result": "A/A",
+          "date": "2023-02-10",
+          "certificate": "RAD-HAN-2023-001"
+        }
+      ],
+      "achievements": [
+        {
+          "title": "Champion de France",
+          "date": "2023-05-20",
+          "organization": "Société Centrale Canine"
+        },
+        {
+          "title": "BOB Spéciale de race Paris",
+          "date": "2023-03-12",
+          "organization": "Club du Bouledogue Français"
+        }
+      ],
+      "images": [
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Arthur - Vue d'exposition",
+          "isMain": true
+        },
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Arthur - Profil stack",
+          "isMain": false
+        }
+      ],
+      "offspring": ["puppy-2024-01", "puppy-2024-03", "puppy-2024-08"],
+      "status": "active"
+    },
+    {
+      "id": "male-2",
+      "name": "Titan Blue Steel",
+      "description": "Titan est un magnifique mâle bringé à la prestance remarquable. Son caractère fort et sa génétique exceptionnelle produisent des chiots de très haute qualité.",
+      "gender": "male",
+      "birthDate": "2020-11-22",
+      "color": "Bringé",
+      "weight": 15,
+      "height": 33,
+      "pedigree": {
+        "registration": "LOF 2020/28456",
+        "lineage": [
+          "Int. Ch. Caesar of Blue Moon",
+          "Ch. Athena Golden Dreams",
+          "Multi-Ch. Baron von Habsburg",
+          "Princess Leia Star Wars"
+        ]
+      },
+      "healthTests": [
+        {
+          "name": "Test ADN - DM (Myélopathie dégénérative)",
+          "result": "Sain",
+          "date": "2022-06-10",
+          "certificate": "DM-2022-156"
+        },
+        {
+          "name": "Test ADN - HUU (Hyperuricosurie)",
+          "result": "Porteur sain",
+          "date": "2022-06-10",
+          "certificate": "HUU-2022-156"
+        },
+        {
+          "name": "Radiographie hanches",
+          "result": "A/B",
+          "date": "2022-07-15",
+          "certificate": "RAD-HAN-2022-156"
+        }
+      ],
+      "achievements": [
+        {
+          "title": "Champion International",
+          "date": "2022-09-18",
+          "organization": "FCI"
+        },
+        {
+          "title": "Best in Show Regional",
+          "date": "2022-04-30",
+          "organization": "Exposition Canine Régionale"
+        }
+      ],
+      "images": [
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Titan - Vue d'exposition",
+          "isMain": true
+        }
+      ],
+      "offspring": ["puppy-2024-02", "puppy-2024-04"],
+      "status": "active"
+    },
+    {
+      "id": "male-3",
+      "name": "Duke Royal Castle",
+      "description": "Duke est un étalon pied d'une élégance rare. Sa génétique diversifiée et son tempérament exemplaire en font un reproducteur très recherché.",
+      "gender": "male",
+      "birthDate": "2021-07-08",
+      "color": "Pied",
+      "weight": 13,
+      "height": 31,
+      "pedigree": {
+        "registration": "LOF 2021/35672",
+        "lineage": [
+          "Ch. Prince William Royal",
+          "Lady Catherine Middleton",
+          "Duke of Cambridge",
+          "Duchess of Cornwall"
+        ]
+      },
+      "healthTests": [
+        {
+          "name": "Test ADN - DM (Myélopathie dégénérative)",
+          "result": "Sain",
+          "date": "2023-03-20",
+          "certificate": "DM-2023-089"
+        },
+        {
+          "name": "Test ADN - HUU (Hyperuricosurie)",
+          "result": "Sain",
+          "date": "2023-03-20",
+          "certificate": "HUU-2023-089"
+        }
+      ],
+      "achievements": [
+        {
+          "title": "Champion Jeune",
+          "date": "2022-10-15",
+          "organization": "Société Centrale Canine"
+        }
+      ],
+      "images": [
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Duke - Vue d'exposition",
+          "isMain": true
+        }
+      ],
+      "offspring": ["puppy-2024-05", "puppy-2024-07"],
+      "status": "active"
+    },
+    {
+      "id": "male-4",
+      "name": "Storm Blue Legend",
+      "description": "Storm est un étalon bleu d'exception, porteur de la rare couleur bleue. Sa lignée prestigieuse et sa morphologie parfaite produisent des chiots extraordinaires.",
+      "gender": "male",
+      "birthDate": "2021-01-30",
+      "color": "Bleu",
+      "weight": 14,
+      "height": 32,
+      "pedigree": {
+        "registration": "LOF 2021/12456",
+        "lineage": [
+          "Int. Ch. Thunder Blue Storm",
+          "Ch. Aurora Blue Moon",
+          "Ch. Lightning Blue Strike",
+          "Lady Blue Diamond"
+        ]
+      },
+      "healthTests": [
+        {
+          "name": "Test ADN - DM (Myélopathie dégénérative)",
+          "result": "Sain",
+          "date": "2023-01-30",
+          "certificate": "DM-2023-012"
+        },
+        {
+          "name": "Test ADN - Dilution color",
+          "result": "d/d",
+          "date": "2023-01-30",
+          "certificate": "DIL-2023-012"
+        }
+      ],
+      "achievements": [
+        {
+          "title": "Champion de Conformité",
+          "date": "2023-06-10",
+          "organization": "Club du Bouledogue Français"
+        }
+      ],
+      "images": [
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Storm - Vue d'exposition",
+          "isMain": true
+        }
+      ],
+      "offspring": ["puppy-2024-06"],
+      "status": "active"
+    },
+    {
+      "id": "female-1",
+      "name": "Princesse Amélie de Paris",
+      "description": "Amélie est notre reproductrice vedette, mère exceptionnelle au caractère doux et maternel. Sa morphologie parfaite et son pedigree prestigieux en font une femelle d'élite.",
+      "gender": "female",
+      "birthDate": "2020-09-12",
+      "color": "Fauve",
+      "weight": 11,
+      "height": 29,
+      "pedigree": {
+        "registration": "LOF 2020/45789",
+        "lineage": [
+          "Ch. Empereur Napoléon III",
+          "Impératrice Joséphine",
+          "Duc de Normandie",
+          "Comtesse de Provence"
+        ]
+      },
+      "healthTests": [
+        {
+          "name": "Test ADN - DM (Myélopathie dégénérative)",
+          "result": "Sain",
+          "date": "2022-05-15",
+          "certificate": "DM-2022-245"
+        },
+        {
+          "name": "Test ADN - HUU (Hyperuricosurie)",
+          "result": "Sain",
+          "date": "2022-05-15",
+          "certificate": "HUU-2022-245"
+        },
+        {
+          "name": "Radiographie hanches",
+          "result": "A/A",
+          "date": "2022-06-20",
+          "certificate": "RAD-HAN-2022-245"
+        }
+      ],
+      "achievements": [
+        {
+          "title": "Championne de France",
+          "date": "2022-08-14",
+          "organization": "Société Centrale Canine"
+        },
+        {
+          "title": "Meilleure Reproductrice 2023",
+          "date": "2023-11-25",
+          "organization": "Club du Bouledogue Français"
+        }
+      ],
+      "images": [
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Amélie - Vue d'exposition",
+          "isMain": true
+        }
+      ],
+      "offspring": ["puppy-2024-01", "puppy-2024-04"],
+      "status": "active"
+    },
+    {
+      "id": "female-2",
+      "name": "Lady Victoria Crown",
+      "description": "Victoria est une femelle bringée d'une beauté saisissante. Son caractère noble et sa génétique exceptionnelle produisent des chiots de très haute qualité avec un excellent tempérament.",
+      "gender": "female",
+      "birthDate": "2021-04-18",
+      "color": "Bringé",
+      "weight": 12,
+      "height": 30,
+      "pedigree": {
+        "registration": "LOF 2021/67890",
+        "lineage": [
+          "Ch. King Arthur Pendragon",
+          "Queen Elizabeth Windsor",
+          "Prince Charles Stuart",
+          "Lady Diana Spencer"
+        ]
+      },
+      "healthTests": [
+        {
+          "name": "Test ADN - DM (Myélopathie dégénérative)",
+          "result": "Sain",
+          "date": "2023-04-18",
+          "certificate": "DM-2023-167"
+        },
+        {
+          "name": "Test ADN - HUU (Hyperuricosurie)",
+          "result": "Porteur sain",
+          "date": "2023-04-18",
+          "certificate": "HUU-2023-167"
+        }
+      ],
+      "achievements": [
+        {
+          "title": "Championne Jeune",
+          "date": "2022-11-20",
+          "organization": "Société Centrale Canine"
+        }
+      ],
+      "images": [
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Victoria - Vue d'exposition",
+          "isMain": true
+        }
+      ],
+      "offspring": ["puppy-2024-02", "puppy-2024-05", "puppy-2024-08"],
+      "status": "active"
+    },
+    {
+      "id": "female-3",
+      "name": "Chanel Cream Dream",
+      "description": "Chanel est une superbe femelle crème aux yeux bleus, porteuse de cette caractéristique rare. Mère attentionnée, elle transmet sa douceur et sa beauté à sa descendance.",
+      "gender": "female",
+      "birthDate": "2020-12-05",
+      "color": "Crème",
+      "weight": 10,
+      "height": 28,
+      "pedigree": {
+        "registration": "LOF 2020/78901",
+        "lineage": [
+          "Ch. Casanova Blue Eyes",
+          "Mademoiselle Coco",
+          "Monsieur Dior",
+          "Lady Chanel"
+        ]
+      },
+      "healthTests": [
+        {
+          "name": "Test ADN - DM (Myélopathie dégénérative)",
+          "result": "Sain",
+          "date": "2022-12-05",
+          "certificate": "DM-2022-378"
+        },
+        {
+          "name": "Test ADN - Blue eyes",
+          "result": "Porteur",
+          "date": "2022-12-05",
+          "certificate": "BE-2022-378"
+        }
+      ],
+      "achievements": [
+        {
+          "title": "Best of Breed Spéciale",
+          "date": "2023-03-25",
+          "organization": "Club du Bouledogue Français"
+        }
+      ],
+      "images": [
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Chanel - Vue d'exposition",
+          "isMain": true
+        }
+      ],
+      "offspring": ["puppy-2024-03", "puppy-2024-07"],
+      "status": "active"
+    },
+    {
+      "id": "female-4",
+      "name": "Mystique Blue Sapphire",
+      "description": "Mystique est une magnifique femelle bleue, rare et précieuse. Sa génétique unique et son tempérament exceptionnel en font une reproductrice de collection.",
+      "gender": "female",
+      "birthDate": "2021-06-20",
+      "color": "Bleu",
+      "weight": 11,
+      "height": 29,
+      "pedigree": {
+        "registration": "LOF 2021/89012",
+        "lineage": [
+          "Int. Ch. Midnight Blue Steel",
+          "Ch. Sapphire Blue Moon",
+          "Ch. Ocean Blue Wave",
+          "Blue Diamond Princess"
+        ]
+      },
+      "healthTests": [
+        {
+          "name": "Test ADN - DM (Myélopathie dégénérative)",
+          "result": "Sain",
+          "date": "2023-06-20",
+          "certificate": "DM-2023-289"
+        },
+        {
+          "name": "Test ADN - Dilution color",
+          "result": "d/d",
+          "date": "2023-06-20",
+          "certificate": "DIL-2023-289"
+        }
+      ],
+      "achievements": [
+        {
+          "title": "Championne de Beauté",
+          "date": "2023-09-10",
+          "organization": "Exposition Nationale Canine"
+        }
+      ],
+      "images": [
+        {
+          "publicId": "WhatsApp_Image_2025-03-07_at_15.53.50_bo9rhj",
+          "alt": "Mystique - Vue d'exposition",
+          "isMain": true
+        }
+      ],
+      "offspring": ["puppy-2024-06"],
+      "status": "active"
+    }
+  ]
+}

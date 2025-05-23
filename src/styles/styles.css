@@ -6,7 +6,7 @@
 }
 @import "./components.css";
 @import "./utilities.css";
-@source inline('icon-[{carbon--logo-facebook,carbon--logo-instagram,carbon--logo-youtube,ic--round-tiktok}]');
+@source inline('icon-[{carbon--gender-male, carbon--gender-female, carbon--logo-facebook,carbon--logo-instagram,carbon--logo-youtube,ic--round-tiktok}]');
 
 @plugin "@iconify/tailwind4" {
     scale: 1.2;
