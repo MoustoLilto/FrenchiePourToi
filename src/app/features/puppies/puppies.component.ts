@@ -5,9 +5,9 @@ import { PuppyStore } from '@/core/stores/puppy.store';
 import { PuppyService, PuppyFilters, PuppySortOptions } from '@/core/services/puppy.service';
 import { CloudinaryImageComponent } from '@/shared/components/cloudinary-image/cloudinary-image.component';
 import { LoadingStateComponent } from '@/shared/components/loading-state.component';
-import { PuppyCardComponent } from '@/shared/components/puppy-card.component';
-import { PuppyFiltersComponent } from '@/shared/components/puppy-filters.component';
 import { PaginationComponent } from '@/shared/components/pagination.component';
+import { PuppyCardComponent } from '@/features/puppies/puppy-card.component';
+import { PuppyFiltersComponent } from '@/features/puppies/puppy-filters.component';
 import { Observable } from 'rxjs';
 import { LoadingState } from '@/shared/rxjs/with-loading-state.operator';
 import { Puppy } from '@/core/models/puppy.model';
@@ -32,7 +32,6 @@ export class PuppiesComponent implements OnInit {
     private route = inject(ActivatedRoute);
     private router = inject(Router);
     routes = routes;
-    // puppiesState$: Observable<LoadingState<Puppy[]>>;
 
     // Signaux d'état local
     currentPage = signal(1);
@@ -41,18 +40,11 @@ export class PuppiesComponent implements OnInit {
 
     // Données pour les filtres
     availableColors = ['Fauve', 'Bringé', 'Crème', 'Pied', 'Bleu', 'Chocolat'];
-    availableFeatures = ['LOF', 'Yeux bleus', 'Petite taille', 'Pelage rare', 'Champion', 'Import'];
+    // availableFeatures = ['LOF', 'Yeux bleus', 'Petite taille', 'Pelage rare', 'Champion', 'Import'];
     skeletonArray = Array(6).fill(0);
 
-    filteredPuppies = computed(() => {
-        const puppies = this.puppyStore.sortedPuppies();
-        return puppies || [];
-    });
-
-    puppiesState = this.puppyStore.puppies;
-
     paginatedPuppies = computed(() => {
-        const puppies = this.filteredPuppies();
+        const puppies = this.puppyStore.filteredPuppies();
         const page = this.currentPage();
         const size = this.pageSize();
         const startIndex = (page - 1) * size;
@@ -65,10 +57,8 @@ export class PuppiesComponent implements OnInit {
     // }
 
     ngOnInit() {
-        // Charger les chiots au démarrage
         this.puppyStore.loadAllPuppies();
 
-        // Gérer les paramètres de requête pour la pagination et le tri
         this.route.queryParams.subscribe((params) => {
             if (params['page']) {
                 this.currentPage.set(parseInt(params['page'], 10));
@@ -81,18 +71,6 @@ export class PuppiesComponent implements OnInit {
                 this.pageSize.set(parseInt(params['size'], 10));
             }
         });
-    }
-
-    onFiltersChange(filters: PuppyFilters) {
-        this.puppyStore.filterPuppies(filters);
-        this.currentPage.set(1); // Retour à la première page lors du filtrage
-        this.updateUrlParams();
-    }
-
-    onSearchChange(query: string) {
-        this.puppyStore.searchPuppies(query);
-        this.currentPage.set(1); // Retour à la première page lors de la recherche
-        this.updateUrlParams();
     }
 
     onSortChange(event: Event) {

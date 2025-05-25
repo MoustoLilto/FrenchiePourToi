@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { inject } from '@angular/core';
 import { signalStore, withState, withMethods, withComputed, patchState } from '@ngrx/signals';
 import { computed } from '@angular/core';
 import { Puppy } from '@/core/models/puppy.model';
@@ -10,20 +10,18 @@ import { pipe } from 'rxjs';
 
 interface PuppyState {
     puppies: LoadingState<Puppy[]>;
-    selectedPuppy: LoadingState<Puppy | null>;
+
     filters: PuppyFilters;
-    sortOptions: PuppySortOptions;
     searchQuery: string;
-    featuredPuppies: LoadingState<Puppy[]>;
+    sortOptions: PuppySortOptions;
 }
 
 const initialState: PuppyState = {
     puppies: { data: null, loading: false, error: null },
-    selectedPuppy: { data: null, loading: false, error: null },
+
     filters: {},
-    sortOptions: { field: 'name', direction: 'asc' },
     searchQuery: '',
-    featuredPuppies: { data: null, loading: false, error: null },
+    sortOptions: { field: 'name', direction: 'asc' },
 };
 
 export const PuppyStore = signalStore(
@@ -32,7 +30,6 @@ export const PuppyStore = signalStore(
     withState(initialState),
 
     withMethods((store, puppyService = inject(PuppyService)) => ({
-        // Actions pour charger les données
         loadAllPuppies: rxMethod<void>(
             pipe(
                 switchMap(() => puppyService.getAllPuppies()),
@@ -40,61 +37,17 @@ export const PuppyStore = signalStore(
             )
         ),
 
-        loadPuppyById: rxMethod<string>(
-            pipe(
-                switchMap((id) => puppyService.getPuppyById(id)),
-                tap((result) => patchState(store, { selectedPuppy: result }))
-            )
-        ),
-
-        loadFeaturedPuppies: rxMethod<number>(
-            pipe(
-                switchMap((limit) => puppyService.getFeaturedPuppies(limit)),
-                tap((result) => patchState(store, { featuredPuppies: result }))
-            )
-        ),
-
-        searchPuppies: rxMethod<string>(
-            pipe(
-                tap((query) => patchState(store, { searchQuery: query })),
-                switchMap((query) =>
-                    query ? puppyService.searchPuppies(query) : puppyService.getAllPuppies()
-                ),
-                tap((result) => patchState(store, { puppies: result }))
-            )
-        ),
-
-        filterPuppies: rxMethod<PuppyFilters>(
-            pipe(
-                tap((filters) => patchState(store, { filters })),
-                switchMap((filters) => puppyService.filterPuppies(filters)),
-                tap((result) => patchState(store, { puppies: result }))
-            )
-        ),
-
-        // Méthodes de mise à jour d'état
         updatePuppies: (puppies: LoadingState<Puppy[]>) => {
             patchState(store, { puppies });
         },
-
-        updateSelectedPuppy: (puppy: LoadingState<Puppy | null>) => {
-            patchState(store, { selectedPuppy: puppy });
-        },
-
-        updateFeaturedPuppies: (featuredPuppies: LoadingState<Puppy[]>) => {
-            patchState(store, { featuredPuppies });
-        },
-
         updateFilters: (filters: PuppyFilters) => {
             patchState(store, { filters });
         },
-
-        updateSortOptions: (sortOptions: PuppySortOptions) => {
-            patchState(store, { sortOptions });
-        },
-
         updateSearchQuery: (searchQuery: string) => {
             patchState(store, { searchQuery });
+        },
+        updateSortOptions: (sortOptions: PuppySortOptions) => {
+            patchState(store, { sortOptions });
         },
 
         clearFilters: () => {
@@ -103,63 +56,62 @@ export const PuppyStore = signalStore(
                 searchQuery: '',
             });
         },
-
-        clearSelectedPuppy: () => {
-            patchState(store, {
-                selectedPuppy: { data: null, loading: false, error: null },
-            });
-        },
     })),
 
-    withComputed((state) => ({
-        // Computed selectors
-        sortedPuppies: computed(() => {
-            const puppies = state.puppies().data;
-            const sortOptions = state.sortOptions();
-
-            if (!puppies) return null;
-
-            return [...puppies].sort((a, b) => {
-                let valueA: any = a[sortOptions.field];
-                let valueB: any = b[sortOptions.field];
-
-                if (sortOptions.field === 'birthDate') {
-                    valueA = new Date(valueA).getTime();
-                    valueB = new Date(valueB).getTime();
-                }
-
-                if (typeof valueA === 'string') {
-                    valueA = valueA.toLowerCase();
-                    valueB = valueB.toLowerCase();
-                }
-
-                const comparison = valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
-                return sortOptions.direction === 'asc' ? comparison : -comparison;
-            });
-        }),
-
-        availablePuppies: computed(() => {
-            const puppies = state.puppies().data;
-            return puppies?.filter((puppy) => puppy.status === 'available') || null;
-        }),
-
-        puppiesLoading: computed(() => state.puppies().loading),
-        puppiesError: computed(() => state.puppies().error),
-        selectedPuppyLoading: computed(() => state.selectedPuppy().loading),
-        selectedPuppyError: computed(() => state.selectedPuppy().error),
-        featuredPuppiesLoading: computed(() => state.featuredPuppies().loading),
-
-        hasActiveFilters: computed(() => {
+    withComputed((state, puppyService = inject(PuppyService)) => {
+        const isPuppiesLoaded = computed(() => !state.puppies().loading && !state.puppies().error);
+        const activeFiltersCount = computed(() => {
             const filters = state.filters();
             const searchQuery = state.searchQuery();
-            return Object.keys(filters).length > 0 || searchQuery.length > 0;
-        }),
+            return (
+                Object.values(filters).filter(
+                    (value) =>
+                        value !== undefined &&
+                        value !== '' &&
+                        (Array.isArray(value) ? value.length > 0 : true)
+                ).length + (searchQuery.length > 0 ? 1 : 0)
+            );
+        });
 
-        puppiesCount: computed(() => state.puppies().data?.length || 0),
-        availablePuppiesCount: computed(() => {
-            const puppies = state.puppies().data;
-            const availablePuppies = puppies?.filter((puppy) => puppy.status === 'available');
-            return availablePuppies?.length || 0;
-        }),
-    }))
+        return {
+            isPuppiesLoaded,
+            isPuppiesLoading: computed(() => state.puppies().loading),
+            hasPuppiesError: computed(() => state.puppies().error),
+
+            // featuredPuppies: computed(() => {
+            //     const puppies = state.puppies().data;
+            //     if (isPuppiesLoaded() && puppies) {
+            //         return puppyService.getFeaturedPuppies(puppies);
+            //     }
+            //     return [];
+            // }),
+            filteredPuppies: computed(() => {
+                const puppies = state.puppies().data;
+                const filters = state.filters();
+                const searchQuery = state.searchQuery();
+                const sortOptions = state.sortOptions();
+
+                if (isPuppiesLoaded() && puppies) {
+                    const searchedPuppies = puppyService.searchPuppies(puppies, searchQuery);
+                    const filteredPuppies = puppyService.filterPuppies(searchedPuppies, filters);
+                    const sortedPuppies = puppyService.sortPuppies(filteredPuppies, sortOptions);
+                    return sortedPuppies;
+                }
+                return [];
+            }),
+
+            activeFiltersCount,
+            hasActiveFilters: computed(() => activeFiltersCount() > 0),
+
+            allPuppiesCount: computed(() => state.puppies().data?.length || 0),
+            availablePuppiesCount: computed(() => {
+                const puppies = state.puppies().data;
+                if (isPuppiesLoaded() && puppies) {
+                    const availablePuppies = puppyService.getAvailablePuppies(puppies);
+                    return availablePuppies.length;
+                }
+                return 0;
+            }),
+        };
+    })
 );

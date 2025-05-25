@@ -1,15 +1,16 @@
 import {
     Component,
     Input,
-    Output,
-    EventEmitter,
     ChangeDetectionStrategy,
     signal,
+    effect,
+    inject,
     computed,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PuppyFilters } from '@/core/services/puppy.service';
+import { PuppyStore } from '@/core/stores/puppy.store';
 
 @Component({
     selector: 'app-puppy-filters',
@@ -24,10 +25,10 @@ import { PuppyFilters } from '@/core/services/puppy.service';
                 <h3 class="text-lg font-semibold" i18n="@@puppy.filters.title">
                     Filtrer les chiots
                 </h3>
-                @if (hasActiveFilters()) {
+                @if (puppyStore.hasActiveFilters()) {
                     <button
                         class="btn btn-ghost btn-sm"
-                        (click)="clearAllFilters()"
+                        (click)="puppyStore.clearFilters()"
                         i18n="@@puppy.filters.clear"
                     >
                         Effacer
@@ -36,19 +37,19 @@ import { PuppyFilters } from '@/core/services/puppy.service';
             </div>
 
             <div class="space-y-4">
-                <!-- Recherche textuelle -->
                 <div class="form-control">
                     <label for="search-input" class="label">
                         <span class="label-text" i18n="@@puppy.filters.search">Recherche</span>
                     </label>
+
                     <input
                         id="search-input"
                         type="text"
                         class="input input-sm"
                         i18n-placeholder="@@puppy.filters.search.placeholder"
                         placeholder="Nom, couleur, caractéristiques..."
-                        [(ngModel)]="searchQuery"
-                        (ngModelChange)="onSearchChange($event)"
+                        [ngModel]="puppyStore.searchQuery()"
+                        (ngModelChange)="puppyStore.updateSearchQuery($event)"
                     />
                 </div>
 
@@ -60,12 +61,12 @@ import { PuppyFilters } from '@/core/services/puppy.service';
                     <select
                         id="gender-select"
                         class="select select-bordered select-sm"
-                        [(ngModel)]="currentFilters().gender"
+                        [(ngModel)]="gender"
                         (ngModelChange)="onFiltersChange()"
                     >
                         <option value="" i18n="@@puppy.filters.gender.all">Tous</option>
-                        <option value="male" i18n="@@puppy.filters.gender.male">Mâle</option>
-                        <option value="female" i18n="@@puppy.filters.gender.female">Femelle</option>
+                        <option value="Male" i18n="@@puppy.filters.gender.male">Mâle</option>
+                        <option value="Female" i18n="@@puppy.filters.gender.female">Femelle</option>
                     </select>
                 </div>
 
@@ -77,7 +78,7 @@ import { PuppyFilters } from '@/core/services/puppy.service';
                     <select
                         id="color-select"
                         class="select select-bordered select-sm"
-                        [(ngModel)]="currentFilters().color"
+                        [(ngModel)]="color"
                         (ngModelChange)="onFiltersChange()"
                     >
                         <option value="" i18n="@@puppy.filters.color.all">Toutes</option>
@@ -95,7 +96,7 @@ import { PuppyFilters } from '@/core/services/puppy.service';
                     <select
                         id="status-select"
                         class="select select-bordered select-sm"
-                        [(ngModel)]="currentFilters().status"
+                        [(ngModel)]="status"
                         (ngModelChange)="onFiltersChange()"
                     >
                         <option value="" i18n="@@puppy.filters.status.all">Tous</option>
@@ -105,7 +106,9 @@ import { PuppyFilters } from '@/core/services/puppy.service';
                         <option value="reserved" i18n="@@puppy.filters.status.reserved">
                             Réservé
                         </option>
-                        <option value="sold" i18n="@@puppy.filters.status.sold">Vendu</option>
+                        <option value="adopted" i18n="@@puppy.filters.status.adopted">
+                            Adopté
+                        </option>
                     </select>
                 </div>
 
@@ -119,8 +122,8 @@ import { PuppyFilters } from '@/core/services/puppy.service';
                             id="min-price-input"
                             type="number"
                             class="input input-bordered input-sm"
-                            [placeholder]="minPricePlaceholder"
-                            [(ngModel)]="currentFilters().minPrice"
+                            placeholder="Min"
+                            [(ngModel)]="minPrice"
                             (ngModelChange)="onFiltersChange()"
                             min="0"
                         />
@@ -128,8 +131,8 @@ import { PuppyFilters } from '@/core/services/puppy.service';
                             id="max-price-input"
                             type="number"
                             class="input input-bordered input-sm"
-                            [placeholder]="maxPricePlaceholder"
-                            [(ngModel)]="currentFilters().maxPrice"
+                            placeholder="Max"
+                            [(ngModel)]="maxPrice"
                             (ngModelChange)="onFiltersChange()"
                             min="0"
                         />
@@ -146,8 +149,8 @@ import { PuppyFilters } from '@/core/services/puppy.service';
                             id="min-age-input"
                             type="number"
                             class="input input-bordered input-sm"
-                            [placeholder]="minAgePlaceholder"
-                            [(ngModel)]="currentFilters().ageMinWeeks"
+                            placeholder="Min"
+                            [(ngModel)]="ageMinWeeks"
                             (ngModelChange)="onFiltersChange()"
                             min="0"
                         />
@@ -155,64 +158,42 @@ import { PuppyFilters } from '@/core/services/puppy.service';
                             id="max-age-input"
                             type="number"
                             class="input input-bordered input-sm"
-                            [placeholder]="maxAgePlaceholder"
-                            [(ngModel)]="currentFilters().ageMaxWeeks"
+                            placeholder="Max"
+                            [(ngModel)]="ageMaxWeeks"
                             (ngModelChange)="onFiltersChange()"
                             min="0"
                         />
                     </div>
                 </div>
-
-                <!-- Caractéristiques spéciales -->
-                <div class="form-control">
-                    <span class="label">
-                        <span class="label-text" i18n="@@puppy.filters.features">
-                            Caractéristiques
-                        </span>
-                    </span>
-                    <div class="flex flex-wrap gap-2">
-                        @for (feature of availableFeatures; track feature) {
-                            <label class="label flex cursor-pointer items-center gap-2">
-                                <input
-                                    type="checkbox"
-                                    class="checkbox checkbox-sm"
-                                    [checked]="isFeatureSelected(feature)"
-                                    (change)="toggleFeature(feature)"
-                                />
-                                <span class="label-text text-sm">{{ feature }}</span>
-                            </label>
-                        }
-                    </div>
-                </div>
             </div>
 
             <!-- Résumé des filtres actifs -->
-            @if (activeFiltersCount() > 0) {
+            @if (puppyStore.hasActiveFilters()) {
                 <div class="border-base-200 mt-4 border-t pt-4">
                     <div class="text-base-content/70 mb-2 text-sm">
                         <span i18n="@@puppy.filters.active">Filtres actifs</span>
-                        ({{ activeFiltersCount() }})
+                        ({{ puppyStore.activeFiltersCount() }})
                     </div>
                     <div class="flex flex-wrap gap-1">
-                        @if (currentFilters().gender) {
+                        @if (gender()) {
                             <span class="badge badge-primary badge-sm">
-                                {{ currentFilters().gender }}
+                                {{ gender() }}
                                 <button class="ml-1" (click)="removeFilter('gender')" type="button">
                                     ×
                                 </button>
                             </span>
                         }
-                        @if (currentFilters().color) {
+                        @if (color()) {
                             <span class="badge badge-primary badge-sm">
-                                {{ currentFilters().color }}
+                                {{ color() }}
                                 <button class="ml-1" (click)="removeFilter('color')" type="button">
                                     ×
                                 </button>
                             </span>
                         }
-                        @if (currentFilters().status) {
+                        @if (status()) {
                             <span class="badge badge-primary badge-sm">
-                                {{ currentFilters().status }}
+                                {{ status() }}
                                 <button class="ml-1" (click)="removeFilter('status')" type="button">
                                     ×
                                 </button>
@@ -225,90 +206,87 @@ import { PuppyFilters } from '@/core/services/puppy.service';
     `,
 })
 export class PuppyFiltersComponent {
+    puppyStore = inject(PuppyStore);
     @Input() availableColors: string[] = ['Fauve', 'Bringé', 'Crème', 'Pied'];
-    @Input() availableFeatures: string[] = ['LOF', 'Yeux bleus', 'Petite taille', 'Pelage rare'];
 
-    @Output() filtersChange = new EventEmitter<PuppyFilters>();
-    @Output() searchChange = new EventEmitter<string>();
+    // Propriétés séparées pour les filtres
+    gender = signal<string>('');
+    color = signal<string>('');
+    status = signal<string>('');
+    minPrice = signal<number | undefined>(undefined);
+    maxPrice = signal<number | undefined>(undefined);
+    ageMinWeeks = signal<number | undefined>(undefined);
+    ageMaxWeeks = signal<number | undefined>(undefined);
 
-    currentFilters = signal<PuppyFilters>({});
-    searchQuery = signal<string>('');
+    currentFilters = computed(() => ({
+        gender: this.gender() || undefined,
+        color: this.color() || undefined,
+        status: this.status() || undefined,
+        minPrice: this.minPrice(),
+        maxPrice: this.maxPrice(),
+        ageMinWeeks: this.ageMinWeeks(),
+        ageMaxWeeks: this.ageMaxWeeks(),
+    }));
 
-    // Variables pour les placeholders
-    searchPlaceholder = $localize`:@@puppy.filters.search.placeholder:Nom, couleur, caractéristiques...`;
-    minPricePlaceholder = $localize`:@@puppy.filters.price.min:Min`;
-    maxPricePlaceholder = $localize`:@@puppy.filters.price.max:Max`;
-    minAgePlaceholder = $localize`:@@puppy.filters.age.min:Min`;
-    maxAgePlaceholder = $localize`:@@puppy.filters.age.max:Max`;
-
-    hasActiveFilters = computed(() => {
-        const filters = this.currentFilters();
-        const search = this.searchQuery();
-        return (
-            Object.keys(filters).some(
-                (key) =>
-                    filters[key as keyof PuppyFilters] !== undefined &&
-                    filters[key as keyof PuppyFilters] !== ''
-            ) || search.length > 0
-        );
-    });
-
-    activeFiltersCount = computed(() => {
-        const filters = this.currentFilters();
-        return Object.keys(filters).filter((key) => {
-            const value = filters[key as keyof PuppyFilters];
-            return (
-                value !== undefined &&
-                value !== '' &&
-                (Array.isArray(value) ? value.length > 0 : true)
-            );
-        }).length;
-    });
+    constructor() {
+        effect(() => {
+            const storeFilters = this.puppyStore.filters();
+            this.updateFiltersFromInput(storeFilters);
+        });
+    }
 
     onFiltersChange() {
-        this.filtersChange.emit(this.currentFilters());
-    }
-
-    onSearchChange(query: string) {
-        this.searchQuery.set(query);
-        this.searchChange.emit(query);
-    }
-
-    toggleFeature(feature: string) {
-        const current = this.currentFilters();
-        const features = current.features || [];
-        const index = features.indexOf(feature);
-
-        if (index > -1) {
-            features.splice(index, 1);
-        } else {
-            features.push(feature);
-        }
-
-        this.currentFilters.set({
-            ...current,
-            features: features.length > 0 ? features : undefined,
-        });
-        this.onFiltersChange();
-    }
-
-    isFeatureSelected(feature: string): boolean {
-        const features = this.currentFilters().features || [];
-        return features.includes(feature);
+        this.puppyStore.updateFilters(this.currentFilters());
     }
 
     removeFilter(filterKey: keyof PuppyFilters) {
-        const current = this.currentFilters();
-        const updated = { ...current };
-        delete updated[filterKey];
-        this.currentFilters.set(updated);
+        switch (filterKey) {
+            case 'gender':
+                this.gender.set('');
+                break;
+            case 'color':
+                this.color.set('');
+                break;
+            case 'status':
+                this.status.set('');
+                break;
+            case 'minPrice':
+                this.minPrice.set(undefined);
+                break;
+            case 'maxPrice':
+                this.maxPrice.set(undefined);
+                break;
+            case 'ageMinWeeks':
+                this.ageMinWeeks.set(undefined);
+                break;
+            case 'ageMaxWeeks':
+                this.ageMaxWeeks.set(undefined);
+                break;
+        }
         this.onFiltersChange();
     }
 
-    clearAllFilters() {
-        this.currentFilters.set({});
-        this.searchQuery.set('');
-        this.onFiltersChange();
-        this.onSearchChange('');
+    private updateFiltersFromInput(filters: PuppyFilters) {
+        if (filters.gender !== this.gender()) {
+            this.gender.set(filters.gender || '');
+        }
+        if (filters.color !== this.color()) {
+            this.color.set(filters.color || '');
+        }
+        if (filters.status !== this.status()) {
+            this.status.set(filters.status || '');
+        }
+        if (filters.minPrice !== this.minPrice()) {
+            this.minPrice.set(filters.minPrice);
+        }
+        if (filters.maxPrice !== this.maxPrice()) {
+            this.maxPrice.set(filters.maxPrice);
+        }
+        if (filters.ageMinWeeks !== this.ageMinWeeks()) {
+            this.ageMinWeeks.set(filters.ageMinWeeks);
+        }
+        if (filters.ageMaxWeeks !== this.ageMaxWeeks()) {
+            this.ageMaxWeeks.set(filters.ageMaxWeeks);
+        }
     }
 }

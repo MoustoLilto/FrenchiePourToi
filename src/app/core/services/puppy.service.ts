@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LOCALE_ID } from '@angular/core';
-import { Observable, map, combineLatest, delay } from 'rxjs';
+import { Observable, map, delay } from 'rxjs';
 import { Puppy, PuppiesResponse } from '@/core/models/puppy.model';
 import { Parent } from '@/core/models/parent.model';
 import { LoadingState } from '@/shared/rxjs/with-loading-state.operator';
@@ -15,7 +15,6 @@ export interface PuppyFilters {
     ageMinWeeks?: number;
     ageMaxWeeks?: number;
     status?: string;
-    features?: string[];
 }
 
 export interface PuppySortOptions {
@@ -46,23 +45,12 @@ export class PuppyService {
         );
     }
 
-    getPuppyById(id: string): Observable<LoadingState<Puppy | null>> {
-        return this.getAllPuppies().pipe(
-            map((loadingState) => ({
-                ...loadingState,
-                data: loadingState.data?.find((puppy) => puppy.id === id) || null,
-            }))
-        );
+    getPuppyById(allPuppies: Puppy[], id: string): Puppy | null {
+        return allPuppies.find((puppy) => puppy.id === id) || null;
     }
 
-    filterPuppies(filters: PuppyFilters): Observable<LoadingState<Puppy[]>> {
-        return this.getAllPuppies().pipe(
-            map((loadingState) => ({
-                ...loadingState,
-                data:
-                    loadingState.data?.filter((puppy) => this.matchesFilters(puppy, filters)) || [],
-            }))
-        );
+    filterPuppies(allPuppies: Puppy[], filters: PuppyFilters): Puppy[] {
+        return allPuppies.filter((puppy) => this.matchesFilters(puppy, filters));
     }
 
     sortPuppies(puppies: Puppy[], sortOptions: PuppySortOptions): Puppy[] {
@@ -85,66 +73,48 @@ export class PuppyService {
         });
     }
 
-    searchPuppies(query: string): Observable<LoadingState<Puppy[]>> {
-        return this.getAllPuppies().pipe(
-            map((loadingState) => ({
-                ...loadingState,
-                data:
-                    loadingState.data?.filter((puppy) => this.matchesSearchQuery(puppy, query)) ||
-                    [],
-            }))
-        );
+    searchPuppies(allPuppies: Puppy[], query: string): Puppy[] {
+        return allPuppies.filter((puppy) => this.matchesSearchQuery(puppy, query));
     }
 
-    getAvailablePuppies(): Observable<LoadingState<Puppy[]>> {
-        return this.filterPuppies({ status: 'available' });
+    getAvailablePuppies(allPuppies: Puppy[]): Puppy[] {
+        return allPuppies.filter((puppy) => puppy.status === 'available');
     }
 
-    getFeaturedPuppies(limit = 3): Observable<LoadingState<Puppy[]>> {
-        return this.getAvailablePuppies().pipe(
-            map((loadingState) => ({
-                ...loadingState,
-                data: loadingState.data?.slice(0, limit) || [],
-            }))
-        );
+    getFeaturedPuppies(allPuppies: Puppy[], limit = 3): Puppy[] {
+        return this.getAvailablePuppies(allPuppies).slice(0, limit);
     }
 
-    getPuppyWithParents(id: string): Observable<
-        LoadingState<{
-            puppy: Puppy | null;
-            parents: { father: Parent | null; mother: Parent | null };
-        }>
-    > {
-        return combineLatest([
-            this.getPuppyById(id),
-            this.http.get<{ parents: Parent[] }>(this.getLocalizedPath('parents')),
-        ]).pipe(
-            map(([puppyState, parentsResponse]) => {
-                if (!puppyState.data) {
-                    return {
-                        data: null,
-                        loading: false,
-                        error: 'Puppy not found',
-                    };
-                }
+    getPuppyWithParents(
+        allPuppies: Puppy[],
+        id: string,
+        parents: Parent[]
+    ): {
+        puppy: Puppy | null;
+        parents: { father: Parent | null; mother: Parent | null };
+    } {
+        const puppy = this.getPuppyById(allPuppies, id);
+        if (!puppy) {
+            return { puppy: null, parents: { father: null, mother: null } };
+        }
 
-                const father =
-                    parentsResponse.parents.find((p) => p.id === puppyState.data!.parents.father) ||
-                    null;
-                const mother =
-                    parentsResponse.parents.find((p) => p.id === puppyState.data!.parents.mother) ||
-                    null;
+        return {
+            puppy,
+            parents: this.getPuppyParents(puppy, parents),
+        };
+    }
 
-                return {
-                    data: {
-                        puppy: puppyState.data,
-                        parents: { father, mother },
-                    },
-                    loading: false,
-                    error: null,
-                };
-            })
-        );
+    getPuppyParents(
+        puppy: Puppy,
+        parents: Parent[]
+    ): {
+        father: Parent | null;
+        mother: Parent | null;
+    } {
+        const father = parents.find((p) => p.id === puppy.parents.father) || null;
+        const mother = parents.find((p) => p.id === puppy.parents.mother) || null;
+
+        return { father, mother };
     }
 
     private matchesFilters(puppy: Puppy, filters: PuppyFilters): boolean {
@@ -161,14 +131,14 @@ export class PuppyService {
             if (filters.ageMaxWeeks && ageWeeks > filters.ageMaxWeeks) return false;
         }
 
-        if (filters.features && filters.features.length > 0) {
-            const hasAllFeatures = filters.features.every((feature) =>
-                puppy.features.some((puppyFeature) =>
-                    puppyFeature.toLowerCase().includes(feature.toLowerCase())
-                )
-            );
-            if (!hasAllFeatures) return false;
-        }
+        // if (filters.features && filters.features.length > 0) {
+        //     const hasAllFeatures = filters.features.every((feature) =>
+        //         puppy.features.some((puppyFeature) =>
+        //             puppyFeature.toLowerCase().includes(feature.toLowerCase())
+        //         )
+        //     );
+        //     if (!hasAllFeatures) return false;
+        // }
 
         return true;
     }
@@ -178,13 +148,7 @@ export class PuppyService {
             .toLowerCase()
             .split(' ')
             .filter((term) => term.length > 0);
-        const searchableText = [
-            puppy.name,
-            puppy.description,
-            puppy.color,
-            puppy.gender,
-            ...puppy.features,
-        ]
+        const searchableText = [puppy.name, puppy.description, puppy.color, puppy.gender]
             .join(' ')
             .toLowerCase();
 

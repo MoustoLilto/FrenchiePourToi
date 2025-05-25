@@ -5,9 +5,8 @@ export interface Puppy {
     birthDate: string;
     gender: string;
     color: string;
-    status: string;
+    status: PuppyStatus;
     price: number;
-    features: string[];
     images: {
         publicId: string;
         alt: string;
@@ -26,3 +25,5 @@ export interface Puppy {
 export interface PuppiesResponse {
     puppies: Puppy[];
 }
+
+export type PuppyStatus = 'available' | 'reserved' | 'adopted';

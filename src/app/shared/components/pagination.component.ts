@@ -5,7 +5,6 @@ import {
     EventEmitter,
     ChangeDetectionStrategy,
     computed,
-    signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -17,8 +16,8 @@ import { CommonModule } from '@angular/common';
     template: `
         <div class="flex items-center justify-between">
             <!-- Informations sur les résultats -->
-            <div class="text-base-content/70 text-sm">
-                <span i18n="@@pagination.showing">Affichage</span>
+            <div class="flex-center text-base-content/70 gap-1 text-sm">
+                <span i18n="@@pagination.showing">Affichage de</span>
                 <span class="font-medium">{{ startItem() }}</span>
                 <span i18n="@@pagination.to">à</span>
                 <span class="font-medium">{{ endItem() }}</span>
@@ -35,7 +34,8 @@ import { CommonModule } from '@angular/common';
                         class="join-item btn btn-sm"
                         [disabled]="currentPage === 1"
                         (click)="goToPage(currentPage - 1)"
-                        [attr.aria-label]="previousPageLabel"
+                        i18n-aria-label="@@pagination.previous.aria-label"
+                        aria-label="Page précédente"
                     >
                         <span class="icon-[carbon--chevron-left]"></span>
                         <span i18n="@@pagination.previous.short">Préc</span>
@@ -50,8 +50,6 @@ import { CommonModule } from '@angular/common';
                                 class="join-item btn btn-sm"
                                 [class.btn-active]="page === currentPage"
                                 (click)="goToPage(+page)"
-                                [attr.aria-label]="'Page ' + page"
-                                [attr.aria-current]="page === currentPage ? 'page' : null"
                             >
                                 {{ page }}
                             </button>
@@ -63,7 +61,8 @@ import { CommonModule } from '@angular/common';
                         class="join-item btn btn-sm"
                         [disabled]="currentPage === totalPages()"
                         (click)="goToPage(currentPage + 1)"
-                        [attr.aria-label]="nextPageLabel"
+                        i18n-aria-label="@@pagination.next.aria-label"
+                        aria-label="Page suivante"
                     >
                         <span i18n="@@pagination.next.short">Suiv</span>
                         <span class="icon-[carbon--chevron-right]"></span>
@@ -113,10 +112,6 @@ export class PaginationComponent {
     totalCount = 0;
     pageSize = 12;
 
-    // Variables pour les aria-labels
-    previousPageLabel = $localize`:@@pagination.previous:Page précédente`;
-    nextPageLabel = $localize`:@@pagination.next:Page suivante`;
-
     totalPages = computed(() => Math.ceil(this.totalCount / this.pageSize));
     startItem = computed(() => (this.currentPage - 1) * this.pageSize + 1);
     endItem = computed(() => Math.min(this.currentPage * this.pageSize, this.totalCount));
@@ -127,7 +122,7 @@ export class PaginationComponent {
         const max = this.maxVisiblePages;
 
         if (total <= max) {
-            return Array.from({ length: total }, (_, i) => (i + 1).toString());
+            return Array.from({ length: total }, (_, i) => i + 1);
         }
 
         const pages: (string | number)[] = [];

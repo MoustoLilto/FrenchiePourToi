@@ -52,12 +52,7 @@
         <!-- Sidebar avec filtres -->
         <aside class="lg:col-span-1">
             <div class="sticky top-24">
-                <app-puppy-filters
-                    [availableColors]="availableColors"
-                    [availableFeatures]="availableFeatures"
-                    (filtersChange)="onFiltersChange($event)"
-                    (searchChange)="onSearchChange($event)"
-                />
+                <app-puppy-filters [availableColors]="availableColors" />
             </div>
         </aside>
 
@@ -69,10 +64,10 @@
             >
                 <!-- Informations sur les résultats -->
                 <div class="text-base-content/70 text-sm">
-                    @if (puppyStore.puppiesLoading()) {
+                    @if (puppyStore.isPuppiesLoading()) {
                         <span i18n="@@puppies.loading">Chargement...</span>
-                    } @else if (filteredPuppies().length > 0) {
-                        {{ filteredPuppies().length }}
+                    } @else if (puppyStore.filteredPuppies().length > 0) {
+                        {{ puppyStore.filteredPuppies().length }}
                         <span i18n="@@puppies.found">chiots trouvés</span>
                         @if (puppyStore.hasActiveFilters()) {
                             (
@@ -114,7 +109,7 @@
             </div>
 
             <!-- Liste des chiots -->
-            <app-loading-state [state]="puppiesState()">
+            <app-loading-state [state]="puppyStore.puppies()">
                 <ng-template let-state>
                     @if (paginatedPuppies().length > 0) {
                         <!-- Grille des chiots -->
@@ -125,7 +120,7 @@
                                     [showPrice]="true"
                                     [showAge]="true"
                                     [showViewButton]="true"
-                                    [showReserveButton]="true"
+                                    [showReserveButton]="false"
                                     class="h-full"
                                 />
                             }
@@ -134,7 +129,7 @@
                         <!-- Pagination -->
                         <app-pagination
                             [currentPageInput]="currentPage()"
-                            [totalCountInput]="filteredPuppies().length"
+                            [totalCountInput]="puppyStore.filteredPuppies().length"
                             [pageSizeInput]="pageSize()"
                             [showPageSizeSelector]="true"
                             (pageChange)="onPageChange($event)"

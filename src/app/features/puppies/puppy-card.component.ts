@@ -57,7 +57,7 @@ import { routes } from '@/core/constants/routes.constants';
                         {{ puppy().description }}
                     </p>
 
-                    @if (showBadges && puppy().features && puppy().features.length > 0) {
+                    <!-- @if (showBadges && puppy().features && puppy().features.length > 0) {
                         <div
                             class="flex max-w-full gap-1 overflow-hidden whitespace-nowrap text-xs"
                         >
@@ -84,7 +84,7 @@ import { routes } from '@/core/constants/routes.constants';
                                 </span>
                             }
                         </div>
-                    }
+                    } -->
 
                     @if (showAge) {
                         <div class="text-base-content/70 flex-start">
@@ -154,7 +154,7 @@ export class PuppyCardComponent {
                 return 'badge-success';
             case 'reserved':
                 return 'badge-warning';
-            case 'sold':
+            case 'adopted':
                 return 'badge-error';
             default:
                 return 'badge-neutral';
