@@ -17,9 +17,11 @@ export interface PuppyFilters {
     status?: string;
 }
 
+export type PuppySortField = 'name' | 'price' | 'birthDate' | 'status';
+export type PuppySortDirection = 'asc' | 'desc';
 export interface PuppySortOptions {
-    field: 'name' | 'price' | 'birthDate' | 'status';
-    direction: 'asc' | 'desc';
+    field: PuppySortField;
+    direction: PuppySortDirection;
 }
 
 @Injectable({

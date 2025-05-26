@@ -5,6 +5,7 @@ import {
     EventEmitter,
     ChangeDetectionStrategy,
     computed,
+    signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -22,7 +23,7 @@ import { CommonModule } from '@angular/common';
                 <span i18n="@@pagination.to">à</span>
                 <span class="font-medium">{{ endItem() }}</span>
                 <span i18n="@@pagination.of">sur</span>
-                <span class="font-medium">{{ totalCount }}</span>
+                <span class="font-medium">{{ totalCount() }}</span>
                 <span i18n="@@pagination.results">résultats</span>
             </div>
 
@@ -32,8 +33,8 @@ import { CommonModule } from '@angular/common';
                     <!-- Bouton Précédent -->
                     <button
                         class="join-item btn btn-sm"
-                        [disabled]="currentPage === 1"
-                        (click)="goToPage(currentPage - 1)"
+                        [disabled]="currentPage() === 1"
+                        (click)="goToPage(currentPage() - 1)"
                         i18n-aria-label="@@pagination.previous.aria-label"
                         aria-label="Page précédente"
                     >
@@ -48,7 +49,7 @@ import { CommonModule } from '@angular/common';
                         } @else {
                             <button
                                 class="join-item btn btn-sm"
-                                [class.btn-active]="page === currentPage"
+                                [class.btn-active]="page === currentPage()"
                                 (click)="goToPage(+page)"
                             >
                                 {{ page }}
@@ -59,8 +60,8 @@ import { CommonModule } from '@angular/common';
                     <!-- Bouton Suivant -->
                     <button
                         class="join-item btn btn-sm"
-                        [disabled]="currentPage === totalPages()"
-                        (click)="goToPage(currentPage + 1)"
+                        [disabled]="currentPage() === totalPages()"
+                        (click)="goToPage(currentPage() + 1)"
                         i18n-aria-label="@@pagination.next.aria-label"
                         aria-label="Page suivante"
                     >
@@ -72,18 +73,21 @@ import { CommonModule } from '@angular/common';
         </div>
 
         <!-- Sélecteur de taille de page (optionnel) -->
-        @if (showPageSizeSelector) {
+        @if (showPageSizeSelector && currentPage()) {
             <div class="mt-4 flex items-center justify-center gap-2">
                 <span class="text-base-content/70 text-sm" i18n="@@pagination.per-page">
                     Éléments par page:
                 </span>
                 <select
                     class="select select-bordered select-sm w-20"
-                    [value]="pageSize"
+                    [value]="pageSize()"
                     (change)="onPageSizeChange($event)"
                 >
+                    <option [value]="pageSize()">{{ pageSize() }}</option>
                     @for (size of pageSizeOptions; track size) {
-                        <option [value]="size">{{ size }}</option>
+                        @if (size !== pageSize()) {
+                            <option [value]="size">{{ size }}</option>
+                        }
                     }
                 </select>
             </div>
@@ -92,13 +96,13 @@ import { CommonModule } from '@angular/common';
 })
 export class PaginationComponent {
     @Input({ required: true }) set currentPageInput(value: number) {
-        this.currentPage = value;
+        this.currentPage.set(value);
     }
     @Input({ required: true }) set totalCountInput(value: number) {
-        this.totalCount = value;
+        this.totalCount.set(value);
     }
     @Input({ required: true }) set pageSizeInput(value: number) {
-        this.pageSize = value;
+        this.pageSize.set(value);
     }
 
     @Input() showPageSizeSelector = false;
@@ -108,17 +112,17 @@ export class PaginationComponent {
     @Output() pageChange = new EventEmitter<number>();
     @Output() pageSizeChange = new EventEmitter<number>();
 
-    currentPage = 1;
-    totalCount = 0;
-    pageSize = 12;
+    currentPage = signal(1);
+    totalCount = signal(0);
+    pageSize = signal(12);
 
-    totalPages = computed(() => Math.ceil(this.totalCount / this.pageSize));
-    startItem = computed(() => (this.currentPage - 1) * this.pageSize + 1);
-    endItem = computed(() => Math.min(this.currentPage * this.pageSize, this.totalCount));
+    totalPages = computed(() => Math.ceil(this.totalCount() / this.pageSize()));
+    startItem = computed(() => (this.currentPage() - 1) * this.pageSize() + 1);
+    endItem = computed(() => Math.min(this.currentPage() * this.pageSize(), this.totalCount()));
 
     visiblePages = computed(() => {
         const total = this.totalPages();
-        const current = this.currentPage;
+        const current = this.currentPage();
         const max = this.maxVisiblePages;
 
         if (total <= max) {
@@ -172,7 +176,7 @@ export class PaginationComponent {
     });
 
     goToPage(page: number) {
-        if (page >= 1 && page <= this.totalPages() && page !== this.currentPage) {
+        if (page >= 1 && page <= this.totalPages() && page !== this.currentPage()) {
             this.pageChange.emit(page);
         }
     }
