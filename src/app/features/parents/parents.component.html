@@ -39,7 +39,7 @@
                 <app-cloudinary-image
                     class="relative size-full"
                     [sizes]="'(max-width: 768px) 100vw, 50vw'"
-                    inputClass="mask mask-heart object-cover object-top"
+                    inputClass="mask mask-decagon object-cover object-top"
                     publicId="frenchie-hero_mtujt9"
                     [isPriority]="true"
                     alt="Frenchie parent picture"
@@ -52,9 +52,9 @@
     <section class="section-content">
         <div class="flex flex-col gap-4">
             <div
-                class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center"
+                class="flex flex-col items-start justify-between gap-x-12 gap-y-4 sm:flex-row sm:items-center"
             >
-                <label class="input input-sm">
+                <label class="input input-md flex-1">
                     <i class="icon-[carbon--search] text-base"></i>
                     <input
                         #searchInput
@@ -71,7 +71,7 @@
 
                 @if (parentStore.parents().data && parentStore.parents().data!.length > 1) {
                     <div class="flex items-center gap-2">
-                        <label class="select select-sm">
+                        <label class="select">
                             <span class="label text-sm" i18n="@@parents.sort">Trier par:</span>
 
                             <select [value]="sortKey()" (change)="onSortChange($event)">
@@ -242,7 +242,7 @@
                             }
                         </div>
                     </div>
-                    
+
                     <!-- Skeleton pour femelles -->
                     <div>
                         <div class="bg-base-200 skeleton mx-auto mb-6 h-8 w-32 rounded"></div>

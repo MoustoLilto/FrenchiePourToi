@@ -87,9 +87,12 @@ import { routes } from '@/core/constants/routes.constants';
                     } -->
 
                     @if (showAge) {
-                        <div class="text-base-content/70 flex-start">
-                            <span class="icon-[carbon--calendar] mr-2"></span>
-                            {{ calculateAge() }} semaines
+                        <div class="flex items-center gap-2 text-sm">
+                            <i class="icon-[carbon--calendar] text-base-content/60"></i>
+                            <span class="text-base-content/70">
+                                {{ calculateAge() }}
+                                <span i18n="@@puppies.age.weeks">semaines</span>
+                            </span>
                         </div>
                     }
                 </div>

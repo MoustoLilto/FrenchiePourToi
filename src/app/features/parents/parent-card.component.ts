@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Parent } from '@/core/models/parent.model';
@@ -12,27 +12,32 @@ import { routes } from '@/core/constants/routes.constants';
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <div
-            class="card bg-base-100 border-base-content/10 shadow-base-content/10 group border shadow-lg transition-all duration-300 hover:shadow-xl"
+            class="card bg-base-100 border-base-content/10 shadow-base-content/10 group w-full max-w-sm border shadow-lg"
         >
-            <!-- Image principale -->
-            <figure class="relative overflow-hidden">
-                @if (parentData.images.length > 0) {
+            <figure class="relative w-full">
+                @if (parent().images && parent().images.length > 0) {
                     <app-cloudinary-image
-                        [publicId]="mainImage.publicId"
-                        [alt]="mainImage.alt"
-                        [sizes]="'(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'"
-                        inputClass="aspect-[3/2] object-cover transition-transform duration-300 group-hover:scale-105"
-                        [isFilled]="true"
+                        [publicId]="mainImage().publicId"
+                        [alt]="mainImage().alt"
+                        [width]="384"
+                        [height]="300"
+                        class="aspect-[3/2] w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                 } @else {
-                    <div class="bg-base-200 flex-center aspect-[3/2] w-full">
-                        <i class="icon-[carbon--image] text-base-content/30 text-4xl"></i>
+                    <div
+                        class="bg-base-200 flex aspect-[3/2] w-full items-center justify-center rounded-t-lg"
+                    >
+                        <span class="text-base-content/50">Aucune image</span>
                     </div>
                 }
 
+                <div
+                    class="bg-neutral/10 group-hover:bg-base-content/5 absolute inset-0 flex justify-end p-2"
+                ></div>
+
                 <!-- Badge de statut -->
                 <div class="absolute left-3 top-3">
-                    @if (parentData.status === 'active') {
+                    @if (parent().status === 'active') {
                         <div class="badge badge-success badge-sm">
                             <span i18n="@@parents.status.active">Actif</span>
                         </div>
@@ -45,7 +50,7 @@ import { routes } from '@/core/constants/routes.constants';
 
                 <!-- Badge de genre -->
                 <div class="absolute right-3 top-3">
-                    @if (parentData.gender === 'male') {
+                    @if (parent().gender === 'male') {
                         <div class="badge badge-info badge-sm">
                             <i class="icon-[carbon--user] mr-1"></i>
                             <span i18n="@@parents.gender.male">Mâle</span>
@@ -59,117 +64,62 @@ import { routes } from '@/core/constants/routes.constants';
                 </div>
             </figure>
 
-            <!-- Contenu de la carte -->
-            <div class="card-body p-4">
-                <!-- Nom et informations de base -->
-                <div class="mb-3">
-                    <h3 class="card-title font-serif text-lg">{{ parentData.name }}</h3>
-                    <p class="text-base-content/70 text-sm">{{ parentData.color }}</p>
-                </div>
+            <div class="card-body">
+                <h3 class="card-title text-base-content line-clamp-1 text-xl font-bold">
+                    {{ parent().name }}
+                </h3>
 
-                <!-- Description courte -->
-                <p class="text-base-content/80 mb-4 line-clamp-2 text-sm">
-                    {{ parentData.description }}
-                </p>
-
-                <!-- Informations détaillées -->
-                <div class="mb-4 space-y-2">
-                    <!-- Âge -->
-                    <div class="flex items-center gap-2 text-sm">
-                        <i class="icon-[carbon--calendar] text-base-content/60"></i>
-                        <span class="text-base-content/70">
-                            {{ getAge() }}
-                            <span i18n="@@parents.age.years">ans</span>
-                        </span>
+                <div class="my-2 flex flex-wrap gap-2">
+                    <div class="badge badge-outline badge-sm max-w-30 truncate">
+                        <i class="icon-[carbon--scale] mr-1"></i>
+                        {{ parent().weight }}
+                        <span i18n="@@parents.weight.kg">kg</span>
                     </div>
 
-                    <!-- Poids -->
-                    <div class="flex items-center gap-2 text-sm">
-                        <i class="icon-[carbon--scale] text-base-content/60"></i>
-                        <span class="text-base-content/70">{{ parentData.weight }} kg</span>
+                    <div class="badge badge-outline badge-sm max-w-30 truncate">
+                        <i class="icon-[carbon--calendar] mr-1"></i>
+                        {{ getAge() }}
+                        <span i18n="@@parents.age.years">ans</span>
                     </div>
 
-                    <!-- Pedigree -->
-                    @if (parentData.pedigree.registration) {
-                        <div class="flex items-center gap-2 text-sm">
-                            <i class="icon-[carbon--certificate] text-base-content/60"></i>
-                            <span class="text-base-content/70">
-                                {{ parentData.pedigree.registration }}
-                            </span>
+                    @if (parent().pedigree.registration) {
+                        <div class="badge badge-outline badge-sm max-w-30 truncate">
+                            <i class="icon-[carbon--certificate] mr-1"></i>
+                            {{ parent().pedigree.registration }}
+                        </div>
+                    } @else {
+                        <div class="badge badge-outline badge-sm max-w-30 truncate">
+                            <i class="icon-[carbon--color-palette] mr-1"></i>
+                            {{ parent().color }}
                         </div>
                     }
                 </div>
 
-                <!-- Tests de santé -->
-                @if (parentData.healthTests.length > 0) {
-                    <div class="mb-4">
-                        <h4
-                            class="text-base-content mb-2 text-sm font-medium"
-                            i18n="@@parents.healthTests"
-                        >
-                            Tests de santé
-                        </h4>
-                        <div class="flex flex-wrap gap-1">
-                            @for (test of parentData.healthTests.slice(0, 3); track test.name) {
-                                <div class="badge badge-outline badge-xs">
-                                    {{ test.name }}
-                                </div>
-                            }
-                            @if (parentData.healthTests.length > 3) {
-                                <div class="badge badge-outline badge-xs">
-                                    +{{ parentData.healthTests.length - 3 }}
-                                </div>
-                            }
-                        </div>
-                    </div>
-                }
+                <div class="mb-4 flex flex-col gap-3">
+                    <p class="text-base-content/80 line-clamp-3 text-sm">
+                        {{ parent().description }}
+                    </p>
 
-                <!-- Récompenses -->
-                @if (parentData.achievements.length > 0) {
-                    <div class="mb-4">
-                        <h4
-                            class="text-base-content mb-2 text-sm font-medium"
-                            i18n="@@parents.achievements"
-                        >
-                            Récompenses
-                        </h4>
-                        <div class="flex flex-wrap gap-1">
-                            @for (
-                                achievement of parentData.achievements.slice(0, 2);
-                                track achievement.title
-                            ) {
-                                <div class="badge badge-warning badge-xs">
-                                    <i class="icon-[carbon--trophy] mr-1"></i>
-                                    {{ achievement.title }}
-                                </div>
-                            }
-                            @if (parentData.achievements.length > 2) {
-                                <div class="badge badge-warning badge-xs">
-                                    +{{ parentData.achievements.length - 2 }}
-                                </div>
-                            }
+                    <div class="collapse-arrow bg-base-200 collapse">
+                        <input type="checkbox" />
+                        <div class="collapse-title font-medium" i18n="@@parents.healthTests">
+                            Voir ses tests de santé
+                        </div>
+                        <div class="collapse-content">
+                            <ul class="list-disc pl-5 text-xs">
+                                @for (test of parent().healthTests; track test.name) {
+                                    <li>{{ test.name }}</li>
+                                }
+                            </ul>
                         </div>
                     </div>
-                }
-
-                <!-- Descendance -->
-                @if (parentData.offspring.length > 0) {
-                    <div class="mb-4">
-                        <div class="flex items-center gap-2 text-sm">
-                            <i class="icon-[carbon--group] text-base-content/60"></i>
-                            <span class="text-base-content/70">
-                                {{ parentData.offspring.length }}
-                                <span i18n="@@parents.offspring">chiots</span>
-                            </span>
-                        </div>
-                    </div>
-                }
+                </div>
 
                 <!-- Actions -->
                 <div class="card-actions justify-end">
                     @if (showViewButton) {
                         <a
-                            [routerLink]="[routes.parents.path, parentData.id]"
+                            [routerLink]="[routes.parents.path, parent().id]"
                             class="btn btn-primary btn-sm"
                         >
                             <span i18n="@@parents.viewDetails">Voir détails</span>
@@ -181,24 +131,25 @@ import { routes } from '@/core/constants/routes.constants';
     `,
 })
 export class ParentCardComponent {
-    @Input({ required: true }) parentData!: Parent;
+    @Input({ required: true }) set parentData(value: Parent) {
+        this.parent.set(value);
+    }
     @Input() showViewButton = true;
+    @Input() showAge = true;
 
+    parent = signal<Parent>({} as Parent);
     routes = routes;
 
-    get mainImage() {
-        return (
-            this.parentData.images.find((img) => img.isMain) ||
-            this.parentData.images[0] || {
-                publicId: 'placeholder-parent',
-                alt: `Photo de ${this.parentData.name}`,
-                isMain: true,
-            }
-        );
-    }
+    mainImage = computed(() => {
+        const images = this.parent().images;
+        if (!images || images.length === 0) {
+            return { publicId: '', alt: 'Aucune image' };
+        }
+        return images.find((img) => img.isMain) || images[0];
+    });
 
     getAge(): number {
-        const birthDate = new Date(this.parentData.birthDate);
+        const birthDate = new Date(this.parent().birthDate);
         const today = new Date();
         const ageInMs = today.getTime() - birthDate.getTime();
         const ageInYears = Math.floor(ageInMs / (1000 * 60 * 60 * 24 * 365.25));
