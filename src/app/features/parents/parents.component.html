@@ -1,0 +1,412 @@
+<div class="container flex flex-col gap-y-20">
+    <header class="section-header">
+        <h2 class="text-h2 text-center">
+            <span i18n="@@parents.title">Nos Parents</span>
+        </h2>
+
+        <div class="grid w-full grid-cols-1 gap-8 md:grid-cols-2">
+            <div class="flex-col-start gap-4">
+                <h3 class="text-h3 mb-4" i18n="@@parents.header.title">
+                    Des reproducteurs d'exception
+                </h3>
+                <p i18n="@@parents.header.description">
+                    Chez Frenchie Pour Toi, nous sélectionnons avec soin nos reproducteurs pour
+                    garantir la qualité de nos chiots. Nos bouledogues français sont choisis pour
+                    leur santé, leur tempérament équilibré et leur conformité aux standards de la
+                    race.
+                </p>
+                <p i18n="@@parents.header.description2">
+                    Tous nos reproducteurs sont testés pour les principales maladies génétiques qui
+                    peuvent affecter la race. Nous veillons également à leur bien-être physique et
+                    émotionnel, car des parents en bonne santé donnent naissance à des chiots en
+                    bonne santé.
+                </p>
+                <p i18n="@@parents.header.description3">
+                    Découvrez ci-dessous nos magnifiques reproducteurs, qui sont avant tout des
+                    membres à part entière de notre famille.
+                </p>
+                <div class="mt-4 flex gap-4">
+                    <a [routerLink]="routes.puppies.path" class="btn btn-primary">
+                        <span i18n="@@parents.header.viewPuppies">Voir nos chiots</span>
+                    </a>
+                    <a [routerLink]="routes.about.path" class="btn btn-outline">
+                        <span i18n="@@parents.header.contact">Nous contacter</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex-center min-w-sm relative h-full w-full">
+                <app-cloudinary-image
+                    class="relative size-full"
+                    [sizes]="'(max-width: 768px) 100vw, 50vw'"
+                    inputClass="mask mask-heart object-cover object-top"
+                    publicId="frenchie-hero_mtujt9"
+                    [isPriority]="true"
+                    alt="Frenchie parent picture"
+                    [isFilled]="true"
+                />
+            </div>
+        </div>
+    </header>
+
+    <section class="section-content">
+        <div class="flex flex-col gap-4">
+            <div
+                class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center"
+            >
+                <label class="input input-sm">
+                    <i class="icon-[carbon--search] text-base"></i>
+                    <input
+                        #searchInput
+                        type="search"
+                        class="grow"
+                        [value]="searchQuery()"
+                        (input)="onSearchChange($event)"
+                        placeholder="Nom du parent..."
+                        i18n-placeholder="@@parents.search.placeholder"
+                    />
+                    <kbd class="kbd kbd-sm">⌘</kbd>
+                    <kbd class="kbd kbd-sm">K</kbd>
+                </label>
+
+                @if (parentStore.parents().data && parentStore.parents().data!.length > 1) {
+                    <div class="flex items-center gap-2">
+                        <label class="select select-sm">
+                            <span class="label text-sm" i18n="@@parents.sort">Trier par:</span>
+
+                            <select [value]="sortKey()" (change)="onSortChange($event)">
+                                <option value="name-asc" i18n="@@parents.sort.name-asc">
+                                    Nom (A-Z)
+                                </option>
+                                <option value="name-desc" i18n="@@parents.sort.name-desc">
+                                    Nom (Z-A)
+                                </option>
+                                <option value="birthDate-desc" i18n="@@parents.sort.age-asc">
+                                    Plus jeunes
+                                </option>
+                                <option value="birthDate-asc" i18n="@@parents.sort.age-desc">
+                                    Plus âgés
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                }
+            </div>
+
+            <div class="text-base-content/70 text-sm">
+                @if (parentStore.isParentsLoading()) {
+                    <span i18n="@@parents.loading">Chargement...</span>
+                } @else if (parentStore.filteredParents().length > 0) {
+                    {{ parentStore.filteredParents().length }}
+                    <span i18n="@@parents.found">reproducteurs trouvés</span>
+                    @if (parentStore.hasActiveSearch()) {
+                        (
+                        <span i18n="@@parents.filtered">filtrés</span>
+                        )
+                    }
+                } @else {
+                    <span i18n="@@parents.none">Aucun reproducteur trouvé</span>
+                }
+            </div>
+        </div>
+
+        <app-loading-state [state]="parentStore.parents()">
+            <ng-template let-state>
+                @if (parentStore.filteredParents().length > 0) {
+                    @if (parentStore.maleParents().length > 0) {
+                        <div class="mb-12">
+                            <h3
+                                class="text-h3 mb-6 text-center font-serif"
+                                i18n="@@parents.gallery.males"
+                            >
+                                Nos Mâles
+                            </h3>
+                            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                                @for (parent of parentStore.maleParents(); track parent.id) {
+                                    <app-parent-card
+                                        [parentData]="parent"
+                                        [showViewButton]="true"
+                                        class="h-full"
+                                    />
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    @if (parentStore.femaleParents().length > 0) {
+                        <div class="mb-12">
+                            <h3
+                                class="text-h3 mb-6 text-center font-serif"
+                                i18n="@@parents.gallery.females"
+                            >
+                                Nos Femelles
+                            </h3>
+                            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                                @for (parent of parentStore.femaleParents(); track parent.id) {
+                                    <app-parent-card
+                                        [parentData]="parent"
+                                        [showViewButton]="true"
+                                        class="h-full"
+                                    />
+                                }
+                            </div>
+                        </div>
+                    }
+                } @else {
+                    <div class="py-12 text-center">
+                        @if (parentStore.hasActiveSearch()) {
+                            <div
+                                class="icon-[carbon--search] text-base-content/30 mx-auto mb-4 text-6xl"
+                            ></div>
+                            <h3 class="text-base-content mb-2 text-xl font-semibold">
+                                <span i18n="@@parents.search.empty.title">Aucun parent trouvé</span>
+                            </h3>
+
+                            <p class="text-base-content/70 mb-6">
+                                <span i18n="@@parents.search.empty.description">
+                                    Aucun parent ne correspond à votre recherche "{{
+                                        searchQuery()
+                                    }}"
+                                </span>
+                            </p>
+
+                            <button class="btn btn-outline" (click)="clearSearch()">
+                                <span i18n="@@parents.search.empty.clear">
+                                    Effacer la recherche
+                                </span>
+                            </button>
+                        } @else {
+                            <div
+                                class="icon-[carbon--favorite] text-base-content/30 mx-auto mb-4 text-6xl"
+                            ></div>
+
+                            <h3 class="text-base-content mb-2 text-xl font-semibold">
+                                <span i18n="@@parents.gallery.empty.title">
+                                    Aucun parent répertorié
+                                </span>
+                            </h3>
+
+                            <p
+                                class="text-base-content/70 mb-6"
+                                i18n="@@parents.gallery.empty.description"
+                            >
+                                Nos reproducteurs seront bientôt présentés ici
+                            </p>
+                        }
+                    </div>
+                }
+            </ng-template>
+
+            <ng-template #error let-errorMessage>
+                <div class="alert alert-error shadow-lg">
+                    <i class="icon-[carbon--close-outline] text-2xl"></i>
+                    <div>
+                        <h3 class="font-bold" i18n="@@parents.error.title">Erreur de chargement</h3>
+                        <div class="text-xs">{{ errorMessage }}</div>
+                    </div>
+                    <button class="btn btn-sm" (click)="parentStore.loadAllParents()">
+                        <span i18n="@@parents.error.retry">Réessayer</span>
+                    </button>
+                </div>
+            </ng-template>
+
+            <ng-template #loading>
+                <div class="space-y-12">
+                    <!-- Skeleton pour mâles -->
+                    <div>
+                        <div class="bg-base-200 skeleton mx-auto mb-6 h-8 w-32 rounded"></div>
+                        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                            @for (skeleton of skeletonArray.slice(0, 3); track $index) {
+                                <div
+                                    class="card bg-base-100 border-base-content/10 shadow-base-content/10 border shadow-lg"
+                                >
+                                    <div
+                                        class="bg-base-200 skeleton aspect-[3/2] rounded-t-lg"
+                                    ></div>
+                                    <div class="card-body">
+                                        <div class="bg-base-200 skeleton mb-2 h-6 rounded"></div>
+                                        <div
+                                            class="bg-base-200 skeleton mb-4 h-4 w-3/4 rounded"
+                                        ></div>
+                                        <div class="mb-4 flex gap-2">
+                                            <div
+                                                class="bg-base-200 skeleton h-6 w-16 rounded"
+                                            ></div>
+                                            <div
+                                                class="bg-base-200 skeleton h-6 w-20 rounded"
+                                            ></div>
+                                        </div>
+                                        <div class="bg-base-200 skeleton h-8 rounded"></div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    
+                    <!-- Skeleton pour femelles -->
+                    <div>
+                        <div class="bg-base-200 skeleton mx-auto mb-6 h-8 w-32 rounded"></div>
+                        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                            @for (skeleton of skeletonArray.slice(0, 3); track $index) {
+                                <div
+                                    class="card bg-base-100 border-base-content/10 shadow-base-content/10 border shadow-lg"
+                                >
+                                    <div
+                                        class="bg-base-200 skeleton aspect-[3/2] rounded-t-lg"
+                                    ></div>
+                                    <div class="card-body">
+                                        <div class="bg-base-200 skeleton mb-2 h-6 rounded"></div>
+                                        <div
+                                            class="bg-base-200 skeleton mb-4 h-4 w-3/4 rounded"
+                                        ></div>
+                                        <div class="mb-4 flex gap-2">
+                                            <div
+                                                class="bg-base-200 skeleton h-6 w-16 rounded"
+                                            ></div>
+                                            <div
+                                                class="bg-base-200 skeleton h-6 w-20 rounded"
+                                            ></div>
+                                        </div>
+                                        <div class="bg-base-200 skeleton h-8 rounded"></div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </app-loading-state>
+    </section>
+
+    <section class="section-content bg-base-100 rounded-lg">
+        <h3 class="text-h3 text-center" i18n="@@parents.selection.sectionTitle">
+            Notre sélection et suivi santé
+        </h3>
+
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+            <div class="card bg-base-200">
+                <div class="card-body">
+                    <div class="mb-4 flex items-center gap-3">
+                        <i class="icon-[carbon--dna] text-primary text-3xl"></i>
+                        <h4 class="card-title font-serif" i18n="@@parents.selection.genetics.title">
+                            Sélection génétique rigoureuse
+                        </h4>
+                    </div>
+
+                    <p i18n="@@parents.selection.genetics.description">
+                        Nos reproducteurs sont sélectionnés selon des critères stricts de santé, de
+                        tempérament et de conformité aux standards de la race. Chaque parent fait
+                        l'objet de tests génétiques approfondis pour éviter la transmission de
+                        maladies héréditaires.
+                    </p>
+
+                    <div class="mt-4">
+                        <h5 class="mb-2 font-medium" i18n="@@parents.selection.genetics.tests">
+                            Tests effectués :
+                        </h5>
+                        <ul class="list-inside list-disc space-y-1 text-sm">
+                            <li i18n="@@parents.selection.genetics.test1">
+                                Test DM (Myélopathie dégénérative)
+                            </li>
+                            <li i18n="@@parents.selection.genetics.test2">
+                                Test IVDD (Discopathie intervertébrale)
+                            </li>
+                            <li i18n="@@parents.selection.genetics.test3">
+                                Test HUU (Hyperuricosurie)
+                            </li>
+                            <li i18n="@@parents.selection.genetics.test4">
+                                Test CMR1 (Curly coat/Dry eye)
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card bg-base-200">
+                <div class="card-body">
+                    <div class="mb-4 flex items-center gap-3">
+                        <i class="icon-[carbon--health-cross] text-secondary text-3xl"></i>
+                        <h4 class="card-title font-serif" i18n="@@parents.selection.health.title">
+                            Suivi santé permanent
+                        </h4>
+                    </div>
+
+                    <p i18n="@@parents.selection.health.description">
+                        La santé de nos reproducteurs est notre priorité absolue. Ils bénéficient
+                        d'un suivi vétérinaire régulier et d'une attention particulière à leur
+                        bien-être physique et mental.
+                    </p>
+
+                    <div class="mt-4">
+                        <h5 class="mb-2 font-medium" i18n="@@parents.selection.health.care">
+                            Soins prodigués :
+                        </h5>
+                        <ul class="list-inside list-disc space-y-1 text-sm">
+                            <li i18n="@@parents.selection.health.care1">
+                                Examens vétérinaires trimestriels
+                            </li>
+                            <li i18n="@@parents.selection.health.care2">
+                                Alimentation premium adaptée
+                            </li>
+                            <li i18n="@@parents.selection.health.care3">
+                                Exercice quotidien et socialisation
+                            </li>
+                            <li i18n="@@parents.selection.health.care4">
+                                Environnement familial aimant
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-content rounded-lg">
+        <h3 class="text-h3 text-center" i18n="@@parents.faq.title">
+            Questions fréquentes sur nos parents
+        </h3>
+
+        <div class="flex flex-col gap-4">
+            @for (faq of faq; track faq.question) {
+                <div class="collapse-plus collapse-plus::after collapse">
+                    <input type="radio" name="parents-faq-accordion" [checked]="$index === 0" />
+                    <div class="collapse-title font-serif text-xl font-medium">
+                        {{ faq.question }}
+                    </div>
+                    <div class="collapse-content">
+                        <p>
+                            {{ faq.answer }}
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+    <section class="section-content bg-primary/10 rounded-lg">
+        <h3 class="text-h3 text-center" i18n="@@parents.contact.title">
+            Découvrez nos chiots issus de ces lignées exceptionnelles
+        </h3>
+
+        <p class="mx-auto mb-6 max-w-2xl" i18n="@@parents.contact.description">
+            Nos reproducteurs d'exception donnent naissance à des chiots de qualité supérieure.
+            Découvrez nos chiots disponibles ou contactez-nous pour en savoir plus sur nos lignées
+            et notre élevage.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-4">
+            <a [routerLink]="routes.puppies.path" class="btn btn-primary">
+                <i class="icon-[carbon--favorite] mr-2"></i>
+                <span i18n="@@parents.contact.viewPuppies">Voir nos chiots</span>
+            </a>
+            <a [routerLink]="routes.about.path" class="btn btn-outline">
+                <i class="icon-[carbon--chat] mr-2"></i>
+                <span i18n="@@parents.contact.contactUs">Nous contacter</span>
+            </a>
+            <a [routerLink]="routes.reservation.path" class="btn btn-secondary">
+                <i class="icon-[carbon--calendar] mr-2"></i>
+                <span i18n="@@parents.contact.reserve">Réserver un chiot</span>
+            </a>
+        </div>
+    </section>
+</div>

@@ -6,6 +6,11 @@ import { Parent, ParentsResponse } from '@/core/models/parent.model';
 import { LoadingState } from '@/shared/rxjs/with-loading-state.operator';
 import { withLoadingState } from '@/shared/rxjs/with-loading-state.operator';
 
+export interface ParentSortOptions {
+    field: 'name' | 'birthDate' | 'color';
+    direction: 'asc' | 'desc';
+}
+
 @Injectable({
     providedIn: 'root',
 })
@@ -24,58 +29,54 @@ export class ParentService {
         );
     }
 
-    getParentById(id: string): Observable<LoadingState<Parent | null>> {
+    getParentById(allParents: Parent[], id: string): Parent | null {
+        return allParents.find((parent) => parent.id === id) || null;
+    }
+
+    sortParents(parents: Parent[], sortOptions: ParentSortOptions): Parent[] {
+        return [...parents].sort((a, b) => {
+            let comparison = 0;
+            switch (sortOptions.field) {
+                case 'name':
+                    comparison = a.name.localeCompare(b.name);
+                    break;
+                case 'birthDate':
+                    comparison = new Date(a.birthDate).getTime() - new Date(b.birthDate).getTime();
+                    break;
+                case 'color':
+                    comparison = a.color.localeCompare(b.color);
+                    break;
+            }
+            return sortOptions.direction === 'desc' ? -comparison : comparison;
+        });
+    }
+
+    searchParents(allParents: Parent[], query: string): Parent[] {
+        return allParents.filter((parent) => this.matchesSearchQuery(parent, query));
+    }
+
+    getMaleParents(allParents: Parent[]): Parent[] {
+        return allParents.filter((parent) => parent.gender === 'male');
+    }
+
+    getFemaleParents(allParents: Parent[]): Parent[] {
+        return allParents.filter((parent) => parent.gender === 'female');
+    }
+
+    getActiveParents(allParents: Parent[]): Parent[] {
+        return allParents.filter((parent) => parent.status === 'active');
+    }
+
+    getRetiredParents(allParents: Parent[]): Parent[] {
+        return allParents.filter((parent) => parent.status === 'retired');
+    }
+
+    // Méthode Observable pour compatibilité avec les composants existants
+    getParentByIdObservable(id: string): Observable<LoadingState<Parent | null>> {
         return this.getAllParents().pipe(
             map((loadingState) => ({
                 ...loadingState,
                 data: loadingState.data?.find((parent) => parent.id === id) || null,
-            }))
-        );
-    }
-
-    getMaleParents(): Observable<LoadingState<Parent[]>> {
-        return this.getAllParents().pipe(
-            map((loadingState) => ({
-                ...loadingState,
-                data: loadingState.data?.filter((parent) => parent.gender === 'male') || [],
-            }))
-        );
-    }
-
-    getFemaleParents(): Observable<LoadingState<Parent[]>> {
-        return this.getAllParents().pipe(
-            map((loadingState) => ({
-                ...loadingState,
-                data: loadingState.data?.filter((parent) => parent.gender === 'female') || [],
-            }))
-        );
-    }
-
-    getActiveParents(): Observable<LoadingState<Parent[]>> {
-        return this.getAllParents().pipe(
-            map((loadingState) => ({
-                ...loadingState,
-                data: loadingState.data?.filter((parent) => parent.status === 'active') || [],
-            }))
-        );
-    }
-
-    getParentOffspring(parentId: string): Observable<LoadingState<string[]>> {
-        return this.getParentById(parentId).pipe(
-            map((loadingState) => ({
-                ...loadingState,
-                data: loadingState.data?.offspring || [],
-            }))
-        );
-    }
-
-    searchParents(query: string): Observable<LoadingState<Parent[]>> {
-        return this.getAllParents().pipe(
-            map((loadingState) => ({
-                ...loadingState,
-                data:
-                    loadingState.data?.filter((parent) => this.matchesSearchQuery(parent, query)) ||
-                    [],
             }))
         );
     }
@@ -85,14 +86,13 @@ export class ParentService {
             .toLowerCase()
             .split(' ')
             .filter((term) => term.length > 0);
+
         const searchableText = [
             parent.name,
             parent.description,
             parent.color,
             parent.pedigree.registration,
             ...parent.pedigree.lineage,
-            ...parent.achievements.map((a) => a.title),
-            ...parent.healthTests.map((h) => h.name),
         ]
             .join(' ')
             .toLowerCase();
