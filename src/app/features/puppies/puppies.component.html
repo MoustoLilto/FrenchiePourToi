@@ -207,4 +207,79 @@
             </app-loading-state>
         </main>
     </div>
+
+    <section class="section-content bg-base-100 rounded-lg">
+        <h3 class="text-h3 text-center" i18n="@@puppies.nextLitters.sectionTitle">
+            Prochaines portées
+        </h3>
+
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+            @for (litter of nextLitters; track litter.expectedDate) {
+                <div class="card bg-base-200">
+                    <div class="card-body">
+                        <h3 class="card-title font-serif" i18n="@@puppies.nextLitters.title">
+                            Portée prévue en {{ litter.expectedDate }}
+                        </h3>
+
+                        <p i18n="@@puppies.nextLitters.description">
+                            Une portée est prévue pour {{ litter.expectedDate }} entre notre femelle
+                            {{ litter.female }} et notre mâle {{ litter.male }}. Les chiots seront
+                            disponibles à partir de {{ litter.releaseDate }}.
+                        </p>
+
+                        <div class="card-actions justify-end">
+                            <a
+                                [routerLink]="routes.reservation.path"
+                                class="btn btn-primary btn-sm"
+                                i18n="@@puppies.nextLitters.reserve"
+                            >
+                                Pré-réserver
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+    <section class="section-content rounded-lg">
+        <h3 class="text-h3 text-center" i18n="@@puppies.faq.title">Questions fréquentes</h3>
+
+        <div class="flex flex-col gap-4">
+            @for (faq of faq; track faq.question) {
+                <div class="collapse-plus collapse-plus::after collapse">
+                    <input type="radio" name="faq-accordion" [checked]="$index === 0" />
+                    <div class="collapse-title font-serif text-xl font-medium">
+                        {{ faq.question }}
+                    </div>
+                    <div class="collapse-content">
+                        <p>
+                            {{ faq.answer }}
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+    <section class="section-content bg-primary/10 rounded-lg">
+        <h3 class="text-h3 text-center" i18n="@@puppies.contact.title">
+            Prêt à accueillir un bouledogue français ?
+        </h3>
+
+        <p class="mx-auto mb-6 max-w-2xl" i18n="@@puppies.contact.description">
+            Contactez-nous dès aujourd'hui pour en savoir plus sur nos chiots disponibles ou pour
+            réserver une visite de notre élevage. Nous serons ravis de vous accueillir et de vous
+            présenter nos bouledogues.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-4">
+            <a [routerLink]="routes.about.path" class="btn btn-outline">
+                <span i18n="@@puppies.contact.contactUs">Nous contacter</span>
+            </a>
+            <a [routerLink]="routes.reservation.path" class="btn btn-primary">
+                <span i18n="@@puppies.contact.reserve">Réserver un chiot</span>
+            </a>
+        </div>
+    </section>
 </div>

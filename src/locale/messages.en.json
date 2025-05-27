@@ -111,6 +111,22 @@
     "pagination.previous.short": "Prev",
     "pagination.next.aria-label": "Next page",
     "pagination.next.short": "Next",
-    "pagination.per-page": " Items per page: "
+    "pagination.per-page": " Items per page: ",
+
+    "puppies.nextLitters.sectionTitle": " Next litters ",
+    "puppies.nextLitters.title": " Litter expected in {$INTERPOLATION} ",
+    "puppies.nextLitters.description": "A litter is expected in {$INTERPOLATION} between our female {$INTERPOLATION_1} and our male {$INTERPOLATION_2}. The puppies will be available from {$INTERPOLATION_3}. ",
+    "puppies.nextLitters.reserve": "Pre-reserve",
+    "puppies.faq.title": "Frequently asked questions",
+    "puppies.contact.title": " Ready to welcome a French Bulldog? ",
+    "puppies.contact.description": " Contact us today to learn more about our available puppies or to schedule a visit to our breeding. We will be happy to welcome you and introduce you to our French Bulldogs. ",
+    "puppies.contact.contactUs": "Contact us",
+    "puppies.contact.reserve": "Reserve a puppy",
+    "puppies.faq.reserve.question": "How to reserve a puppy?",
+    "puppies.faq.reserve.answer": "You can contact us by phone, email or through our contact form. A deposit of 30% of the puppy's price is required to confirm the reservation. The balance is to be paid upon delivery of the puppy.",
+    "puppies.faq.age.question": "At what age are the puppies available?",
+    "puppies.faq.age.answer": "Our puppies are available from 8 weeks, the legal minimum age for the sale of a puppy. This allows them to stay with their mother and siblings for a good socialization.",
+    "puppies.faq.documents.question": "What documents are provided with the puppy?",
+    "puppies.faq.documents.answer": "Each puppy is sold with a health certificate issued by our veterinarian, a health record of vaccinations, an electronic chip, a LOF birth certificate (if applicable), a sales contract, and a written guarantee."
   }
 }

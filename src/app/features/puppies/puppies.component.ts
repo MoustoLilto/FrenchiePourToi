@@ -36,6 +36,34 @@ export class PuppiesComponent implements OnInit, OnDestroy {
 
     routes = routes;
     skeletonArray = Array(6).fill(0);
+    nextLitters = [
+        {
+            expectedDate: 'juin 2023',
+            female: 'Luna',
+            male: 'Max',
+            releaseDate: 'août 2023',
+        },
+        {
+            expectedDate: 'septembre 2023',
+            releaseDate: 'novembre 2023',
+            female: 'Bella',
+            male: 'Oscar',
+        },
+    ];
+    faq = [
+        {
+            question: $localize`:@@puppies.faq.reserve.question:Comment réserver un chiot ?`,
+            answer: $localize`:@@puppies.faq.reserve.answer:Pour réserver un chiot, vous pouvez nous contacter par téléphone, email ou via notre formulaire de contact. Un acompte de 30% du prix du chiot est demandé pour confirmer la réservation. Le solde est à régler lors de la remise du chiot.`,
+        },
+        {
+            question: $localize`:@@puppies.faq.age.question:À quel âge les chiots sont-ils disponibles ?`,
+            answer: $localize`:@@puppies.faq.age.answer:Nos chiots sont disponibles à partir de 8 semaines, âge légal minimum pour la cession d'un chiot. Cela leur permet de rester suffisamment longtemps avec leur mère et leurs frères et sœurs pour une bonne socialisation.`,
+        },
+        {
+            question: $localize`:@@puppies.faq.documents.question:Quels documents sont fournis avec le chiot ?`,
+            answer: $localize`:@@puppies.faq.documents.answer:Chaque chiot est vendu avec un certificat de bonne santé délivré par notre vétérinaire, un carnet de santé à jour des vaccinations, une puce électronique, un certificat de naissance LOF (si applicable), un contrat de vente et une garantie écrite.`,
+        },
+    ];
 
     private defaultSortKey = 'name-asc';
     private defaultPageSize = 12;

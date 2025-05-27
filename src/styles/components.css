@@ -18,6 +18,9 @@
     .text-h3 {
         @apply font-serif font-bold text-primary text-2xl md:text-3xl;
     }
+    .text-h4 {
+        @apply font-serif font-medium text-xl md:text-2xl;
+    }
     .text-subtitle {
         @apply font-sans font-medium text-lg text-base-content;
     }
@@ -45,6 +48,9 @@
     }
     .section-header {
         @apply flex-col-center w-full gap-8 px-4 pt-8 md:px-8;
+    }
+    .section-content {
+        @apply flex flex-col gap-8 px-4 md:px-8 py-8;
     }
 
     /* Sections d'information */
