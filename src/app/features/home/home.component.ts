@@ -166,10 +166,10 @@ import { LoadingStateComponent } from '@/shared/components/loading-state.compone
                         <app-cloudinary-image
                             inputClass="aspect-1/1 size-46 rounded-full object-cover object-center"
                             publicId="WhatsApp_Image_2025-03-07_at_15.57.45_xy8noe"
-                            i18n-alt="@@home.puppies.alt"
+                            i18n-alt="@@home.contact.alt"
                             [width]="184"
                             [height]="184"
-                            alt="Chiot bouledogue français"
+                            alt="Avatar de l'élevage"
                         />
                     </div>
 

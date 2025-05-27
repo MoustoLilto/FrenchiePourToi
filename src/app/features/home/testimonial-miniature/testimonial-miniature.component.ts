@@ -23,10 +23,10 @@ import { Testimonial } from '@/core/models/testimonial.model';
                                 class="relative size-full"
                                 inputClass="size-12 object-top"
                                 publicId="IMG_0460_f8onkt"
-                                i18n-alt="@@home.puppies.alt"
+                                i18n-alt="@@home.testimonials.alt"
                                 [width]="48"
                                 [height]="48"
-                                alt="Chiot bouledogue français"
+                                alt="Avatar du propriétaire"
                             />
                         </div>
                     </div>
