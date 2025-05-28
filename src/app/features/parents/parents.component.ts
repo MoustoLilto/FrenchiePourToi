@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ParentStore } from '@/core/stores/parents.store';
+import { ParentStore } from '~/app/core/stores/parent.store';
 import { CloudinaryImageComponent } from '@/shared/components/cloudinary-image/cloudinary-image.component';
 import { LoadingStateComponent } from '@/shared/components/loading-state.component';
 import { ParentCardComponent } from '@/features/parents/parent-card.component';

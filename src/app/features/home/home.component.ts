@@ -1,17 +1,16 @@
 import { Component, inject } from '@angular/core';
-import { AsyncPipe } from '@angular/common'; // Ajoutez cette ligne
 import { layoutStore } from '@/core/stores/layout.store';
 import { IntersectionObserverDirective } from '@/shared/directives/intersection-observer.directive';
 import { CloudinaryImageComponent } from '@/shared/components/cloudinary-image/cloudinary-image.component';
 import { PuppyMiniatureComponent } from './puppy-miniature/puppy-miniature.component';
+import { ParentMiniatureComponent } from './parent-miniature.component';
 import { TestimonialMiniatureComponent } from './testimonial-miniature/testimonial-miniature.component';
 import { RouterLink } from '@angular/router';
 import { routes } from '@/core/constants/routes.constants';
-import { Puppy } from '@/core/models/puppy.model';
 import { Testimonial } from '@/core/models/testimonial.model';
-import { DataService, LoadingState } from '@/core/services/data.service';
-import { Observable } from 'rxjs';
 import { LoadingStateComponent } from '@/shared/components/loading-state.component';
+import { PuppyStore } from '@/core/stores/puppy.store';
+import { ParentStore } from '~/app/core/stores/parent.store';
 
 @Component({
     selector: 'app-home',
@@ -22,16 +21,16 @@ import { LoadingStateComponent } from '@/shared/components/loading-state.compone
         PuppyMiniatureComponent,
         TestimonialMiniatureComponent,
         LoadingStateComponent,
-        AsyncPipe,
+        ParentMiniatureComponent,
     ],
     template: `
         <div class="container flex flex-col">
             <!-- Section Présentation -->
-            <header class="section flex-col-center h-120 w-full gap-12 md:flex-row">
+            <header class="section flex-col-center min-h-120 w-full gap-x-12 gap-y-0 md:flex-row">
                 <div
                     appIntersectionObserver
                     (intersectionChange)="onIntersectionChange($event)"
-                    class="flex-center min-h-34 relative h-full w-full md:w-1/3"
+                    class="flex-center min-h-34 h-90 relative w-full md:w-1/3"
                 >
                     <app-cloudinary-image
                         class="relative size-full"
@@ -73,10 +72,10 @@ import { LoadingStateComponent } from '@/shared/components/loading-state.compone
             <section class="section flex flex-col gap-8">
                 <h2 class="text-h2 text-center" i18n="@@home.puppies.title">Nos derniers chiots</h2>
 
-                <app-loading-state [state]="puppies$ | async">
+                <app-loading-state [state]="puppyStore.puppies()">
                     <ng-template let-state>
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                            @for (puppy of state.data; track puppy.id) {
+                            @for (puppy of puppyStore.getFeaturedPuppies(); track puppy.id) {
                                 <app-puppy-miniature [puppy]="puppy" />
                             } @empty {
                                 <div class="flex-center flex-col gap-4">
@@ -146,6 +145,37 @@ import { LoadingStateComponent } from '@/shared/components/loading-state.compone
                 </div>
             </section>
 
+            <!-- Section Derniers Parents -->
+            <section class="section flex flex-col gap-8">
+                <h2 class="text-h2 text-center" i18n="@@home.parents.title">
+                    Nos derniers parents
+                </h2>
+
+                <app-loading-state [state]="parentStore.parents()">
+                    <ng-template let-state>
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                            @for (parent of parentStore.getFeaturedParents(); track parent.id) {
+                                <app-parent-miniature [parent]="parent" />
+                            } @empty {
+                                <div class="flex-center flex-col gap-4">
+                                    <p i18n="@@common.noData">Aucun parent disponible</p>
+                                </div>
+                            }
+                        </div>
+                    </ng-template>
+                </app-loading-state>
+
+                <div class="flex-center">
+                    <a
+                        [routerLink]="routes.parents.path"
+                        class="btn btn-outline"
+                        i18n="@@home.parents.viewAll"
+                    >
+                        Voir tous nos parents
+                    </a>
+                </div>
+            </section>
+
             <!-- Section Témoignages -->
             <section class="section flex flex-col gap-8">
                 <h2 class="text-h2 text-center" i18n="@@home.testimonials.title">
@@ -201,20 +231,16 @@ import { LoadingStateComponent } from '@/shared/components/loading-state.compone
 export class HomeComponent {
     layoutStore = inject(layoutStore);
     routes = routes;
-
-    puppies$?: Observable<LoadingState<Puppy[]>>;
-    // testimonials = signal<Testimonial[]>([]);
+    puppyStore = inject(PuppyStore);
+    parentStore = inject(ParentStore);
 
     onIntersectionChange(isVisible: boolean) {
         this.layoutStore.setIsHomeLogoVisible(isVisible);
     }
 
-    constructor(private dataService: DataService) {
-        this.puppies$ = this.dataService.getPuppies();
-
-        // this.dataService.getTestimonials().subscribe((testimonials) => {
-        //     this.testimonials.set(testimonials);
-        // });
+    constructor() {
+        this.puppyStore.loadAllPuppies();
+        this.parentStore.loadAllParents();
     }
 
     testimonials: Testimonial[] = [

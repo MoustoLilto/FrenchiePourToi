@@ -6,7 +6,7 @@ import { ParentService, ParentSortOptions } from '@/core/services/parent.service
 import { LoadingState } from '@/shared/rxjs/with-loading-state.operator';
 import { switchMap, tap } from 'rxjs/operators';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { pipe } from 'rxjs';
+import { of, pipe } from 'rxjs';
 
 interface ParentState {
     parents: LoadingState<Parent[]>;
@@ -72,7 +72,13 @@ export const ParentStore = signalStore(
                 tap(() =>
                     patchState(store, { parents: { data: null, loading: true, error: null } })
                 ),
-                switchMap(() => parentService.getAllParents()),
+                switchMap(() => {
+                    const currentParents = store.parents();
+                    if (currentParents.data && currentParents.data.length > 0) {
+                        return of(currentParents);
+                    }
+                    return parentService.getAllParents();
+                }),
                 tap((loadingState) => patchState(store, { parents: loadingState }))
             )
         ),
@@ -90,6 +96,13 @@ export const ParentStore = signalStore(
         getParentById: (id: string) => {
             const parents = store.parents().data;
             return parents ? parentService.getParentById(parents, id) : null;
+        },
+        getFeaturedParents: () => {
+            const parents = store.parents().data;
+            if (store.isParentsLoaded() && parents) {
+                return parentService.getFeaturedParents(parents);
+            }
+            return [];
         },
     }))
 );

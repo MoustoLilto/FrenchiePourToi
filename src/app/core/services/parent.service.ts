@@ -71,7 +71,10 @@ export class ParentService {
         return allParents.filter((parent) => parent.status === 'retired');
     }
 
-    // Méthode Observable pour compatibilité avec les composants existants
+    getFeaturedParents(allParents: Parent[], limit = 3): Parent[] {
+        return allParents.slice(0, limit);
+    }
+
     getParentByIdObservable(id: string): Observable<LoadingState<Parent | null>> {
         return this.getAllParents().pipe(
             map((loadingState) => ({

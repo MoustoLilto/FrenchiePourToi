@@ -6,7 +6,7 @@ import { PuppyService, PuppyFilters, PuppySortOptions } from '@/core/services/pu
 import { LoadingState } from '@/shared/rxjs/with-loading-state.operator';
 import { switchMap, tap } from 'rxjs/operators';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { pipe } from 'rxjs';
+import { pipe, of } from 'rxjs';
 
 interface PuppyState {
     puppies: LoadingState<Puppy[]>;
@@ -28,35 +28,6 @@ export const PuppyStore = signalStore(
     { providedIn: 'root' },
 
     withState(initialState),
-
-    withMethods((store, puppyService = inject(PuppyService)) => ({
-        loadAllPuppies: rxMethod<void>(
-            pipe(
-                switchMap(() => puppyService.getAllPuppies()),
-                tap((result) => patchState(store, { puppies: result }))
-            )
-        ),
-
-        updatePuppies: (puppies: LoadingState<Puppy[]>) => {
-            patchState(store, { puppies });
-        },
-        updateFilters: (filters: PuppyFilters) => {
-            patchState(store, { filters });
-        },
-        updateSearchQuery: (searchQuery: string) => {
-            patchState(store, { searchQuery });
-        },
-        updateSortOptions: (sortOptions: PuppySortOptions) => {
-            patchState(store, { sortOptions });
-        },
-
-        clearFilters: () => {
-            patchState(store, {
-                filters: {},
-                searchQuery: '',
-            });
-        },
-    })),
 
     withComputed((state, puppyService = inject(PuppyService)) => {
         const isPuppiesLoaded = computed(() => !state.puppies().loading && !state.puppies().error);
@@ -113,5 +84,47 @@ export const PuppyStore = signalStore(
                 return 0;
             }),
         };
-    })
+    }),
+
+    withMethods((store, puppyService = inject(PuppyService)) => ({
+        loadAllPuppies: rxMethod<void>(
+            pipe(
+                switchMap(() => {
+                    const currentPuppies = store.puppies();
+                    if (currentPuppies.data && currentPuppies.data.length > 0) {
+                        return of(currentPuppies);
+                    }
+                    return puppyService.getAllPuppies();
+                }),
+                tap((result) => patchState(store, { puppies: result }))
+            )
+        ),
+
+        updatePuppies: (puppies: LoadingState<Puppy[]>) => {
+            patchState(store, { puppies });
+        },
+        updateFilters: (filters: PuppyFilters) => {
+            patchState(store, { filters });
+        },
+        updateSearchQuery: (searchQuery: string) => {
+            patchState(store, { searchQuery });
+        },
+        updateSortOptions: (sortOptions: PuppySortOptions) => {
+            patchState(store, { sortOptions });
+        },
+
+        clearFilters: () => {
+            patchState(store, {
+                filters: {},
+                searchQuery: '',
+            });
+        },
+        getFeaturedPuppies: () => {
+            const puppies = store.puppies().data;
+            if (store.isPuppiesLoaded() && puppies) {
+                return puppyService.getFeaturedPuppies(puppies);
+            }
+            return [];
+        },
+    }))
 );

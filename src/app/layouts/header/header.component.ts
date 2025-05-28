@@ -78,9 +78,7 @@ export class HeaderComponent {
     layoutStore = inject(layoutStore);
     isDark: Signal<boolean>;
     routes = routes;
-    navItems = Object.values(routes).filter(
-        (route) => route.path !== routes.home.path && route.path !== routes.blog.path
-    );
+    navItems = Object.values(routes).filter((route) => route.path !== routes.blog.path);
     currentLocale: string;
     Language = Language;
 
