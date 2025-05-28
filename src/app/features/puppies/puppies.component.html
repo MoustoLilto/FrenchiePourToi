@@ -113,7 +113,10 @@
                 <ng-template let-state>
                     @if (paginatedPuppies().length > 0) {
                         <!-- Grille des chiots -->
-                        <div class="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+                        <div
+                            id="puppies-grid"
+                            class="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
+                        >
                             @for (puppy of paginatedPuppies(); track puppy.id) {
                                 <app-puppy-card
                                     [puppyData]="puppy"

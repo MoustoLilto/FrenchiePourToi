@@ -129,6 +129,7 @@ export class PuppiesComponent implements OnInit, OnDestroy {
     }
     onPageSizeChange(size: number) {
         this.updateUrlParams({ size, page: 1 });
+        this.scrollToTop();
     }
 
     // Actions
@@ -159,6 +160,11 @@ export class PuppiesComponent implements OnInit, OnDestroy {
     }
 
     private scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => {
+            const puppiesGrid = document.querySelector('#puppies-grid');
+            if (puppiesGrid) {
+                puppiesGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 100);
     }
 }

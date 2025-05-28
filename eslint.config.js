@@ -51,6 +51,9 @@ module.exports = tseslint.config(
     {
         files: ['**/*.html'],
         extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
+        rules: {
+            '@angular-eslint/template/label-has-associated-control': 'off',
+        },
     },
     {
         files: ['**/*.ts', '**/*.html'],

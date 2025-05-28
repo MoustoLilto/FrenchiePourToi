@@ -53,6 +53,30 @@ import { PuppyStore } from '@/core/stores/puppy.store';
                     />
                 </div>
 
+                <!-- Statut -->
+                <div class="form-control">
+                    <label for="status-select" class="label">
+                        <span class="label-text" i18n="@@puppy.filters.status">Disponibilité</span>
+                    </label>
+                    <select
+                        id="status-select"
+                        class="select select-bordered select-sm"
+                        [(ngModel)]="status"
+                        (ngModelChange)="onFiltersChange()"
+                    >
+                        <option value="" i18n="@@puppy.filters.status.all">Tous</option>
+                        <option value="available" i18n="@@puppy.filters.status.available">
+                            Disponible
+                        </option>
+                        <option value="reserved" i18n="@@puppy.filters.status.reserved">
+                            Réservé
+                        </option>
+                        <option value="adopted" i18n="@@puppy.filters.status.adopted">
+                            Adopté
+                        </option>
+                    </select>
+                </div>
+
                 <!-- Sexe -->
                 <div class="form-control">
                     <label for="gender-select" class="label">
@@ -85,30 +109,6 @@ import { PuppyStore } from '@/core/stores/puppy.store';
                         @for (color of availableColors; track color) {
                             <option [value]="color">{{ color }}</option>
                         }
-                    </select>
-                </div>
-
-                <!-- Statut -->
-                <div class="form-control">
-                    <label for="status-select" class="label">
-                        <span class="label-text" i18n="@@puppy.filters.status">Statut</span>
-                    </label>
-                    <select
-                        id="status-select"
-                        class="select select-bordered select-sm"
-                        [(ngModel)]="status"
-                        (ngModelChange)="onFiltersChange()"
-                    >
-                        <option value="" i18n="@@puppy.filters.status.all">Tous</option>
-                        <option value="available" i18n="@@puppy.filters.status.available">
-                            Disponible
-                        </option>
-                        <option value="reserved" i18n="@@puppy.filters.status.reserved">
-                            Réservé
-                        </option>
-                        <option value="adopted" i18n="@@puppy.filters.status.adopted">
-                            Adopté
-                        </option>
                     </select>
                 </div>
 
