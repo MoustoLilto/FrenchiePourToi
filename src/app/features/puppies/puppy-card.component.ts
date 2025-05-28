@@ -113,7 +113,7 @@ import { routes } from '@/core/constants/routes.constants';
                         @if (showReserveButton && puppy().status === 'available') {
                             <a
                                 [routerLink]="[routes.reservation.path]"
-                                [queryParams]="{ puppy: puppy().id }"
+                                [queryParams]="{ puppyId: puppy().id }"
                                 class="btn btn-accent btn-sm flex-1"
                                 [attr.aria-label]="'Réserver ' + puppy().name"
                             >

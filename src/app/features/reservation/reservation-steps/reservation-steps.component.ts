@@ -1,12 +1,9 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { routes } from '@/core/constants/routes.constants';
 
 @Component({
     selector: 'app-reservation-steps',
     standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [RouterLink],
     template: `
         <section class="section-content">
             <div class="flex-col-center gap-8">
@@ -35,19 +32,6 @@ import { routes } from '@/core/constants/routes.constants';
                                     {{ step.title }}
                                 </h4>
                                 <p>{{ step.description }}</p>
-
-                                @if (step.number === 1) {
-                                    <div
-                                        class="bg-primary/80 flex-center absolute inset-0 hidden group-hover:flex"
-                                    >
-                                        <a [routerLink]="routes.puppies.path" class="btn btn-ghost">
-                                            <i class="icon-[carbon--arrow-up-right]"></i>
-                                            <span i18n="@@reservation.process.button">
-                                                Voir nos chiots
-                                            </span>
-                                        </a>
-                                    </div>
-                                }
                             </div>
                         </div>
                     }
@@ -57,7 +41,6 @@ import { routes } from '@/core/constants/routes.constants';
     `,
 })
 export class ReservationStepsComponent {
-    routes = routes;
     steps = [
         {
             number: 1,

@@ -5,57 +5,25 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
     standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-        <div class="w-full max-w-4xl">
-            <div class="space-y-4">
+        <section class="section-content rounded-lg">
+            <h2 class="text-h3 text-center" i18n="@@reservation.faq.title">Questions fréquentes</h2>
+
+            <div class="flex flex-col gap-4">
                 @for (faq of faqs; track faq.id) {
-                    <div class="collapse-plus bg-base-100 collapse shadow-lg">
-                        <input type="radio" name="faq-accordion" [id]="'faq-' + faq.id" />
-                        <div class="collapse-title text-lg font-medium">
-                            <label [for]="'faq-' + faq.id" class="cursor-pointer">
-                                {{ faq.question }}
-                            </label>
+                    <div class="collapse-plus collapse-plus::after collapse">
+                        <input type="radio" name="faq-accordion" [checked]="$index === 0" />
+                        <div class="collapse-title font-serif text-xl font-medium">
+                            {{ faq.question }}
                         </div>
                         <div class="collapse-content">
-                            <p class="text-base-content/80">{{ faq.answer }}</p>
+                            <p>
+                                {{ faq.answer }}
+                            </p>
                         </div>
                     </div>
                 }
             </div>
-
-            <!-- Contact pour plus d'informations -->
-            <div class="mt-8 text-center">
-                <div class="card bg-primary/5 border-primary/20 border">
-                    <div class="card-body">
-                        <h3
-                            class="card-title text-primary justify-center"
-                            i18n="@@reservation.faq.contact.title"
-                        >
-                            Vous avez d'autres questions ?
-                        </h3>
-                        <p
-                            class="text-base-content/70 text-center"
-                            i18n="@@reservation.faq.contact.description"
-                        >
-                            Notre équipe est là pour vous aider et répondre à toutes vos
-                            interrogations
-                        </p>
-                        <div class="card-actions mt-4 justify-center">
-                            <a href="tel:+33123456789" class="btn btn-primary btn-sm">
-                                <i class="icon-[carbon--phone] mr-2"></i>
-                                <span i18n="@@reservation.faq.contact.phone">Nous appeler</span>
-                            </a>
-                            <a
-                                href="mailto:contact@frenchiepourtooi.fr"
-                                class="btn btn-outline btn-sm"
-                            >
-                                <i class="icon-[carbon--email] mr-2"></i>
-                                <span i18n="@@reservation.faq.contact.email">Nous écrire</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </section>
     `,
 })
 export class ReservationFaqComponent {

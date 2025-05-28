@@ -1,19 +1,18 @@
-import { Component, inject, signal, computed } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { CloudinaryImageComponent } from '@/shared/components/cloudinary-image/cloudinary-image.component';
-import { LoadingStateComponent } from '@/shared/components/loading-state.component';
 import { PuppyStore } from '@/core/stores/puppy.store';
 import { routes } from '@/core/constants/routes.constants';
 import { ReservationStepsComponent } from './reservation-steps/reservation-steps.component';
 import { ReservationFormComponent } from './reservation-form/reservation-form.component';
 import { ReservationFaqComponent } from './reservation-faq/reservation-faq.component';
+import { address } from '@/core/constants/address.constants';
 
 @Component({
     selector: 'app-reservation',
     imports: [
         RouterLink,
         CloudinaryImageComponent,
-        LoadingStateComponent,
         ReservationStepsComponent,
         ReservationFormComponent,
         ReservationFaqComponent,
@@ -64,128 +63,6 @@ import { ReservationFaqComponent } from './reservation-faq/reservation-faq.compo
 
             <app-reservation-steps />
 
-            <!-- <div class="flex flex-wrap justify-center gap-4">
-                <div class="badge badge-primary badge-lg">
-                    <i class="icon-[carbon--certificate] mr-2"></i>
-                    <span i18n="@@reservation.hero.guarantee">Garantie santé</span>
-                </div>
-                <div class="badge badge-secondary badge-lg">
-                    <i class="icon-[carbon--security] mr-2"></i>
-                    <span i18n="@@reservation.hero.secure">Paiement sécurisé</span>
-                </div>
-                <div class="badge badge-accent badge-lg">
-                    <i class="icon-[carbon--favorite] mr-2"></i>
-                    <span i18n="@@reservation.hero.support">Suivi personnalisé</span>
-                </div>
-            </div> -->
-
-            <!-- Section Chiots disponibles -->
-            <section class="section bg-base-100 rounded-lg">
-                <div class="flex-col-center gap-8">
-                    <h2 class="text-h2 text-center" i18n="@@reservation.available.title">
-                        Nos chiots disponibles
-                    </h2>
-
-                    <app-loading-state [state]="puppyStore.puppies()">
-                        <ng-template let-state>
-                            @if (availablePuppies().length > 0) {
-                                <div
-                                    class="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-                                >
-                                    @for (puppy of availablePuppies(); track puppy.id) {
-                                        <div
-                                            class="card bg-base-200 shadow-lg transition-shadow hover:shadow-xl"
-                                        >
-                                            <figure class="relative">
-                                                <app-cloudinary-image
-                                                    [publicId]="
-                                                        puppy.images[0]?.publicId || 'placeholder'
-                                                    "
-                                                    [alt]="puppy.name"
-                                                    inputClass="aspect-4/3 w-full object-cover"
-                                                    [width]="400"
-                                                    [height]="300"
-                                                />
-                                                <div class="absolute right-4 top-4">
-                                                    <div class="badge badge-success">
-                                                        <span i18n="@@reservation.available.status">
-                                                            Disponible
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </figure>
-
-                                            <div class="card-body">
-                                                <h3 class="card-title font-serif">
-                                                    {{ puppy.name }}
-                                                </h3>
-
-                                                <div class="flex flex-wrap gap-2 text-sm">
-                                                    <span class="badge badge-outline">
-                                                        {{ puppy.gender }}
-                                                    </span>
-                                                    <span class="badge badge-outline">
-                                                        {{ puppy.color }}
-                                                    </span>
-                                                </div>
-
-                                                <p
-                                                    class="text-base-content/70 line-clamp-2 text-sm"
-                                                >
-                                                    {{ puppy.description }}
-                                                </p>
-
-                                                <div
-                                                    class="card-actions mt-4 items-center justify-between"
-                                                >
-                                                    <span class="text-primary text-2xl font-bold">
-                                                        {{ puppy.price }}€
-                                                    </span>
-
-                                                    <button
-                                                        class="btn btn-primary btn-sm"
-                                                        (click)="selectPuppy(puppy.id)"
-                                                        i18n="@@reservation.available.select"
-                                                    >
-                                                        Réserver
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                            } @else {
-                                <div class="flex-center flex-col gap-6 py-12">
-                                    <i
-                                        class="icon-[carbon--information] text-base-content/30 text-6xl"
-                                    ></i>
-                                    <div class="text-center">
-                                        <h3
-                                            class="mb-2 text-xl font-semibold"
-                                            i18n="@@reservation.available.none.title"
-                                        >
-                                            Aucun chiot disponible actuellement
-                                        </h3>
-                                        <p
-                                            class="text-base-content/70"
-                                            i18n="@@reservation.available.none.description"
-                                        >
-                                            Nos chiots trouvent rapidement leur famille !
-                                            Contactez-nous pour être informé des prochaines portées.
-                                        </p>
-                                    </div>
-                                    <a [routerLink]="routes.puppies.path" class="btn btn-outline">
-                                        <span i18n="@@reservation.available.none.viewAll">
-                                            Voir tous nos chiots
-                                        </span>
-                                    </a>
-                                </div>
-                            }
-                        </ng-template>
-                    </app-loading-state>
-                </div>
-            </section>
-
             <!-- Section Formulaire de réservation -->
             @if (selectedPuppyId()) {
                 <section class="section">
@@ -195,140 +72,134 @@ import { ReservationFaqComponent } from './reservation-faq/reservation-faq.compo
                         </h2>
 
                         <app-reservation-form
+                            id="app-reservation-form"
                             [selectedPuppyId]="selectedPuppyId()!"
                             (formSubmitted)="onReservationSubmitted($event)"
                             (cancelled)="onReservationCancelled()"
                         />
                     </div>
                 </section>
+            } @else {
+                <section class="section bg-base-100 border-info rounded-lg border">
+                    <div class="flex-col-center gap-6 text-center">
+                        <i class="icon-[carbon--information] text-info text-6xl"></i>
+                        <h3 class="text-h3 text-base-content" i18n="@@reservation.no-puppy.title">
+                            Aucun chiot sélectionné
+                        </h3>
+                        <p
+                            class="text-base-content/70 max-w-2xl"
+                            i18n="@@reservation.no-puppy.description"
+                        >
+                            Pour réserver un chiot, veuillez d'abord en sélectionner un depuis notre
+                            page dédiée aux chiots disponibles.
+                        </p>
+                        <a [routerLink]="routes.puppies.path" class="btn btn-primary">
+                            <span i18n="@@reservation.no-puppy.browse">Voir nos chiots</span>
+                            <i class="icon-[carbon--arrow-right]"></i>
+                        </a>
+                    </div>
+                </section>
             }
 
             <!-- Section Informations importantes -->
-            <section class="section bg-warning/10 rounded-lg">
-                <div class="flex-col-center gap-6">
-                    <h2 class="text-h2 text-center" i18n="@@reservation.info.title">
-                        Informations importantes
-                    </h2>
+            <section class="section-content bg-base-100 rounded-lg">
+                <h3 class="text-h3 text-center" i18n="@@reservation.info.title">
+                    Informations importantes
+                </h3>
 
-                    <div class="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        <div class="card bg-base-100">
+                <div class="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    @for (info of importantInfo; track info.title) {
+                        <div class="card bg-base-200">
                             <div class="card-body items-center text-center">
-                                <i class="icon-[carbon--money] text-primary text-4xl"></i>
-                                <h3
-                                    class="card-title font-serif"
-                                    i18n="@@reservation.info.deposit.title"
-                                >
-                                    Acompte de réservation
+                                <i [class]="info.icon" class="text-primary text-4xl"></i>
+
+                                <h3 class="card-title font-serif">
+                                    {{ info.title }}
                                 </h3>
-                                <p class="text-sm" i18n="@@reservation.info.deposit.description">
-                                    Un acompte de 30% du prix du chiot est demandé pour confirmer
-                                    votre réservation. Le solde est à régler lors de la remise du
-                                    chiot.
+
+                                <p class="text-sm">
+                                    {{ info.description }}
                                 </p>
                             </div>
                         </div>
-
-                        <div class="card bg-base-100">
-                            <div class="card-body items-center text-center">
-                                <i class="icon-[carbon--calendar] text-primary text-4xl"></i>
-                                <h3
-                                    class="card-title font-serif"
-                                    i18n="@@reservation.info.delivery.title"
-                                >
-                                    Remise du chiot
-                                </h3>
-                                <p class="text-sm" i18n="@@reservation.info.delivery.description">
-                                    Les chiots sont disponibles à partir de 8 semaines. Nous vous
-                                    contacterons pour organiser la remise selon vos disponibilités.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="card bg-base-100">
-                            <div class="card-body items-center text-center">
-                                <i class="icon-[carbon--document] text-primary text-4xl"></i>
-                                <h3
-                                    class="card-title font-serif"
-                                    i18n="@@reservation.info.documents.title"
-                                >
-                                    Documents fournis
-                                </h3>
-                                <p class="text-sm" i18n="@@reservation.info.documents.description">
-                                    Certificat de santé, carnet de vaccination, puce électronique,
-                                    certificat LOF et contrat de vente inclus.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </section>
 
             <!-- Section FAQ -->
-            <section class="section">
-                <div class="flex-col-center gap-8">
-                    <h2 class="text-h2 text-center" i18n="@@reservation.faq.title">
-                        Questions fréquentes
-                    </h2>
-
-                    <app-reservation-faq />
-                </div>
-            </section>
+            <app-reservation-faq />
 
             <!-- Section Contact -->
-            <section class="section bg-primary/10 rounded-lg">
-                <div class="flex-col-center gap-6 text-center">
-                    <h2 class="text-h2" i18n="@@reservation.contact.title">
-                        Une question ? Nous sommes là pour vous aider
-                    </h2>
+            <section class="section-content bg-primary/10 rounded-lg">
+                <h3 class="text-h3 text-center" i18n="@@reservation.contact.title">
+                    Une question ? Nous sommes là pour vous aider
+                </h3>
 
-                    <p
-                        class="text-base-content/70 max-w-2xl"
-                        i18n="@@reservation.contact.description"
-                    >
-                        Notre équipe est disponible pour répondre à toutes vos questions et vous
-                        accompagner dans votre démarche d'adoption. N'hésitez pas à nous contacter !
-                    </p>
+                <p class="text-base-content/70 max-w-2xl" i18n="@@reservation.contact.description">
+                    Notre équipe est disponible pour répondre à toutes vos questions et vous
+                    accompagner dans votre démarche d'adoption. N'hésitez pas à nous contacter !
+                </p>
 
-                    <div class="flex flex-wrap justify-center gap-4">
-                        <a href="tel:+33123456789" class="btn btn-primary">
-                            <i class="icon-[carbon--phone] mr-2"></i>
-                            <span i18n="@@reservation.contact.phone">Nous appeler</span>
-                        </a>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a [href]="'tel:' + address.phone" class="btn btn-primary flex-center gap-2">
+                        <i class="icon-[carbon--phone]"></i>
+                        <span i18n="@@reservation.contact.phone">Nous appeler</span>
+                    </a>
 
-                        <a href="mailto:contact@frenchiepourtooi.fr" class="btn btn-outline">
-                            <i class="icon-[carbon--email] mr-2"></i>
-                            <span i18n="@@reservation.contact.email">Nous écrire</span>
-                        </a>
-                    </div>
+                    <a [href]="'mailto:' + address.email" class="btn btn-outline flex-center gap-2">
+                        <i class="icon-[carbon--email]"></i>
+                        <span i18n="@@reservation.contact.email">Nous écrire</span>
+                    </a>
                 </div>
             </section>
         </div>
     `,
 })
-export class ReservationComponent {
+export class ReservationComponent implements OnInit {
+    private route = inject(ActivatedRoute);
+    private router = inject(Router);
     puppyStore = inject(PuppyStore);
     routes = routes;
+    address = address;
 
     selectedPuppyId = signal<string | null>(null);
 
-    availablePuppies = computed(() => {
-        const puppies = this.puppyStore.puppies().data;
-        return puppies?.filter((puppy) => puppy.status === 'available') || [];
-    });
+    importantInfo = [
+        {
+            icon: 'icon-[carbon--money]',
+            title: $localize`:@@reservation.info.deposit.title:Acompte de réservation`,
+            description: $localize`:@@reservation.info.deposit.description:Un acompte de 30% du prix du chiot est demandé pour confirmer votre réservation. Le solde est à régler lors de la remise du chiot.`,
+        },
+        {
+            icon: 'icon-[carbon--calendar]',
+            title: $localize`:@@reservation.info.delivery.title:Remise du chiot`,
+            description: $localize`:@@reservation.info.delivery.description:Les chiots sont disponibles à partir de 8 semaines. Nous vous contacterons pour organiser la remise selon vos disponibilités.`,
+        },
+        {
+            icon: 'icon-[carbon--document]',
+            title: $localize`:@@reservation.info.documents.title:Documents fournis`,
+            description: $localize`:@@reservation.info.documents.description:Certificat de santé, carnet de vaccination, puce électronique, certificat LOF et contrat de vente inclus.`,
+        },
+    ];
 
-    constructor() {
-        this.puppyStore.loadAllPuppies();
-    }
-
-    selectPuppy(puppyId: string) {
-        this.selectedPuppyId.set(puppyId);
-        // Scroll vers le formulaire
-        setTimeout(() => {
-            const formSection = document.querySelector('app-reservation-form');
-            if (formSection) {
-                formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    ngOnInit() {
+        // Récupérer l'ID du chiot depuis les paramètres de requête
+        this.route.queryParams.subscribe((params) => {
+            const puppyId = params['puppyId'];
+            if (puppyId) {
+                this.selectedPuppyId.set(puppyId);
             }
-        }, 100);
+
+            // Faire défiler jusqu'au formulaire de réservation
+            setTimeout(() => {
+                const reservationForm = document.getElementById('app-reservation-form');
+                if (reservationForm) {
+                    reservationForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 500);
+        });
+
+        this.puppyStore.loadAllPuppies();
     }
 
     onReservationSubmitted(reservationData: any) {
@@ -339,5 +210,12 @@ export class ReservationComponent {
 
     onReservationCancelled() {
         this.selectedPuppyId.set(null);
+
+        this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { puppyId: null },
+            queryParamsHandling: 'replace',
+            replaceUrl: true,
+        });
     }
 }
