@@ -18,12 +18,12 @@ import { ScrollToTopButtonComponent } from '@/shared/components/scroll-to-top-bu
         <div
             appScrollListener
             #scrollListener="scrollListener"
-            class="bg-base-200 text-base-content flex h-full flex-col font-sans"
+            class="bg-base-200 text-base-content flex h-full min-h-full flex-col font-sans"
         >
             <app-header />
 
-            <main role="main" class="h-full flex-auto py-16">
-                <router-outlet />
+            <main role="main" class="flex-auto py-16">
+                <router-outlet></router-outlet>
             </main>
 
             @if (scrollListener.hasExceededScreenHeight()) {

@@ -24,30 +24,28 @@ import { ParentStore } from '~/app/core/stores/parent.store';
         ParentMiniatureComponent,
     ],
     template: `
-        <div class="container flex flex-col">
+        <div class="container flex h-full min-h-full flex-col">
             <!-- Section Présentation -->
-            <header class="section flex-col-center min-h-120 w-full gap-x-12 gap-y-0 md:flex-row">
-                <div
+            <header
+                class="section flex-col-center min-h-90 h-max w-full gap-x-12 gap-y-0 md:flex-row"
+            >
+                <app-cloudinary-image
                     appIntersectionObserver
                     (intersectionChange)="onIntersectionChange($event)"
-                    class="flex-center min-h-34 h-90 relative w-full md:w-1/3"
-                >
-                    <app-cloudinary-image
-                        class="relative size-full"
-                        [sizes]="'(max-width: 768px) 100vw, 33vw'"
-                        inputClass="object-contain"
-                        publicId="logo_l4z9mp"
-                        [isPriority]="true"
-                        i18n-alt="@@home.hero.alt"
-                        alt="Hero picture"
-                        [isFilled]="true"
-                    />
-                </div>
+                    class="flex-center min-h-34 relative size-full md:w-1/3"
+                    [sizes]="'(max-width: 768px) 100vw, 33vw'"
+                    inputClass="object-contain"
+                    publicId="logo_l4z9mp"
+                    [isPriority]="true"
+                    i18n-alt="@@home.hero.alt"
+                    alt="Hero picture"
+                    [isFilled]="true"
+                />
 
                 <div class="flex-col-start h-full w-full gap-6 md:w-2/3">
                     <h1 class="text-h1">Frenchie Pour Toi</h1>
 
-                    <p class="text-subtitle flex-col-start gap-4">
+                    <p class="flex-col-start gap-4 text-base font-medium">
                         <span i18n="@@home.hero.description">
                             Nous sommes un élevage familial spécialisé dans les bouledogues français
                             de qualité. Nos chiots sont élevés avec amour et attention pour devenir
@@ -69,7 +67,7 @@ import { ParentStore } from '~/app/core/stores/parent.store';
             </header>
 
             <!-- Section Derniers Chiots -->
-            <section class="section flex flex-col gap-8">
+            <section class="section">
                 <h2 class="text-h2 text-center" i18n="@@home.puppies.title">Nos derniers chiots</h2>
 
                 <app-loading-state [state]="puppyStore.puppies()">
@@ -98,7 +96,7 @@ import { ParentStore } from '~/app/core/stores/parent.store';
             </section>
 
             <!-- Section Pourquoi nous choisir -->
-            <section class="section bg-base-100 flex flex-col gap-8 rounded-lg">
+            <section class="section bg-base-100 rounded-lg">
                 <h2 class="text-h2 text-center" i18n="@@home.whyUs.title">
                     Pourquoi nous choisir ?
                 </h2>
@@ -146,7 +144,7 @@ import { ParentStore } from '~/app/core/stores/parent.store';
             </section>
 
             <!-- Section Derniers Parents -->
-            <section class="section flex flex-col gap-8">
+            <section class="section">
                 <h2 class="text-h2 text-center" i18n="@@home.parents.title">
                     Nos derniers parents
                 </h2>

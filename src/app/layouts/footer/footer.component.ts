@@ -9,7 +9,7 @@ import { address } from '@/core/constants/address.constants';
     imports: [SocialLinksComponent, RouterLink, RouterLinkActive],
     template: `
         <footer class="bg-primary/10 py-8">
-            <div class="container mx-auto px-4">
+            <div class="container px-4">
                 <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
                     <div class="flex flex-col items-start justify-start gap-4">
                         <h3 class="font-serif text-xl font-bold">Frenchie Pour Toi</h3>

@@ -22,13 +22,13 @@
         @apply font-serif font-medium text-xl md:text-2xl;
     }
     .text-subtitle {
-        @apply font-sans font-medium text-lg text-base-content;
+        @apply font-medium text-sm/6 text-base-content;
     }
     .text-body {
         @apply font-sans font-normal text-base leading-relaxed text-base-content;
     }
     .text-caption {
-        @apply font-sans font-normal text-sm text-base-content/70;
+        @apply font-normal text-sm text-base-content/70;
     }
     .text-quote {
         @apply italic font-semibold;
@@ -44,7 +44,7 @@
         @apply w-full max-w-7xl mx-auto;
     }
     .section {
-        @apply py-10 px-4 md:px-8 md:py-20;
+        @apply flex flex-col gap-8 py-10 px-4 md:px-8 md:py-20;
     }
     .section-header {
         @apply flex-col-center w-full gap-8 px-4 pt-8 md:px-8;
@@ -65,13 +65,5 @@
     }
     .info-section-subtitle {
         @apply text-sm text-base-content/80;
-    }
-}
-
-@layer base {
-    html,
-    body {
-        min-height: 100vh;
-        overflow-x: hidden;
     }
 }

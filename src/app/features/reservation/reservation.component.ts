@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { CloudinaryImageComponent } from '@/shared/components/cloudinary-image/cloudinary-image.component';
 import { PuppyStore } from '@/core/stores/puppy.store';
@@ -7,6 +7,7 @@ import { ReservationStepsComponent } from './reservation-steps/reservation-steps
 import { ReservationFormComponent } from './reservation-form/reservation-form.component';
 import { ReservationFaqComponent } from './reservation-faq/reservation-faq.component';
 import { address } from '@/core/constants/address.constants';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 @Component({
     selector: 'app-reservation',
@@ -65,8 +66,8 @@ import { address } from '@/core/constants/address.constants';
 
             <!-- Section Formulaire de réservation -->
             @if (selectedPuppyId()) {
-                <section class="section">
-                    <div class="flex-col-center gap-8">
+                <section class="section-content">
+                    <div class="flex-col-center gap-10">
                         <h2 class="text-h2 text-center" i18n="@@reservation.form.title">
                             Formulaire de réservation
                         </h2>
@@ -182,6 +183,11 @@ export class ReservationComponent implements OnInit {
         },
     ];
 
+    constructor(
+        @Inject(DOCUMENT) private document: Document,
+        @Inject(PLATFORM_ID) private platformId: object
+    ) {}
+
     ngOnInit() {
         // Récupérer l'ID du chiot depuis les paramètres de requête
         this.route.queryParams.subscribe((params) => {
@@ -192,9 +198,11 @@ export class ReservationComponent implements OnInit {
 
             // Faire défiler jusqu'au formulaire de réservation
             setTimeout(() => {
-                const reservationForm = document.getElementById('app-reservation-form');
-                if (reservationForm) {
-                    reservationForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (isPlatformBrowser(this.platformId)) {
+                    const reservationForm = this.document.getElementById('app-reservation-form');
+                    if (reservationForm) {
+                        reservationForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
                 }
             }, 500);
         });

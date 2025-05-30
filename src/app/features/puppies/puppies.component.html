@@ -1,4 +1,4 @@
-<div class="container flex flex-col gap-y-20">
+<div class="container flex h-full min-h-full flex-col gap-y-20">
     <header class="section-header">
         <h2 class="text-h2 text-center">
             <span i18n="@@puppies.title">Nos chiots</span>
@@ -34,17 +34,15 @@
                 </div>
             </div>
 
-            <div class="flex-center min-w-sm relative h-full w-full">
-                <app-cloudinary-image
-                    class="relative size-full"
-                    [sizes]="'(max-width: 768px) 100vw, 50vw'"
-                    inputClass="mask mask-heart object-cover object-top"
-                    publicId="frenchie-hero_mtujt9"
-                    [isPriority]="true"
-                    alt="Frenchie picture"
-                    [isFilled]="true"
-                />
-            </div>
+            <app-cloudinary-image
+                class="flex-center relative size-full"
+                [sizes]="'(max-width: 768px) 100vw, 50vw'"
+                inputClass="mask mask-heart object-cover object-top"
+                publicId="frenchie-hero_mtujt9"
+                [isPriority]="true"
+                alt="Frenchie picture"
+                [isFilled]="true"
+            />
         </div>
     </header>
 
@@ -57,10 +55,10 @@
         </aside>
 
         <!-- Contenu principal -->
-        <main class="lg:col-span-3">
+        <main class="flex flex-col gap-6 lg:col-span-3">
             <!-- Barre de contrôle (tri et résultats) -->
             <div
-                class="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center"
+                class="flex w-full flex-col items-start justify-between gap-4 sm:flex-row sm:items-center"
             >
                 <!-- Informations sur les résultats -->
                 <div class="text-base-content/70 text-sm">
@@ -80,32 +78,26 @@
                 </div>
 
                 <!-- Options de tri -->
-                <div class="flex items-center gap-2">
-                    <label class="select select-sm">
-                        <span class="label text-sm" i18n="@@puppies.sort">Trier par:</span>
+                <label class="select select-sm">
+                    <span class="label text-sm" i18n="@@puppies.sort">Trier par:</span>
 
-                        <select [value]="sortKey()" (change)="onSortChange($event)">
-                            <option value="name-asc" i18n="@@puppies.sort.name-asc">
-                                Nom (A-Z)
-                            </option>
-                            <option value="name-desc" i18n="@@puppies.sort.name-desc">
-                                Nom (Z-A)
-                            </option>
-                            <option value="price-asc" i18n="@@puppies.sort.price-asc">
-                                Prix (croissant)
-                            </option>
-                            <option value="price-desc" i18n="@@puppies.sort.price-desc">
-                                Prix (décroissant)
-                            </option>
-                            <option value="birthDate-desc" i18n="@@puppies.sort.age-asc">
-                                Plus jeunes
-                            </option>
-                            <option value="birthDate-asc" i18n="@@puppies.sort.age-desc">
-                                Plus âgés
-                            </option>
-                        </select>
-                    </label>
-                </div>
+                    <select [value]="sortKey()" (change)="onSortChange($event)">
+                        <option value="name-asc" i18n="@@puppies.sort.name-asc">Nom (A-Z)</option>
+                        <option value="name-desc" i18n="@@puppies.sort.name-desc">Nom (Z-A)</option>
+                        <option value="price-asc" i18n="@@puppies.sort.price-asc">
+                            Prix (croissant)
+                        </option>
+                        <option value="price-desc" i18n="@@puppies.sort.price-desc">
+                            Prix (décroissant)
+                        </option>
+                        <option value="birthDate-desc" i18n="@@puppies.sort.age-asc">
+                            Plus jeunes
+                        </option>
+                        <option value="birthDate-asc" i18n="@@puppies.sort.age-desc">
+                            Plus âgés
+                        </option>
+                    </select>
+                </label>
             </div>
 
             <!-- Liste des chiots -->

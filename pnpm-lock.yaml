@@ -103,8 +103,8 @@ importers:
         specifier: 19.4.0
         version: 19.4.0(chokidar@4.0.3)(eslint@9.26.0(jiti@2.4.2))(typescript-eslint@8.32.0(eslint@9.26.0(jiti@2.4.2))(typescript@5.7.3))(typescript@5.7.3)
       daisyui:
-        specifier: ^5.0.35
-        version: 5.0.35
+        specifier: ^5.0.37
+        version: 5.0.42
       eslint:
         specifier: ^9.26.0
         version: 9.26.0(jiti@2.4.2)
@@ -2551,8 +2551,8 @@ packages:
   custom-event@1.0.1:
     resolution: {integrity: sha512-GAj5FOq0Hd+RsCGVJxZuKaIDXDf3h6GQoNEjFgbLLI/trgtavwUbSnZ5pVfg27DVCaWjIohryS0JFwIJyT2cMg==}
 
-  daisyui@5.0.35:
-    resolution: {integrity: sha512-AWi11n/x5++mps55jcwrBf0Lmip1euWY0FYcH/05SFGmoqrU7S7/aIUWaiaeqlJ5EcmEZ/7zEY73aOxMv6hcIg==}
+  daisyui@5.0.42:
+    resolution: {integrity: sha512-sZlqpPyu0wvjKtdryS62Njq18AJScr0V7Kruqc0ruSsl74SfGqaY8RMFkJoyNTorUx1OxWkAvkQP81uTyzNBqg==}
 
   date-format@4.0.14:
     resolution: {integrity: sha512-39BOQLs9ZjKh0/patS9nrT8wc3ioX3/eA/zgbKNopnF2wCqJEoxywwwElATYvRsXdnOxA/OQeQoFZ3rFjVajhg==}
@@ -7815,7 +7815,7 @@ snapshots:
 
   custom-event@1.0.1: {}
 
-  daisyui@5.0.35: {}
+  daisyui@5.0.42: {}
 
   date-format@4.0.14: {}
 
