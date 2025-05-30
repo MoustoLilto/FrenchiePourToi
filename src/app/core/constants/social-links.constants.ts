@@ -21,4 +21,8 @@ export const socialLinks = {
     },
 };
 
-export type SocialLink = (typeof socialLinks)[keyof typeof socialLinks];
+export interface SocialLink {
+    url: string;
+    icon: string;
+    label?: string;
+}

@@ -1,0 +1,219 @@
+<div class="container flex h-full min-h-full flex-col gap-y-20">
+    <header class="section-header">
+        <h2 class="text-h2 text-center">
+            <span i18n="@@puppies.title">À propos de nous</span>
+        </h2>
+
+        <div class="grid w-full grid-cols-1 gap-8 md:grid-cols-2">
+            <div class="flex-col-start gap-4">
+                <h3 class="text-h3 mb-4" i18n="@@puppies.header.title">
+                    Notre histoire et notre passion
+                </h3>
+                <p i18n="@@puppies.header.description">
+                    Frenchie Pour Toi est un élevage familial de bouledogues français fondé par des
+                    passionnés de la race. Notre histoire a commencé il y a plus de 10 ans, lorsque
+                    nous avons accueilli notre premier bouledogue français.
+                </p>
+                <p i18n="@@puppies.header.description2">
+                    Après plusieurs années d'expérience et de formation auprès d'éleveurs reconnus,
+                    nous avons décidé de créer notre propre élevage familial avec pour objectif de
+                    produire des chiots de qualité, en bonne santé et au tempérament équilibré.
+                </p>
+                <p i18n="@@puppies.header.description3">
+                    Aujourd'hui, Frenchie Pour Toi est reconnu pour la qualité de ses bouledogues
+                    français et pour son engagement envers le bien-être animal. Nous mettons tout en
+                    œuvre pour offrir à nos clients des chiots exceptionnels qui deviendront des
+                    compagnons fidèles pour la vie.
+                </p>
+            </div>
+
+            <app-cloudinary-image
+                class="flex-center relative size-full"
+                [sizes]="'(max-width: 768px) 100vw, 50vw'"
+                inputClass="mask mask-heart object-cover object-top"
+                publicId="frenchie-hero_mtujt9"
+                [isPriority]="true"
+                alt="Frenchie picture"
+                [isFilled]="true"
+            />
+        </div>
+    </header>
+
+    <!-- Section Notre Équipe -->
+    <app-team-section />
+
+    <!-- Section Notre Histoire -->
+    <section class="section-content">
+        <div class="flex-col-center gap-8">
+            <h2 class="text-h2 text-center" i18n="@@about.process.title">
+                Notre processus d'adoption
+            </h2>
+
+            <p class="text-base-content/70 max-w-2xl text-center" i18n="@@about.process.subtitle">
+                Un processus simple en 4 étapes pour vous accompagner dans l'adoption de votre chiot
+            </p>
+
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+                <!-- Étape 1 -->
+                <div class="flex-col-center gap-4 text-center">
+                    <div class="bg-primary/10 flex-center size-16 rounded-full">
+                        <span class="text-primary icon-[carbon--search] text-2xl"></span>
+                    </div>
+                    <h3 class="text-lg font-semibold" i18n="@@about.process.step1.title">
+                        1. Recherche
+                    </h3>
+                    <p
+                        class="text-base-content/70 text-sm"
+                        i18n="@@about.process.step1.description"
+                    >
+                        Découvrez nos chiots disponibles et choisissez celui qui vous correspond
+                    </p>
+                </div>
+
+                <!-- Étape 2 -->
+                <div class="flex-col-center gap-4 text-center">
+                    <div class="bg-secondary/10 flex-center size-16 rounded-full">
+                        <span class="text-secondary icon-[carbon--phone] text-2xl"></span>
+                    </div>
+                    <h3 class="text-lg font-semibold" i18n="@@about.process.step2.title">
+                        2. Contact
+                    </h3>
+                    <p
+                        class="text-base-content/70 text-sm"
+                        i18n="@@about.process.step2.description"
+                    >
+                        Contactez-nous pour discuter de vos attentes et poser vos questions
+                    </p>
+                </div>
+
+                <!-- Étape 3 -->
+                <div class="flex-col-center gap-4 text-center">
+                    <div class="bg-accent/10 flex-center size-16 rounded-full">
+                        <span class="text-accent icon-[carbon--calendar] text-2xl"></span>
+                    </div>
+                    <h3 class="text-lg font-semibold" i18n="@@about.process.step3.title">
+                        3. Réservation
+                    </h3>
+                    <p
+                        class="text-base-content/70 text-sm"
+                        i18n="@@about.process.step3.description"
+                    >
+                        Réservez votre chiot avec un acompte et préparez l'adoption
+                    </p>
+                </div>
+
+                <!-- Étape 4 -->
+                <div class="flex-col-center gap-4 text-center">
+                    <div class="bg-success/10 flex-center size-16 rounded-full">
+                        <span class="text-success icon-[carbon--home] text-2xl"></span>
+                    </div>
+                    <h3 class="text-lg font-semibold" i18n="@@about.process.step4.title">
+                        4. Adoption
+                    </h3>
+                    <p
+                        class="text-base-content/70 text-sm"
+                        i18n="@@about.process.step4.description"
+                    >
+                        Accueillez votre nouveau compagnon dans sa famille d'adoption
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-content bg-base-100 rounded-lg">
+        <h3 class="text-h3 text-center" i18n="@@about.values.title">Nos Valeurs</h3>
+
+        <div class="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            @for (info of values; track info.title) {
+                <div class="card bg-base-200">
+                    <div class="card-body items-center text-center">
+                        <i [class]="info.icon" class="text-primary text-4xl"></i>
+
+                        <h3 class="card-title font-serif">
+                            {{ info.title }}
+                        </h3>
+
+                        <p class="text-sm">
+                            {{ info.description }}
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+    <!-- Section Nous Contacter -->
+    <section class="section-content">
+        <h3 class="text-h3 text-center" i18n="@@about.contact.title">Nous Contacter</h3>
+
+        <div class="grid gap-8 md:grid-cols-2">
+            <div class="flex flex-col justify-center">
+                <p class="mb-6 text-base font-medium" i18n="@@about.contact.description">
+                    Vous avez des questions sur nos chiots disponibles ou notre élevage ? N'hésitez
+                    pas à nous contacter par téléphone, email ou via nos réseaux sociaux. Nous
+                    serons ravis d'échanger avec vous !
+                </p>
+
+                <div class="mb-6">
+                    <div class="mb-4 flex items-center">
+                        <span class="text-primary icon-[carbon--phone] mr-3 text-xl"></span>
+                        <span>{{ address.phone }}</span>
+                    </div>
+                    <div class="mb-4 flex items-center">
+                        <span class="text-primary icon-[carbon--email] mr-3 text-xl"></span>
+                        <span>{{ address.email }}</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="text-primary icon-[carbon--location] mr-3 text-xl"></span>
+                        <span>{{ address.address }}</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="mb-4 text-xl font-semibold" i18n="@@about.contact.social">
+                        Suivez-nous
+                    </h3>
+
+                    <app-social-links
+                        [withLabel]="false"
+                        inputClass="text-lg mr-4 mb-4 btn btn-outline btn-primary"
+                    ></app-social-links>
+                </div>
+            </div>
+
+            <div class="relative h-[400px] overflow-hidden rounded-lg shadow-lg">
+                <app-cloudinary-image
+                    publicId="WhatsApp_Image_2025-03-07_at_15.57.45_xy8noe"
+                    alt="Contactez notre élevage de Bouledogues Français"
+                    [isFilled]="true"
+                    inputClass="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                ></app-cloudinary-image>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-content bg-primary/10 rounded-lg">
+        <h3 class="text-h3 text-center" i18n="@@about.contact.title">Intéressé par nos chiots ?</h3>
+
+        <p class="mx-auto mb-6 max-w-2xl" i18n="@@about.contact.description">
+            Découvrez nos adorables chiots Bouledogues Français disponibles à l'adoption ou réservez
+            votre futur compagnon dès maintenant.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-4">
+            <a [routerLink]="routes.puppies.path" class="btn btn-outline">
+                <span i18n="@@about.cta.button1">Voir nos chiots</span>
+            </a>
+
+            <a
+                [routerLink]="routes.reservation.path"
+                class="btn btn-primary"
+                i18n="@@about.cta.button2"
+            >
+                Réserver un chiot
+            </a>
+        </div>
+    </section>
+</div>
