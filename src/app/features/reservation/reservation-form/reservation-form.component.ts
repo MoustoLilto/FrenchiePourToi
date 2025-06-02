@@ -356,7 +356,7 @@ import { ReservationForm } from '@/core/models/reservation.model';
                                 <div class="shrink-0">
                                     <app-cloudinary-image
                                         [publicId]="
-                                            selectedPuppy()!.images[0]?.publicId || 'placeholder'
+                                            selectedPuppy()!.images[0].publicId || 'placeholder'
                                         "
                                         [alt]="selectedPuppy()!.name"
                                         inputClass="w-20 h-20 rounded-md object-cover"

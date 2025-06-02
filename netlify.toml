@@ -1,0 +1,10 @@
+[build]
+  command = "pnpm run build"
+  publish = "dist/frenchie-pour-toi/browser"
+  functions = "dist/frenchie-pour-toi/server"
+
+[[plugins]]
+  package = "@netlify/angular-runtime"
+
+[functions]
+  node_bundler = "esbuild"
