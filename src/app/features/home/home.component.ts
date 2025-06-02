@@ -77,7 +77,7 @@ import { ParentStore } from '~/app/core/stores/parent.store';
                                 <app-puppy-miniature [puppy]="puppy" />
                             } @empty {
                                 <div class="flex-center flex-col gap-4">
-                                    <p i18n="@@common.noData">Aucun chiot disponible</p>
+                                    <p i18n="@@home.puppies.noData">Aucun chiot disponible</p>
                                 </div>
                             }
                         </div>
@@ -156,7 +156,7 @@ import { ParentStore } from '~/app/core/stores/parent.store';
                                 <app-parent-miniature [parent]="parent" />
                             } @empty {
                                 <div class="flex-center flex-col gap-4">
-                                    <p i18n="@@common.noData">Aucun parent disponible</p>
+                                    <p i18n="@@home.parents.noData">Aucun parent disponible</p>
                                 </div>
                             }
                         </div>

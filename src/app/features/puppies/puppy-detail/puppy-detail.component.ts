@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy, computed, inject, OnInit } from '@angular/core';
 import { CloudinaryImageComponent } from '@/shared/components/cloudinary-image/cloudinary-image.component';
-import { SocialLinksComponent } from '@/shared/components/social-links.component';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { routes } from '@/core/constants/routes.constants';
 import { Puppy } from '@/core/models/puppy.model';
@@ -10,14 +9,7 @@ import { DatePipe, CurrencyPipe, SlicePipe } from '@angular/common';
 @Component({
     selector: 'app-puppy-detail',
     standalone: true,
-    imports: [
-        CloudinaryImageComponent,
-        SocialLinksComponent,
-        RouterLink,
-        DatePipe,
-        CurrencyPipe,
-        SlicePipe,
-    ],
+    imports: [CloudinaryImageComponent, RouterLink, DatePipe, CurrencyPipe, SlicePipe],
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
         <div class="container flex h-full min-h-full flex-col gap-y-12">
@@ -179,7 +171,7 @@ import { DatePipe, CurrencyPipe, SlicePipe } from '@angular/common';
                                         class="btn btn-outline btn-block"
                                     >
                                         <span class="icon-[carbon--chat] mr-2"></span>
-                                        <span i18n="@@puppy.cta.contact">Poser une question</span>
+                                        <span i18n="@@puppy.cta.question">Poser une question</span>
                                     </a>
                                 } @else if (currentPuppy.status === 'reserved') {
                                     <div class="alert alert-warning">
