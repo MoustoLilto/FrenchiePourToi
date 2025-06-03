@@ -10,6 +10,10 @@ export const serverRoutes: ServerRoute[] = [
         renderMode: RenderMode.Server,
     },
     {
+        path: 'reservation',
+        renderMode: RenderMode.Server,
+    },
+    {
         path: '**',
         renderMode: RenderMode.Prerender,
     },

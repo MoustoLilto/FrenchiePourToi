@@ -5,21 +5,3 @@
 
 [[plugins]]
   package = "@netlify/angular-runtime"
-
-[functions]
-  node_bundler = "esbuild"
-
-[[redirects]]
-  from = "/"
-  to = "/en"
-  status = 302
-
-[[redirects]]
-  from = "/en"
-  to = "/en/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/fr"
-  to = "/fr/index.html"
-  status = 200

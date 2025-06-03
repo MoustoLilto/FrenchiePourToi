@@ -1,4 +1,3 @@
-import { AngularAppEngine, createRequestHandler } from '@angular/ssr';
 import {
     AngularNodeAppEngine,
     createNodeRequestHandler,
@@ -8,35 +7,28 @@ import {
 import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { getContext } from '@netlify/angular-runtime/context.mjs';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
 
 const app = express();
-const angularAppEngine = new AngularAppEngine();
+const angularApp = new AngularNodeAppEngine();
 
-export async function netlifyAppEngineHandler(request: Request): Promise<Response> {
-    const context = getContext();
-    const url = new URL(request.url);
+/**
+ * Example Express Rest API endpoints can be defined here.
+ * Uncomment and define endpoints as necessary.
+ *
+ * Example:
+ * ```ts
+ * app.get('/api/**', (req, res) => {
+ *   // Handle API request
+ * });
+ * ```
+ */
 
-    // Gestion des locales
-    const path = url.pathname;
-    let locale = 'fr'; // locale par défaut
-
-    if (path.startsWith('/en')) {
-        locale = 'en';
-    } else if (path.startsWith('/fr')) {
-        locale = 'fr';
-    }
-
-    // Ajout de la locale au contexte
-    context.locale = locale;
-
-    const result = await angularAppEngine.handle(request, context);
-    return result || new Response('Not found', { status: 404 });
-}
-
+/**
+ * Serve static files from /browser
+ */
 app.use(
     express.static(browserDistFolder, {
         maxAge: '1y',
@@ -48,28 +40,11 @@ app.use(
 /**
  * Handle all other requests by rendering the Angular application.
  */
-app.use('/**', async (req, res, next) => {
-    try {
-        // Conversion de la requête Express en Request standard
-        const request = new Request(`http://${req.headers.host}${req.url}`, {
-            method: req.method,
-            headers: new Headers(req.headers as Record<string, string>),
-            body: req.method !== 'GET' && req.method !== 'HEAD' ? req.body : undefined,
-        });
-
-        const result = await angularAppEngine.handle(request);
-        if (result) {
-            res.status(result.status);
-            for (const [key, value] of result.headers) {
-                res.setHeader(key, value);
-            }
-            res.send(await result.text());
-        } else {
-            next();
-        }
-    } catch (error) {
-        next(error);
-    }
+app.use('/**', (req, res, next) => {
+    angularApp
+        .handle(req)
+        .then((response) => (response ? writeResponseToNodeResponse(response, res) : next()))
+        .catch(next);
 });
 
 /**
@@ -86,4 +61,4 @@ if (isMainModule(import.meta.url)) {
 /**
  * Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.
  */
-export const reqHandler = createRequestHandler(netlifyAppEngineHandler);
+export const reqHandler = createNodeRequestHandler(app);
