@@ -29,6 +29,7 @@
     "@angular/ssr": "^19.2.8",
     "@cloudinary/ng": "^2.1.2",
     "@cloudinary/url-gen": "^1.21.0",
+    "@netlify/functions": "^4.1.0",
     "@ngrx/signals": "^19.2.0",
     "@tailwindcss/postcss": "^4.1.5",
     "express": "^4.18.2",
