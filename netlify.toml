@@ -1,9 +1,32 @@
 [build]
   command = "pnpm run build"
-  publish = "dist/frenchie-pour-toi/browser/en"
-  functions = "netlify/functions"
+  publish = "dist/frenchie-pour-toi/browser"
+
+[[plugins]]
+  package = "@netlify/angular-runtime"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Redirections pour supporter l'i18n
+[[redirects]]
+  from = "/"
+  to = "/fr/"
+  status = 302
+  force = true
 
 [[redirects]]
-  from = "/*"
-  to = "/.netlify/functions/ssr"
+  from = "/en/*"
+  to = "/en/:splat"
   status = 200
+
+[[redirects]]
+  from = "/fr/*"
+  to = "/fr/:splat"
+  status = 200
+
+# Fallback pour les routes qui n'existent pas dans une locale spécifique
+[[redirects]]
+  from = "/*"
+  to = "/fr/:splat"
+  status = 404

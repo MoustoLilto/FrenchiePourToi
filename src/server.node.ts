@@ -7,8 +7,6 @@ import {
 import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -28,27 +26,6 @@ const angularApp = new AngularNodeAppEngine();
  * ```
  */
 
-app.get('*', (req, res, next) => {
-    const supportedLocales = ['en', 'fr'];
-    const defaultLocale = 'en';
-
-    const localeFromPath = req.path.split('/')[1];
-    const locale = supportedLocales.includes(localeFromPath)
-        ? localeFromPath
-        : defaultLocale;
-
-    // Rediriger si pas de locale
-    if (!supportedLocales.includes(localeFromPath)) {
-        return res.redirect(`/${locale}${req.url}`);
-    }
-
-
-    return angularApp
-    .handle(req)
-    .then((response) => (response ? writeResponseToNodeResponse(response, res) : next()))
-    .catch(next);
-});
-
 /**
  * Serve static files from /browser
  */
@@ -59,7 +36,6 @@ app.use(
         redirect: false,
     })
 );
-
 
 /**
  * Handle all other requests by rendering the Angular application.

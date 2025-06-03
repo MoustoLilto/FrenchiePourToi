@@ -1,0 +1,13 @@
+# Rediriger la racine vers la locale par défaut (français)
+/ /fr/ 302
+
+# Rediriger l'ancien chemin avec locale vers le nouveau
+/fr /fr/ 301
+/en /en/ 301
+
+# Gestion des routes SPA pour les deux locales
+/fr/* /fr/index.html 200
+/en/* /en/index.html 200
+
+# Fallback pour toutes les autres routes vers la locale par défaut
+/* /fr/index.html 200
